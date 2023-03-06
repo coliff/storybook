@@ -24,16 +24,13 @@
     ".": {
       "node": "./dist/index.js",
       "require": "./dist/index.js",
-      "import": "./dist/index.mjs",
       "types": "./dist/index.d.ts"
     },
     "./preset": {
       "require": "./dist/preset.js",
-      "import": "./dist/preset.mjs",
       "types": "./dist/preset.d.ts"
     },
     "./preview.js": {
-      "require": "./dist/preview.js",
       "import": "./dist/preview.mjs",
       "types": "./dist/preview.d.ts"
     },
@@ -45,7 +42,6 @@
     "./package.json": "./package.json"
   },
   "main": "dist/index.js",
-  "module": "dist/index.mjs",
   "types": "dist/index.d.ts",
   "files": [
     "dist/**/*",
@@ -140,13 +136,14 @@
   },
   "bundler": {
     "entries": [
-      "./src/index.ts",
-      "./src/preset.ts",
       "./src/preview.tsx",
-      "./src/next-image-loader-stub.ts",
-      "./src/font/webpack/loader/storybook-nextjs-font-loader.ts"
+      "./src/next-image-loader-stub.ts"
     ],
-    "platform": "node"
+    "nodeEntries": [
+      "./src/font/webpack/loader/storybook-nextjs-font-loader.ts",
+      "./src/index.ts",
+      "./src/preset.ts"
+    ]
   },
   "gitHead": "c4707c66fa1b173da15d232f35e03dd647aa6a42"
 }

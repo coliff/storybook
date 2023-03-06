@@ -27,13 +27,11 @@
       "types": "./dist/index.d.ts"
     },
     "./preview": {
-      "require": "./dist/config.js",
       "import": "./dist/config.mjs",
       "types": "./dist/config.d.ts"
     },
     "./dist/preset": {
       "require": "./dist/preset.js",
-      "import": "./dist/preset.mjs",
       "types": "./dist/preset.d.ts"
     },
     "./package.json": "./package.json"
@@ -101,7 +99,9 @@
   "bundler": {
     "entries": [
       "./src/index.ts",
-      "./src/config.ts",
+      "./src/config.ts"
+    ],
+    "nodeEntries": [
       "./src/preset.ts"
     ],
     "platform": "browser"

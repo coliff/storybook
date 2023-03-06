@@ -23,19 +23,16 @@
     ".": {
       "node": "./dist/index.js",
       "require": "./dist/index.js",
-      "import": "./dist/index.mjs",
       "types": "./dist/index.d.ts"
     },
     "./presets/custom-webpack-preset": {
       "node": "./dist/presets/custom-webpack-preset.js",
       "require": "./dist/presets/custom-webpack-preset.js",
-      "import": "./dist/presets/custom-webpack-preset.mjs",
       "types": "./dist/presets/custom-webpack-preset.d.ts"
     },
     "./presets/preview-preset": {
       "node": "./dist/presets/preview-preset.js",
       "require": "./dist/presets/preview-preset.js",
-      "import": "./dist/presets/preview-preset.mjs",
       "types": "./dist/presets/preview-preset.d.ts"
     },
     "./templates/virtualModuleModernEntry.js.handlebars": "./templates/virtualModuleModernEntry.js.handlebars",
@@ -43,7 +40,6 @@
     "./package.json": "./package.json"
   },
   "main": "dist/index.js",
-  "module": "dist/index.mjs",
   "types": "dist/index.d.ts",
   "files": [
     "dist/**/*",
@@ -124,12 +120,11 @@
     "access": "public"
   },
   "bundler": {
-    "entries": [
+    "nodeEntries": [
       "./src/index.ts",
       "./src/presets/custom-webpack-preset.ts",
       "./src/presets/preview-preset.ts"
-    ],
-    "platform": "node"
+    ]
   },
   "gitHead": "c4707c66fa1b173da15d232f35e03dd647aa6a42"
 }

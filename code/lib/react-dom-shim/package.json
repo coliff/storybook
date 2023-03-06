@@ -66,9 +66,11 @@
   },
   "bundler": {
     "entries": [
-      "./src/preset.ts",
       "./src/react-16.tsx",
       "./src/react-18.tsx"
+    ],
+    "nodeEntries": [
+      "./src/preset.ts"
     ]
   },
   "gitHead": "c4707c66fa1b173da15d232f35e03dd647aa6a42"

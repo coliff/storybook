@@ -141,7 +141,7 @@ const run = async ({ cwd, flags }: { cwd: string; flags: string[] }) => {
   await Promise.all(tasks);
 
   if (tsConfigExists && !optimized) {
-    await Promise.all(entries.map(generateDTSMapperFile));
+    await Promise.all(uniqueEntries.map(generateDTSMapperFile));
   }
 
   if (post) {

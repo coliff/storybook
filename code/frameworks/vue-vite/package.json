@@ -23,18 +23,15 @@
     ".": {
       "node": "./dist/index.js",
       "require": "./dist/index.js",
-      "import": "./dist/index.mjs",
       "types": "./dist/index.d.ts"
     },
     "./preset": {
       "require": "./dist/preset.js",
-      "import": "./dist/preset.mjs",
       "types": "./dist/preset.d.ts"
     },
     "./package.json": "./package.json"
   },
   "main": "dist/index.js",
-  "module": "dist/index.mjs",
   "types": "dist/index.d.ts",
   "files": [
     "dist/**/*",
@@ -73,11 +70,10 @@
     "access": "public"
   },
   "bundler": {
-    "entries": [
+    "nodeEntries": [
       "./src/index.ts",
       "./src/preset.ts"
-    ],
-    "platform": "node"
+    ]
   },
   "gitHead": "c4707c66fa1b173da15d232f35e03dd647aa6a42"
 }

@@ -23,26 +23,22 @@
     ".": {
       "node": "./dist/index.js",
       "require": "./dist/index.js",
-      "import": "./dist/index.mjs",
       "types": "./dist/index.d.ts"
     },
     "./dist/presets/babel-cache-preset": {
       "node": "./dist/presets/babel-cache-preset.js",
       "require": "./dist/presets/babel-cache-preset.js",
-      "import": "./dist/presets/babel-cache-preset.mjs",
       "types": "./dist/presets/babel-cache-preset.d.ts"
     },
     "./dist/presets/common-preset": {
       "node": "./dist/presets/common-preset.js",
       "require": "./dist/presets/common-preset.js",
-      "import": "./dist/presets/common-preset.mjs",
       "types": "./dist/presets/common-preset.d.ts"
     },
     "./public/favicon.svg": "./public/favicon.svg",
     "./package.json": "./package.json"
   },
   "main": "dist/index.js",
-  "module": "dist/index.mjs",
   "types": "dist/index.d.ts",
   "files": [
     "dist/**/*",
@@ -113,12 +109,11 @@
     "access": "public"
   },
   "bundler": {
-    "entries": [
+    "nodeEntries": [
       "./src/index.ts",
       "./src/presets/babel-cache-preset.ts",
       "./src/presets/common-preset.ts"
-    ],
-    "platform": "node"
+    ]
   },
   "gitHead": "c4707c66fa1b173da15d232f35e03dd647aa6a42"
 }
