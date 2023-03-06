@@ -98,7 +98,7 @@
     "access": "public"
   },
   "bundler": {
-    "entries": [
+    "browserEntries": [
       "./src/index.ts",
       "./src/manager.tsx",
       "./src/preview.tsx"
