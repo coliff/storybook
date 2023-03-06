@@ -32,7 +32,7 @@ export const Title = styled.h1(withReset, ({ theme }) => ({
   [`@media (min-width: ${breakpoint}px)`]: {
     fontSize: theme.typography.size.l1,
     lineHeight: '36px',
-    marginBottom: '.5rem', // 8px
+    marginBottom: '16px',
   },
 }));
 
@@ -191,6 +191,7 @@ export const DocsContent = styled.div(({ theme }) => {
       ...reset,
       ...headers,
       fontSize: `${theme.typography.size.m1}px`,
+      fontWeight: theme.typography.weight.bold,
     },
     [toGlobalSelector('h4')]: {
       ...reset,

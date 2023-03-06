@@ -17,7 +17,7 @@ import { buildDevStandalone, withTelemetry } from '@storybook/core-server';
 import { StyleElement } from '@angular-devkit/build-angular/src/builders/browser/schema';
 import { StandaloneOptions } from '../utils/standalone-options';
 import { runCompodoc } from '../utils/run-compodoc';
-import { buildStandaloneErrorHandler } from '../utils/build-standalone-errors-handler';
+import { printErrorDetails, errorSummary } from '../utils/error-handler';
 
 export type StorybookBuilderOptions = JsonObject & {
   browserTarget?: string | null;
@@ -139,12 +139,13 @@ function runInstance(options: StandaloneOptions) {
       {
         cliOptions: options,
         presetOptions: { ...options, corePresets: [], overridePresets: [] },
+        printError: printErrorDetails,
       },
-      () =>
-        buildDevStandalone(options).then(
-          ({ port }) => observer.next(port),
-          (error) => observer.error(buildStandaloneErrorHandler(error))
-        )
-    );
+      () => buildDevStandalone(options)
+    )
+      .then(({ port }) => observer.next(port))
+      .catch((error) => {
+        observer.error(errorSummary(error));
+      });
   });
 }

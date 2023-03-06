@@ -1,7 +1,7 @@
 import { logger, instance as npmLog } from '@storybook/node-logger';
 import { dedent } from 'ts-dedent';
 
-export const buildStandaloneErrorHandler = (error: any): any => {
+export const printErrorDetails = (error: any): void => {
   // Duplicate code for Standalone error handling
   // Source: https://github.com/storybookjs/storybook/blob/39c7ba09ad84fbd466f9c25d5b92791a5450b9f6/lib/core-server/src/build-dev.ts#L136
   npmLog.heading = '';
@@ -19,6 +19,9 @@ export const buildStandaloneErrorHandler = (error: any): any => {
   }
 
   logger.line();
+};
+
+export const errorSummary = (error: any): string => {
   return error.close
     ? dedent`
       FATAL broken build!, will close the process,

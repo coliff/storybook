@@ -1,6 +1,6 @@
 {
   "name": "@storybook/preact",
-  "version": "7.0.0-beta.61",
+  "version": "7.0.0-beta.62",
   "description": "Storybook Preact renderer",
   "keywords": [
     "storybook"
@@ -48,10 +48,10 @@
     "prep": "../../../scripts/prepare/bundle.ts"
   },
   "dependencies": {
-    "@storybook/core-client": "7.0.0-beta.61",
+    "@storybook/core-client": "7.0.0-beta.62",
     "@storybook/global": "^5.0.0",
-    "@storybook/preview-api": "7.0.0-beta.61",
-    "@storybook/types": "7.0.0-beta.61",
+    "@storybook/preview-api": "7.0.0-beta.62",
+    "@storybook/types": "7.0.0-beta.62",
     "ts-dedent": "^2.0.0"
   },
   "devDependencies": {
@@ -74,5 +74,5 @@
     ],
     "platform": "browser"
   },
-  "gitHead": "c4707c66fa1b173da15d232f35e03dd647aa6a42"
+  "gitHead": "f70dcdb599363bfd6e6d2b63f8fadd02e9cbe00a"
 }

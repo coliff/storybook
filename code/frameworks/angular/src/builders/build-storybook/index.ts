@@ -17,7 +17,7 @@ import { buildStaticStandalone, withTelemetry } from '@storybook/core-server';
 import { StyleElement } from '@angular-devkit/build-angular/src/builders/browser/schema';
 import { StandaloneOptions } from '../utils/standalone-options';
 import { runCompodoc } from '../utils/run-compodoc';
-import { buildStandaloneErrorHandler } from '../utils/build-standalone-errors-handler';
+import { errorSummary, printErrorDetails } from '../utils/error-handler';
 
 export type StorybookBuilderOptions = JsonObject & {
   browserTarget?: string | null;
@@ -121,8 +121,9 @@ function runInstance(options: StandaloneBuildOptions) {
       {
         cliOptions: options,
         presetOptions: { ...options, corePresets: [], overridePresets: [] },
+        printError: printErrorDetails,
       },
       () => buildStaticStandalone(options)
     )
-  ).pipe(catchError((error: any) => throwError(buildStandaloneErrorHandler(error))));
+  ).pipe(catchError((error: any) => throwError(errorSummary(error))));
 }

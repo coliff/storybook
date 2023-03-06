@@ -1,6 +1,6 @@
 {
   "name": "@storybook/builder-webpack5",
-  "version": "7.0.0-beta.61",
+  "version": "7.0.0-beta.62",
   "description": "Storybook framework-agnostic API",
   "keywords": [
     "storybook"
@@ -54,25 +54,25 @@
   },
   "dependencies": {
     "@babel/core": "^7.12.10",
-    "@storybook/addons": "7.0.0-beta.61",
-    "@storybook/api": "7.0.0-beta.61",
-    "@storybook/channel-postmessage": "7.0.0-beta.61",
-    "@storybook/channel-websocket": "7.0.0-beta.61",
-    "@storybook/channels": "7.0.0-beta.61",
-    "@storybook/client-api": "7.0.0-beta.61",
-    "@storybook/client-logger": "7.0.0-beta.61",
-    "@storybook/components": "7.0.0-beta.61",
-    "@storybook/core-common": "7.0.0-beta.61",
-    "@storybook/core-events": "7.0.0-beta.61",
-    "@storybook/core-webpack": "7.0.0-beta.61",
+    "@storybook/addons": "7.0.0-beta.62",
+    "@storybook/api": "7.0.0-beta.62",
+    "@storybook/channel-postmessage": "7.0.0-beta.62",
+    "@storybook/channel-websocket": "7.0.0-beta.62",
+    "@storybook/channels": "7.0.0-beta.62",
+    "@storybook/client-api": "7.0.0-beta.62",
+    "@storybook/client-logger": "7.0.0-beta.62",
+    "@storybook/components": "7.0.0-beta.62",
+    "@storybook/core-common": "7.0.0-beta.62",
+    "@storybook/core-events": "7.0.0-beta.62",
+    "@storybook/core-webpack": "7.0.0-beta.62",
     "@storybook/global": "^5.0.0",
-    "@storybook/manager-api": "7.0.0-beta.61",
-    "@storybook/node-logger": "7.0.0-beta.61",
-    "@storybook/preview": "7.0.0-beta.61",
-    "@storybook/preview-api": "7.0.0-beta.61",
-    "@storybook/router": "7.0.0-beta.61",
-    "@storybook/store": "7.0.0-beta.61",
-    "@storybook/theming": "7.0.0-beta.61",
+    "@storybook/manager-api": "7.0.0-beta.62",
+    "@storybook/node-logger": "7.0.0-beta.62",
+    "@storybook/preview": "7.0.0-beta.62",
+    "@storybook/preview-api": "7.0.0-beta.62",
+    "@storybook/router": "7.0.0-beta.62",
+    "@storybook/store": "7.0.0-beta.62",
+    "@storybook/theming": "7.0.0-beta.62",
     "@types/node": "^16.0.0",
     "@types/semver": "^7.3.4",
     "babel-loader": "^9.0.0",
@@ -126,5 +126,5 @@
       "./src/presets/preview-preset.ts"
     ]
   },
-  "gitHead": "c4707c66fa1b173da15d232f35e03dd647aa6a42"
+  "gitHead": "f70dcdb599363bfd6e6d2b63f8fadd02e9cbe00a"
 }

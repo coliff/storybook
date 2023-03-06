@@ -101,6 +101,10 @@ const PreviewContainer = styled.div<PreviewProps>(
     borderBottomLeftRadius: withSource && isExpanded && 0,
     borderBottomRightRadius: withSource && isExpanded && 0,
     borderBottomWidth: isExpanded && 0,
+
+    'h3 + &': {
+      marginTop: '16px',
+    },
   }),
   ({ withToolbar }) => withToolbar && { paddingTop: 40 }
 );

@@ -1,6 +1,6 @@
 {
   "name": "@storybook/svelte",
-  "version": "7.0.0-beta.61",
+  "version": "7.0.0-beta.62",
   "description": "Storybook Svelte renderer",
   "keywords": [
     "storybook"
@@ -52,12 +52,12 @@
     "prep": "../../../scripts/prepare/bundle.ts"
   },
   "dependencies": {
-    "@storybook/client-logger": "7.0.0-beta.61",
-    "@storybook/core-client": "7.0.0-beta.61",
-    "@storybook/docs-tools": "7.0.0-beta.61",
+    "@storybook/client-logger": "7.0.0-beta.62",
+    "@storybook/core-client": "7.0.0-beta.62",
+    "@storybook/docs-tools": "7.0.0-beta.62",
     "@storybook/global": "^5.0.0",
-    "@storybook/preview-api": "7.0.0-beta.61",
-    "@storybook/types": "7.0.0-beta.61",
+    "@storybook/preview-api": "7.0.0-beta.62",
+    "@storybook/types": "7.0.0-beta.62",
     "sveltedoc-parser": "^4.2.1",
     "type-fest": "2.19.0"
   },
@@ -83,5 +83,5 @@
     ],
     "platform": "browser"
   },
-  "gitHead": "c4707c66fa1b173da15d232f35e03dd647aa6a42"
+  "gitHead": "f70dcdb599363bfd6e6d2b63f8fadd02e9cbe00a"
 }

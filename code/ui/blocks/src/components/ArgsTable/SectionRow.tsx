@@ -1,6 +1,6 @@
 import type { FC } from 'react';
 import React, { useState } from 'react';
-import { transparentize } from 'polished';
+import { transparentize, lighten } from 'polished';
 import { styled } from '@storybook/theming';
 import { Icons } from '@storybook/components';
 
@@ -54,16 +54,16 @@ const Subsection = styled.td(({ theme }) => ({
   position: 'relative',
   fontWeight: theme.typography.weight.bold,
   fontSize: theme.typography.size.s2 - 1,
-  background: theme.background.content,
+  background: theme.background.app,
 }));
 
-const StyledTd = styled.td(({ theme }) => ({
+const StyledTd = styled.td(() => ({
   position: 'relative',
 }));
 
 const StyledTr = styled.tr(({ theme }) => ({
   '&:hover > td': {
-    backgroundColor: `${theme.background.hoverable} !important`,
+    backgroundColor: `${lighten(0.005, theme.background.app)} !important`,
     boxShadow: `${theme.color.mediumlight} 0 - 1px 0 0 inset`,
     cursor: 'row-resize',
   },
