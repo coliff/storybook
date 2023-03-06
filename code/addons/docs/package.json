@@ -26,43 +26,34 @@
   "license": "MIT",
   "exports": {
     ".": {
-      "node": "./dist/index.js",
-      "require": "./dist/index.js",
       "import": "./dist/index.mjs",
       "types": "./dist/index.d.ts"
     },
     "./preview": {
-      "require": "./dist/preview.js",
       "import": "./dist/preview.mjs",
       "types": "./dist/preview.d.ts"
     },
     "./preset": {
       "require": "./dist/preset.js",
-      "import": "./dist/preset.mjs",
       "types": "./dist/preset.d.ts"
     },
     "./blocks": {
-      "require": "./dist/blocks.js",
       "import": "./dist/blocks.mjs",
       "types": "./dist/blocks.d.ts"
     },
     "./dist/preview": {
-      "require": "./dist/preview.js",
       "import": "./dist/preview.mjs",
       "types": "./dist/preview.d.ts"
     },
     "./dist/preset": {
       "require": "./dist/preset.js",
-      "import": "./dist/preset.mjs",
       "types": "./dist/preset.d.ts"
     },
     "./dist/shims/mdx-react-shim": {
-      "require": "./dist/shims/mdx-react-shim.js",
       "import": "./dist/shims/mdx-react-shim.mjs",
       "types": "./dist/shims/mdx-react-shim.d.ts"
     },
     "./mdx-react-shim": {
-      "require": "./dist/shims/mdx-react-shim.js",
       "import": "./dist/shims/mdx-react-shim.mjs",
       "types": "./dist/shims/mdx-react-shim.d.ts"
     },
@@ -75,7 +66,6 @@
     "./jest-transform-mdx": "./jest-transform-mdx.js",
     "./package.json": "./package.json"
   },
-  "main": "dist/index.js",
   "module": "dist/index.mjs",
   "types": "dist/index.d.ts",
   "files": [
@@ -140,12 +130,14 @@
     "access": "public"
   },
   "bundler": {
-    "entries": [
+    "browserEntries": [
       "./src/index.ts",
-      "./src/preset.ts",
       "./src/preview.ts",
       "./src/blocks.ts",
       "./src/shims/mdx-react-shim.ts"
+    ],
+    "nodeEntries": [
+      "./src/preset.ts"
     ]
   },
   "gitHead": "c4707c66fa1b173da15d232f35e03dd647aa6a42",

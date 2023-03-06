@@ -25,88 +25,72 @@
     ".": {
       "node": "./dist/index.js",
       "require": "./dist/index.js",
-      "import": "./dist/index.mjs",
       "types": "./dist/index.d.ts"
     },
     "./actions/preview": {
-      "require": "./dist/actions/preview.js",
       "import": "./dist/actions/preview.mjs",
       "types": "./dist/actions/preview.d.ts"
     },
     "./actions/manager": {
-      "require": "./dist/actions/manager.js",
       "import": "./dist/actions/manager.mjs",
       "types": "./dist/actions/manager.d.ts"
     },
     "./backgrounds/preview": {
-      "require": "./dist/backgrounds/preview.js",
       "import": "./dist/backgrounds/preview.mjs",
       "types": "./dist/backgrounds/preview.d.ts"
     },
     "./backgrounds/manager": {
-      "require": "./dist/backgrounds/manager.js",
       "import": "./dist/backgrounds/manager.mjs",
       "types": "./dist/backgrounds/manager.d.ts"
     },
     "./controls/manager": {
-      "require": "./dist/controls/manager.js",
       "import": "./dist/controls/manager.mjs",
       "types": "./dist/controls/manager.d.ts"
     },
     "./docs/preview": {
-      "require": "./dist/docs/preview.js",
       "import": "./dist/docs/preview.mjs",
       "types": "./dist/docs/preview.d.ts"
     },
     "./docs/preset": {
+      "node": "./dist/docs/preset.js",
       "require": "./dist/docs/preset.js",
-      "import": "./dist/docs/preset.mjs",
       "types": "./dist/docs/preset.d.ts"
     },
     "./docs/mdx-react-shim": {
-      "require": "./dist/docs/mdx-react-shim.js",
       "import": "./dist/docs/mdx-react-shim.mjs",
       "types": "./dist/docs/mdx-react-shim.d.ts"
     },
     "./highlight/preview": {
-      "require": "./dist/highlight/preview.js",
       "import": "./dist/highlight/preview.mjs",
       "types": "./dist/highlight/preview.d.ts"
     },
     "./measure/preview": {
-      "require": "./dist/measure/preview.js",
       "import": "./dist/measure/preview.mjs",
       "types": "./dist/measure/preview.d.ts"
     },
     "./measure/manager": {
-      "require": "./dist/measure/manager.js",
       "import": "./dist/measure/manager.mjs",
       "types": "./dist/measure/manager.d.ts"
     },
     "./outline/preview": {
-      "require": "./dist/outline/preview.js",
       "import": "./dist/outline/preview.mjs",
       "types": "./dist/outline/preview.d.ts"
     },
     "./outline/manager": {
-      "require": "./dist/outline/manager.js",
       "import": "./dist/outline/manager.mjs",
       "types": "./dist/outline/manager.d.ts"
     },
     "./toolbars/manager": {
-      "require": "./dist/toolbars/manager.js",
       "import": "./dist/toolbars/manager.mjs",
       "types": "./dist/toolbars/manager.d.ts"
     },
     "./viewport/manager": {
-      "require": "./dist/viewport/manager.js",
       "import": "./dist/viewport/manager.mjs",
       "types": "./dist/viewport/manager.d.ts"
     },
     "./package.json": "./package.json"
   },
   "main": "dist/index.js",
-  "module": "dist/index.mjs",
   "types": "dist/index.d.ts",
   "files": [
     "dist/**/*",
@@ -146,15 +130,13 @@
     "access": "public"
   },
   "bundler": {
-    "entries": [
-      "./src/index.ts",
+    "browserEntries": [
       "./src/actions/preview.ts",
       "./src/actions/manager.ts",
       "./src/backgrounds/preview.ts",
       "./src/backgrounds/manager.ts",
       "./src/controls/manager.ts",
       "./src/docs/preview.ts",
-      "./src/docs/preset.ts",
       "./src/docs/mdx-react-shim.ts",
       "./src/highlight/preview.ts",
       "./src/measure/preview.ts",
@@ -164,7 +146,10 @@
       "./src/toolbars/manager.ts",
       "./src/viewport/manager.ts"
     ],
-    "platform": "node"
+    "nodeEntries": [
+      "./src/index.ts",
+      "./src/docs/preset.ts"
+    ]
   },
   "gitHead": "c4707c66fa1b173da15d232f35e03dd647aa6a42"
 }
