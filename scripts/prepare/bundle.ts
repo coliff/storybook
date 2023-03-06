@@ -15,6 +15,8 @@ import { exec } from '../utils/exec';
 type Formats = 'esm' | 'cjs';
 type BundlerConfig = {
   entries: string[];
+  nodeEntries: string[];
+  browserEntries: string[];
   externals: string[];
   platform: Options['platform'];
   pre: string;
@@ -35,6 +37,8 @@ const run = async ({ cwd, flags }: { cwd: string; flags: string[] }) => {
     peerDependencies,
     bundler: {
       entries = [],
+      nodeEntries = [],
+      browserEntries = [],
       externals: extraExternals = [],
       platform,
       pre,
@@ -64,7 +68,6 @@ const run = async ({ cwd, flags }: { cwd: string; flags: string[] }) => {
     ...Object.keys(dependencies || {}),
     ...Object.keys(peerDependencies || {}),
   ];
-  const allEntries = entries.map((e: string) => slash(join(cwd, e)));
 
   const { dtsBuild, dtsConfig, tsConfigExists } = await getDTSConfigs({
     formats,
@@ -75,8 +78,9 @@ const run = async ({ cwd, flags }: { cwd: string; flags: string[] }) => {
   if (formats.includes('esm')) {
     tasks.push(
       build({
+        treeshake: true,
         silent: true,
-        entry: allEntries,
+        entry: [...entries, ...browserEntries].map((e: string) => slash(join(cwd, e))),
         watch,
         outDir,
         format: ['esm'],
@@ -107,7 +111,7 @@ const run = async ({ cwd, flags }: { cwd: string; flags: string[] }) => {
     tasks.push(
       build({
         silent: true,
-        entry: allEntries,
+        entry: [...entries, ...nodeEntries].map((e: string) => slash(join(cwd, e))),
         watch,
         outDir,
         format: ['cjs'],
