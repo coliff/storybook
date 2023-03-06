@@ -53,7 +53,7 @@
     "access": "public"
   },
   "bundler": {
-    "entries": [
+    "nodeEntries": [
       "./src/index.ts"
     ],
     "externals": [
@@ -61,8 +61,7 @@
       "vite",
       "rollup",
       "esbuild"
-    ],
-    "platform": "node"
+    ]
   },
   "gitHead": "f70dcdb599363bfd6e6d2b63f8fadd02e9cbe00a"
 }
