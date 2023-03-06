@@ -75,7 +75,7 @@ const run = async ({ cwd, flags }: { cwd: string; flags: string[] }) => {
     optimized,
   });
 
-  if (formats.includes('esm')) {
+  if (formats.includes('esm') && [...entries, ...browserEntries].length > 0) {
     tasks.push(
       build({
         treeshake: true,
@@ -107,7 +107,7 @@ const run = async ({ cwd, flags }: { cwd: string; flags: string[] }) => {
     );
   }
 
-  if (formats.includes('cjs')) {
+  if (formats.includes('cjs') && [...entries, ...nodeEntries].length > 0) {
     tasks.push(
       build({
         silent: true,
