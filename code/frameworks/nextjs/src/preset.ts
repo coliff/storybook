@@ -52,8 +52,8 @@ export const frameworkOptions = async (
   };
 };
 
-export const core: PresetProperty<'core', StorybookConfig> = async (config, options) => {
-  const framework = await options.presets.apply<StorybookConfig['framework']>('framework');
+export const core: PresetProperty<'core', StorybookConfig> = async (config, { presets }) => {
+  const framework = await presets.apply<StorybookConfig['framework']>('framework');
 
   return {
     ...config,

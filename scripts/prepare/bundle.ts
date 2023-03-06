@@ -71,10 +71,11 @@ const run = async ({ cwd, flags }: { cwd: string; flags: string[] }) => {
 
   const uniqueEntries = [...new Set([...entries, ...browserEntries, ...nodeEntries])];
   const emsEntries = [...new Set([...entries, ...browserEntries])];
-  const cjsEntries = [...new Set([...entries, ...browserEntries])];
+  const cjsEntries = [...new Set([...entries, ...nodeEntries])];
+  const dtsFormat: Formats = emsEntries.length > 0 ? 'esm' : 'cjs';
 
   const { dtsBuild, dtsConfig, tsConfigExists } = await getDTSConfigs({
-    formats,
+    formats: dtsFormat,
     entries: uniqueEntries,
     optimized,
   });
@@ -162,14 +163,14 @@ async function getDTSConfigs({
   entries,
   optimized,
 }: {
-  formats: Formats[];
+  formats: Formats;
   entries: string[];
   optimized: boolean;
 }) {
   const tsConfigPath = join(cwd, 'tsconfig.json');
   const tsConfigExists = await fs.pathExists(tsConfigPath);
 
-  const dtsBuild = optimized && formats[0] && tsConfigExists ? formats[0] : undefined;
+  const dtsBuild = optimized && formats && tsConfigExists ? formats : undefined;
 
   const dtsConfig: DtsConfigSection = {
     tsconfig: tsConfigPath,
