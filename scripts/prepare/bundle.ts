@@ -69,18 +69,23 @@ const run = async ({ cwd, flags }: { cwd: string; flags: string[] }) => {
     ...Object.keys(peerDependencies || {}),
   ];
 
+  const uniqueEntries = [...new Set([...entries, ...browserEntries, ...nodeEntries])];
+  const emsEntries = [...new Set([...entries, ...browserEntries])];
+  const cjsEntries = [...new Set([...entries, ...browserEntries])];
+
   const { dtsBuild, dtsConfig, tsConfigExists } = await getDTSConfigs({
     formats,
-    entries,
+    entries: uniqueEntries,
     optimized,
   });
 
-  if (formats.includes('esm') && [...entries, ...browserEntries].length > 0) {
+  if (formats.includes('esm') && emsEntries.length > 0) {
     tasks.push(
       build({
+        sourcemap: false,
         treeshake: true,
         silent: true,
-        entry: [...entries, ...browserEntries].map((e: string) => slash(join(cwd, e))),
+        entry: emsEntries.map((e: string) => slash(join(cwd, e))),
         watch,
         outDir,
         format: ['esm'],
@@ -107,11 +112,13 @@ const run = async ({ cwd, flags }: { cwd: string; flags: string[] }) => {
     );
   }
 
-  if (formats.includes('cjs') && [...entries, ...nodeEntries].length > 0) {
+  if (formats.includes('cjs') && cjsEntries.length > 0) {
     tasks.push(
       build({
+        sourcemap: false,
+        treeshake: true,
         silent: true,
-        entry: [...entries, ...nodeEntries].map((e: string) => slash(join(cwd, e))),
+        entry: cjsEntries.map((e: string) => slash(join(cwd, e))),
         watch,
         outDir,
         format: ['cjs'],
