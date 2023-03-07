@@ -1,5 +1,5 @@
 import React from 'react';
-import type { FunctionComponent, ComponentType } from 'react';
+import type { ComponentType } from 'react';
 import type { Renderer, Parameters } from '@storybook/types';
 import type { Theme } from '@storybook/theming';
 
@@ -7,12 +7,15 @@ import type { DocsContextProps } from './DocsContext';
 import { DocsContainer } from './DocsContainer';
 import { DocsPage } from './DocsPage';
 
-export type DocsProps<TFramework extends Renderer = Renderer> = {
+export type DocsProps<TRenderer extends Renderer = Renderer> = {
   docsParameter: Parameters;
-  context: DocsContextProps<TFramework>;
+  context: DocsContextProps<TRenderer>;
 };
 
-export const Docs: FunctionComponent<DocsProps> = ({ docsParameter, context }) => {
+export function Docs<TRenderer extends Renderer = Renderer>({
+  context,
+  docsParameter,
+}: DocsProps<TRenderer>) {
   const Container: ComponentType<{ context: DocsContextProps; theme: Theme }> =
     docsParameter.container || DocsContainer;
 
@@ -23,4 +26,4 @@ export const Docs: FunctionComponent<DocsProps> = ({ docsParameter, context }) =
       <Page />
     </Container>
   );
-};
+}

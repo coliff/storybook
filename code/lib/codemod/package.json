@@ -80,7 +80,7 @@
     "access": "public"
   },
   "bundler": {
-    "entries": [
+    "nodeEntries": [
       "./src/index.js",
       "./src/transforms/add-component-parameters.js",
       "./src/transforms/csf-2-to-3.ts",
@@ -92,9 +92,6 @@
       "./src/transforms/update-organisation-name.js",
       "./src/transforms/upgrade-deprecated-types.ts",
       "./src/transforms/upgrade-hierarchy-separators.js"
-    ],
-    "formats": [
-      "cjs"
     ]
   },
   "gitHead": "f70dcdb599363bfd6e6d2b63f8fadd02e9cbe00a"

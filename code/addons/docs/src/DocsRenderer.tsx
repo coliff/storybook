@@ -48,13 +48,15 @@ export class DocsRenderer<TRenderer extends Renderer> {
         ...docsParameter?.components,
       };
 
-      return new Promise((resolve, reject) => {
+      const TDocs = Docs as typeof Docs<TRenderer>;
+
+      await new Promise((resolve, reject) => {
         import('@mdx-js/react')
           .then(({ MDXProvider }) =>
             renderElement(
               <ErrorBoundary showException={reject}>
                 <MDXProvider components={components}>
-                  <Docs context={context} docsParameter={docsParameter} />
+                  <TDocs context={context} docsParameter={docsParameter} />
                 </MDXProvider>
               </ErrorBoundary>,
               element
