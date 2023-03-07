@@ -4902,6 +4902,7 @@ __metadata:
     "@storybook/node-logger": 7.0.0-beta.62
     "@storybook/preview-api": 7.0.0-beta.62
     "@storybook/vue": 7.0.0-beta.62
+    fs-extra: ^11.1.0
     ts-dedent: ^2.0.0
     typescript: ^4.9.3
   peerDependencies:

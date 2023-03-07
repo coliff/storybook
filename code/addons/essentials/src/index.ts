@@ -1,57 +1,98 @@
-import path from 'path';
-import { logger } from '@storybook/node-logger';
+import { isAbsolute, join } from 'path';
+import { pathExists, pathExistsSync } from 'fs-extra';
 import { serverRequire } from '@storybook/core-common';
+import type { StorybookConfig } from '@storybook/types';
 
-interface PresetOptions {
+const subAddons = [
+  'docs',
+  'controls',
+  'actions',
+  'backgrounds',
+  'viewport',
+  'toolbars',
+  'measure',
+  'outline',
+  'highlight',
+] as const;
+
+type SubAddons = keyof typeof subAddons;
+
+type PresetOptions = {
   configDir: string;
-  docs?: boolean;
-  controls?: boolean;
-  actions?: boolean;
-  backgrounds?: boolean;
-  viewport?: boolean;
-  toolbars?: boolean;
-  measure?: boolean;
-  outline?: boolean;
-}
+} & Record<SubAddons, boolean>;
 
-const requireMain = (configDir: string) => {
-  const absoluteConfigDir = path.isAbsolute(configDir)
-    ? configDir
-    : path.join(process.cwd(), configDir);
-  const mainFile = path.join(absoluteConfigDir, 'main');
+const requireMain = (configDir: string): StorybookConfig => {
+  const absoluteConfigDir = isAbsolute(configDir) ? configDir : join(process.cwd(), configDir);
+  const mainFile = join(absoluteConfigDir, 'main');
 
   return serverRequire(mainFile) ?? {};
 };
 
-export function addons(options: PresetOptions) {
-  const checkInstalled = (addonName: string, main: any) => {
-    const addon = `@storybook/addon-${addonName}`;
-    const existingAddon = main.addons?.find((entry: string | { name: string }) => {
-      const name = typeof entry === 'string' ? entry : entry.name;
-      return name?.startsWith(addon);
-    });
-    if (existingAddon) {
-      logger.info(`Found existing addon ${JSON.stringify(existingAddon)}, skipping.`);
-    }
-    return !!existingAddon;
-  };
+const checkIsDefineInMainAlready = (addonName: SubAddons, main: any) => {
+  const addon = `@storybook/addon-${String(addonName)}`;
+  const existingAddon = main.addons?.find((entry: string | { name: string }) => {
+    const name = typeof entry === 'string' ? entry : entry.name;
+    return name?.startsWith(addon);
+  });
+  return !!existingAddon;
+};
 
+const filter = (entry: SubAddons, options: PresetOptions, main: StorybookConfig) => {
+  if (options[entry] === false) {
+    return false;
+  }
+  if (checkIsDefineInMainAlready(entry, main)) {
+    return false;
+  }
+
+  return true;
+};
+
+export async function managerEntries(entry: string[], options: PresetOptions) {
   const main = requireMain(options.configDir);
-  return [
-    'docs',
-    'controls',
-    'actions',
-    'backgrounds',
-    'viewport',
-    'toolbars',
-    'measure',
-    'outline',
-    'highlight',
-  ]
-    .filter((key) => (options as any)[key] !== false)
-    .filter((addon) => !checkInstalled(addon, main))
-    .map((addon) => {
-      // We point to the re-export from addon-essentials to support yarn pnp and pnpm.
-      return `@storybook/addon-essentials/${addon}`;
+  const list = await Promise.all(
+    subAddons
+      .filter((e: any) => filter(e, options, main))
+      .map(async (key) => {
+        const p = join(__dirname, key, 'manager.mjs');
+        const exists = await pathExists(p);
+
+        return exists ? p : null;
+      })
+  );
+
+  return [...entry, ...list].filter(Boolean);
+}
+
+export async function previewEntries(entry: string[], options: PresetOptions) {
+  const main = requireMain(options.configDir);
+  const list = await Promise.all(
+    subAddons
+      .filter((e: any) => filter(e, options, main))
+      .map(async (key) => {
+        const p = join(__dirname, key, 'preview.mjs');
+        const exists = await pathExists(p);
+
+        return exists ? p : null;
+      })
+  );
+
+  return [...entry, ...list].filter(Boolean);
+}
+
+export function addons(options: PresetOptions) {
+  const main = requireMain(options.configDir);
+  const list = subAddons
+    .filter((e: any) => filter(e, options, main))
+    .map((key) => {
+      const p = join(__dirname, key, 'preset.js');
+      const exists = pathExistsSync(p);
+
+      console.log({ p, exists });
+      return exists ? p : null;
     });
+
+  console.log({ list });
+
+  return list.filter(Boolean);
 }
