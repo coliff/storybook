@@ -1,8 +1,5 @@
 import { dedent } from 'ts-dedent';
 import { logger } from '@storybook/node-logger';
-import enhancedResolve from 'enhanced-resolve';
-import { resolveImports } from 'resolve-pkg-maps';
-import { sync as readUpSync } from 'read-pkg-up';
 
 import type {
   BuilderOptions,
@@ -14,54 +11,14 @@ import type {
   PresetConfig,
   Presets,
 } from '@storybook/types';
-import { dirname, join } from 'path';
-import slash from 'slash';
 import { loadCustomPresets } from './utils/load-custom-presets';
-import { safeResolve, safeResolveFrom } from './utils/safeResolve';
+import { safeResolveAll } from './utils/safeResolveAll';
 import { interopRequireDefault } from './utils/interpret-require';
 import { stripAbsNodeModulesPath } from './utils/strip-abs-node-modules-path';
 
 const isObject = (val: unknown): val is Record<string, any> =>
   val != null && typeof val === 'object' && Array.isArray(val) === false;
 const isFunction = (val: unknown): val is Function => typeof val === 'function';
-
-const browserResolver = (() => {
-  const main = enhancedResolve.create.sync({
-    extensions: ['.mjs', '.js', '.jsx', '.ts', '.tsx', '.json'],
-    mainFields: ['browser', 'module', 'main'],
-    conditionNames: ['browser', 'import', 'default'],
-    exportsFields: ['browser', 'module', 'main'],
-    symlinks: true,
-  });
-
-  return (input: string, from: string = process.cwd()) => {
-    try {
-      const a = main({}, from, input);
-      const b = main(from, input);
-      console.log({ a, b });
-      return a;
-    } catch (e) {
-      return false;
-    }
-  };
-})();
-
-const nodeResolver = (() => {
-  const main = enhancedResolve.create.sync({
-    extensions: ['.cjs', '.js'],
-    mainFields: ['node', 'require', 'main'],
-    conditionNames: ['node', 'require', 'default'],
-    exportsFields: ['node', 'require', 'main'],
-  });
-
-  return (input: string, from: string = process.cwd()) => {
-    try {
-      return main({}, from, input);
-    } catch (e) {
-      return false;
-    }
-  };
-})();
 
 export function filterPresetsConfig(presetsConfig: PresetConfig[]): PresetConfig[] {
   return presetsConfig.filter((preset) => {
@@ -107,87 +64,15 @@ export const resolveAddonName = (
   name: string,
   options: any
 ): CoreCommon_ResolvedAddonPreset | CoreCommon_ResolvedAddonVirtual | undefined => {
-  const resolve = name.startsWith('/') ? safeResolve : safeResolveFrom.bind(null, configDir);
-  const resolved =
-    browserResolver(name, configDir) || nodeResolver(name, configDir) || resolve(name);
-  const resolvedNode = nodeResolver(name, configDir);
-  const resolvedBrowser = browserResolver(name, configDir);
-  const pkg = readUpSync({ cwd: resolved });
+  const resolved = safeResolveAll(name, configDir);
 
-  if (resolved) {
-    if (
-      resolvedBrowser &&
-      resolvedBrowser.match(/\/(manager|register(-panel)?)(\.(js|mjs|ts|tsx|jsx))?$/)
-    ) {
-      return {
-        type: 'virtual',
-        name,
-        // we remove the extension
-        // this is a bit of a hack to try to find .mjs files
-        // node can only ever resolve .js files; it does not look at the exports field in package.json
-        managerEntries: [resolvedBrowser],
-      };
-    }
-    if (resolvedNode && resolvedNode.match(/\/(preset)(\.(js|mjs|ts|tsx|jsx))?$/)) {
-      return {
-        type: 'presets',
-        name: resolvedNode,
-      };
-    }
-  }
+  console.log({ resolved });
 
-  if (!pkg) {
+  if (!resolved) {
     return undefined;
   }
 
-  const dir = dirname(pkg?.path);
-
-  // This is used to maintain back-compat with community addons that do not
-  // re-export their sub-addons but reference the sub-addon name directly.
-  //  We need to turn it into an absolute path so that webpack can
-  // serve it up correctly  when yarn pnp or pnpm is being used.
-  // Vite will be broken in such cases, because it does not process absolute paths,
-  // and it will try to import from the bare import, breaking in pnp/pnpm.
-
-  const resolveFromExportsBrowser = (input: string) => {
-    try {
-      const conditions = ['browser', 'import', 'default'];
-      const paths = resolveImports(pkg?.packageJson.exports, input, conditions);
-      return slash(join(dir, paths[0]));
-    } catch (e) {
-      return false;
-    }
-  };
-  const resolveFromExportsNode = (input: string) => {
-    try {
-      const conditions = ['node', 'require', 'default'];
-      const paths = resolveImports(pkg?.packageJson.exports, input, conditions);
-      return browserResolver(slash(join(name, paths[0])));
-    } catch (e) {
-      return false;
-    }
-  };
-
-  const resolveBrowser = (input: string) => {
-    return browserResolver(`${name}/${input}`, dir) || resolveFromExportsBrowser(`./${input}`);
-  };
-  const resolveNode = (input: string) => {
-    return nodeResolver(`${name}/${input}`, dir) || resolveFromExportsNode(`./${input}`);
-  };
-
-  const managerFile = resolveBrowser('manager');
-  const registerFile = resolveBrowser('register') || resolveBrowser('register-panel');
-  const previewFile = resolveBrowser('preview');
-
-  const previewFileAbsolute = browserResolver(`${name}/preview`, dir);
-  const presetFile = resolveNode(`preset`);
-
-  if (!(managerFile || previewFile) && presetFile) {
-    return {
-      type: 'presets',
-      name: presetFile,
-    };
-  }
+  const { managerFile, registerFile, previewFile, previewFileAbsolute, presetFile } = resolved;
 
   if (managerFile || registerFile || previewFile || presetFile) {
     const managerEntries = [];
@@ -223,10 +108,10 @@ export const resolveAddonName = (
     };
   }
 
-  if (resolved) {
+  if (resolved.fallback) {
     return {
       type: 'presets',
-      name: resolved,
+      name: resolved.fallback,
     };
   }
 
