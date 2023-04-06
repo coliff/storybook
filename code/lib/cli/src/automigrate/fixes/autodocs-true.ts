@@ -64,7 +64,7 @@ export const autodocsTrue: Fix<AutodocsTrueFrameworkRunOptions> = {
       ${autodocsFormatted}
       ${value === 'tag' ? tagWarning : ''}
       More info: ${chalk.yellow(
-        'https://github.com/storybookjs/storybook/blob/next/MIGRATION.md#autodocs'
+        'https://github.com/storybookjs/storybook/blob/next/MIGRATION.md#autodocs-changes'
       )}
     `;
     }
@@ -77,7 +77,7 @@ export const autodocsTrue: Fix<AutodocsTrueFrameworkRunOptions> = {
       ${autodocsFormatted}
 
       More info: ${chalk.yellow(
-        'https://github.com/storybookjs/storybook/blob/next/MIGRATION.md#autodocs'
+        'https://github.com/storybookjs/storybook/blob/next/MIGRATION.md#autodocs-changes'
       )}
     `;
   },

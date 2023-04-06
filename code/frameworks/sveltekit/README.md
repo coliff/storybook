@@ -38,7 +38,7 @@ However SvelteKit has some [Kit-specific modules](https://kit.svelte.dev/docs/mo
 | [`$service-worker`](https://kit.svelte.dev/docs/modules#$service-worker)           | ⛔ Not supported       | They are only meant to be used in service workers                                                                                   |
 | [`@sveltejs/kit/*`](https://kit.svelte.dev/docs/modules#sveltejs-kit)              | ✅ Supported           |                                                                                                                                     |
 
-This is just the beginning. We're close to adding basic support for many of the SvelteKit features. Longer term we're planning on making it an even better experience to [build](https://storybook.js.org/docs/7.0/react/writing-stories/introduction), [test](https://storybook.js.org/docs/7.0/react/writing-tests/introduction) and [document](https://storybook.js.org/docs/7.0/react/writing-docs/introduction) all the SvelteKit goodies like [pages](https://kit.svelte.dev/docs/routing), [forms](https://kit.svelte.dev/docs/form-actions) and [layouts](https://kit.svelte.dev/docs/routing#layout) in Storybook, while still integrating with all the addons and workflows you know and love.
+This is just the beginning. We're close to adding basic support for many of the SvelteKit features. Longer term we're planning on making it an even better experience to [build](https://storybook.js.org/docs/svelte/writing-stories/introduction), [test](https://storybook.js.org/docs/svelte/writing-tests/introduction) and [document](https://storybook.js.org/docs/svelte/writing-docs/introduction) all the SvelteKit goodies like [pages](https://kit.svelte.dev/docs/routing), [forms](https://kit.svelte.dev/docs/form-actions) and [layouts](https://kit.svelte.dev/docs/routing#layout) in Storybook, while still integrating with all the addons and workflows you know and love.
 
 ## Requirements
 
@@ -52,17 +52,17 @@ This is just the beginning. We're close to adding basic support for many of the 
 Run the following command in your SvelteKit project's root directory, and follow the prompts:
 
 ```bash
-npx storybook@next init
+npx storybook@latest init
 ```
 
-[More on getting started with Storybook](https://storybook.js.org/docs/7.0/svelte/get-started/install)
+[More on getting started with Storybook](https://storybook.js.org/docs/svelte/get-started/install)
 
 ### In a project with Storybook
 
 This framework is designed to work with Storybook 7. If you’re not already using v7, upgrade with this command:
 
 ```bash
-npx storybook@next upgrade --prerelease
+npx storybook@latest upgrade --prerelease
 ```
 
 #### Automatic migration
@@ -76,7 +76,7 @@ Storybook 7.0 automatically loads your Vite config, and by extension your Svelte
 Install the framework:
 
 ```bash
-yarn add -D @storybook/sveltekit@next
+yarn add -D @storybook/sveltekit
 ```
 
 Update your `main.js` to change the framework property:

@@ -65,15 +65,25 @@ export type DocsIndexEntry = BaseIndexEntry & {
 
 export type IndexEntry = StoryIndexEntry | DocsIndexEntry;
 
-export interface V2CompatIndexEntry extends Omit<StoryIndexEntry, 'type'> {
+export interface V3CompatIndexEntry extends Omit<StoryIndexEntry, 'type' | 'tags'> {
   kind: ComponentTitle;
   story: StoryName;
   parameters: Parameters;
 }
 
+export interface StoryIndexV2 {
+  v: number;
+  stories: Record<
+    StoryId,
+    Omit<V3CompatIndexEntry, 'title' | 'name' | 'importPath'> & {
+      name?: StoryName;
+    }
+  >;
+}
+
 export interface StoryIndexV3 {
   v: number;
-  stories: Record<StoryId, V2CompatIndexEntry>;
+  stories: Record<StoryId, V3CompatIndexEntry>;
 }
 
 export interface StoryIndex {

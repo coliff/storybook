@@ -38,7 +38,8 @@ describe('LinkTo', () => {
       mockAddons.getChannel.mockReturnValue(channel);
 
       const { container } = render(
-        <LinkTo kind="foo" story="bar">
+        // eslint-disable-next-line jsx-a11y/anchor-is-valid
+        <LinkTo title="foo" name="bar">
           link
         </LinkTo>
       );
@@ -46,12 +47,12 @@ describe('LinkTo', () => {
       await waitFor(() => {
         expect(screen.getByText('link')).toHaveAttribute(
           'href',
-          'originpathname?search=&id=foo--bar'
+          'originpathname?path=/story/foo--bar'
         );
       });
       expect(container.firstChild).toMatchInlineSnapshot(`
         <a
-          href="originpathname?search=&id=foo--bar"
+          href="originpathname?path=/story/foo--bar"
         >
           link
         </a>
@@ -68,7 +69,8 @@ describe('LinkTo', () => {
       mockAddons.getChannel.mockReturnValue(channel);
 
       render(
-        <LinkTo kind="foo" story="bar">
+        // eslint-disable-next-line jsx-a11y/anchor-is-valid
+        <LinkTo title="foo" name="bar">
           link
         </LinkTo>
       );
@@ -77,8 +79,8 @@ describe('LinkTo', () => {
       expect(channel.emit).toHaveBeenLastCalledWith(
         SELECT_STORY,
         expect.objectContaining({
-          kind: 'foo',
-          story: 'bar',
+          title: 'foo',
+          name: 'bar',
         })
       );
     });

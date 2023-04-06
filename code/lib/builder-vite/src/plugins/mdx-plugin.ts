@@ -1,5 +1,7 @@
 import type { Options } from '@storybook/types';
 import type { Plugin } from 'vite';
+import remarkSlug from 'remark-slug';
+import remarkExternalLinks from 'remark-external-links';
 import { createFilter } from 'vite';
 
 const isStorybookMdx = (id: string) => id.endsWith('stories.mdx') || id.endsWith('story.mdx');
@@ -33,6 +35,9 @@ export async function mdxPlugin(options: Options): Promise<Plugin> {
         mdxCompileOptions: {
           providerImportSource: '@storybook/addon-docs/mdx-react-shim',
           ...mdxPluginOptions?.mdxCompileOptions,
+          remarkPlugins: [remarkSlug, remarkExternalLinks].concat(
+            mdxPluginOptions?.mdxCompileOptions?.remarkPlugins ?? []
+          ),
         },
         jsxOptions,
       });

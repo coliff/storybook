@@ -20,6 +20,8 @@ export const printDuration = (startTime: [number, number]) =>
     .replace(' s', ' seconds')
     .replace(' m', ' minutes');
 
+const wrapForPnP = (input: string) => dirname(require.resolve(join(input, 'package.json')));
+
 let compilation: ReturnType<typeof webpackDevMiddleware> | undefined;
 let reject: (reason?: any) => void;
 
@@ -173,7 +175,7 @@ const starter: StarterFunction = async function* starterGeneratorFn({
 
   compilation = webpackDevMiddleware(compiler, middlewareOptions);
 
-  const previewResolvedDir = dirname(require.resolve('@storybook/preview/package.json'));
+  const previewResolvedDir = wrapForPnP('@storybook/preview');
   const previewDirOrigin = join(previewResolvedDir, 'dist');
 
   router.use(`/sb-preview`, express.static(previewDirOrigin, { immutable: true, maxAge: '5m' }));
@@ -286,7 +288,7 @@ const builder: BuilderFunction = async function* builderGeneratorFn({ startTime,
     });
   });
 
-  const previewResolvedDir = dirname(require.resolve('@storybook/preview/package.json'));
+  const previewResolvedDir = wrapForPnP('@storybook/preview');
   const previewDirOrigin = join(previewResolvedDir, 'dist');
   const previewDirTarget = join(options.outputDir || '', `sb-preview`);
 

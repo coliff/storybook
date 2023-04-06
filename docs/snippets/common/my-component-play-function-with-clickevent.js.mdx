@@ -17,7 +17,7 @@ export const ClickExample = {
   play: async ({ canvasElement }) => {
     const canvas = within(canvasElement);
 
-    // See https://storybook.js.org/docs/7.0/react/essentials/actions#automatically-matching-args to learn how to setup logging in the Actions panel
+    // See https://storybook.js.org/docs/react/essentials/actions#automatically-matching-args to learn how to setup logging in the Actions panel
     await userEvent.click(canvas.getByRole('button'));
   },
 };
@@ -26,7 +26,7 @@ export const FireEventExample = {
   play: async ({ canvasElement }) => {
     const canvas = within(canvasElement);
 
-    // See https://storybook.js.org/docs/7.0/react/essentials/actions#automatically-matching-args to learn how to setup logging in the Actions panel
+    // See https://storybook.js.org/docs/react/essentials/actions#automatically-matching-args to learn how to setup logging in the Actions panel
     await fireEvent.click(canvas.getByTestId('data-testid'));
   },
 };

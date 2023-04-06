@@ -26,6 +26,15 @@ export const Selected = {
   },
 };
 
+export const Orientation = {
+  parameters: {
+    viewport: {
+      defaultViewport: Object.keys(MINIMAL_VIEWPORTS)[0],
+      defaultOrientation: 'landscape',
+    },
+  },
+};
+
 export const Custom = {
   parameters: {
     viewport: {

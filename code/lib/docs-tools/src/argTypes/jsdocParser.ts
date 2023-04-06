@@ -9,10 +9,6 @@ export interface ExtractedJsDocParam {
   getTypeName: () => string;
 }
 
-export interface ExtractedJsDocDeprecated {
-  name: string;
-}
-
 export interface ExtractedJsDocReturns {
   type?: any;
   description?: string;
@@ -21,7 +17,7 @@ export interface ExtractedJsDocReturns {
 
 export interface ExtractedJsDoc {
   params?: ExtractedJsDocParam[];
-  deprecated?: ExtractedJsDocDeprecated;
+  deprecated?: string;
   returns?: ExtractedJsDocReturns;
   ignore: boolean;
 }
@@ -178,11 +174,9 @@ function extractParam(tag: doctrine.Tag): ExtractedJsDocParam {
   return null;
 }
 
-function extractDeprecated(tag: doctrine.Tag): ExtractedJsDocDeprecated {
+function extractDeprecated(tag: doctrine.Tag): string {
   if (tag.title != null) {
-    return {
-      name: tag.description,
-    };
+    return tag.description;
   }
 
   return null;

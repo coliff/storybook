@@ -22,7 +22,6 @@ Here are some answers to frequently asked questions. If you have a question, you
 - [Is snapshot testing with Storyshots supported for Vue 3?](#is-snapshot-testing-with-storyshots-supported-for-vue-3)
 - [Why aren't my code blocks highlighted with Storybook MDX](#why-arent-my-code-blocks-highlighted-with-storybook-mdx)
 - [Why aren't my MDX 2 stories working in Storybook?](#why-arent-my-mdx-2-stories-working-in-storybook)
-- [Why can't I import my own stories into MDX 2?](#why-cant-i-import-my-own-stories-into-mdx-2)
 - [Why are my mocked GraphQL queries failing with Storybook's MSW addon?](#why-are-my-mocked-graphql-queries-failing-with-storybooks-msw-addon)
 - [Can I use other GraphQL providers with Storybook's MSW addon?](#can-i-use-other-graphql-providers-with-storybooks-msw-addon)
 - [Can I mock GraphQL mutations with Storybook's MSW addon?](#can-i-mock-graphql-mutations-with-storybooks-msw-addon)
@@ -321,47 +320,7 @@ See our documentation on how to customize the [Storyshots configuration](./writi
 
 ### Why aren't my code blocks highlighted with Storybook MDX
 
-Out of the box, Storybook provides syntax highlighting for a set of languages (e.g., Javascript, Markdown, CSS, HTML, Typescript, GraphQL) that you can use with your code blocks. If you're writing your custom code blocks with MDX, you'll need to import the syntax highlighter manually. For example, if you're adding a code block for SCSS, adjust your story to the following:
-
-<!-- prettier-ignore-start -->
-
-<CodeSnippets
-  paths={[
-   'common/my-component-with-custom-syntax-highlight.mdx.mdx',
-  ]}
-/>
-
-<!-- prettier-ignore-end -->
-
-<div class="aside">
-💡 Check <code>react-syntax-highlighter</code>'s <a href="https://github.com/react-syntax-highlighter/react-syntax-highlighter">documentation</a> for a list of available languages.
-</div>
-
-Applying this small change will enable you to add syntax highlight for SCSS or any other language available.
-
-You can also update your [`.storybook/preview.js`](../configure/overview.md#configure-story-rendering) and enable syntax highlighting globally. For example, to add support for SCSS, update your configuration to the following:
-
-<!-- prettier-ignore-start -->
-
-<CodeSnippets
-  paths={[
-   'common/storybook-preview-register-language-globally.js.mdx',
-  ]}
-/>
-
-<!-- prettier-ignore-end -->
-
-Write your documentation as you usually would, and your existing SCSS code blocks will automatically be highlighted when Storybook reloads. For example:
-
-<!-- prettier-ignore-start -->
-
-<CodeSnippets
-  paths={[
-   'common/my-component-with-global-syntax-highlight.mdx.mdx',
-  ]}
-/>
-
-<!-- prettier-ignore-end -->
+Out of the box, Storybook provides syntax highlighting for a set of languages (e.g., Javascript, Markdown, CSS, HTML, Typescript, GraphQL) you can use with your code blocks. Currently, there's a know limitation when you try and register a custom language to get syntax highlighting. We're working on a fix for this And will update this section once it's available.
 
 ### Why aren't my MDX 2 stories working in Storybook?
 
@@ -397,20 +356,6 @@ You'll need to update it to make it compatible with MDX 2.
 ```
 
 See the following [issue](https://github.com/mdx-js/mdx/issues/1945) for more information.
-
-### Why can't I import my own stories into MDX 2?
-
-This is a known issue with MDX 2. We're working to fix it. For now you can apply the following workaround:
-
-```md
-<!-- Button.stories.mdx -->
-
-import { Story } from '@storybook/addon-docs';
-
-import \* as stories from './Button.stories.jsx';
-
-<Story name="Basic" story={stories.Basic} />
-```
 
 ### Why are my mocked GraphQL queries failing with Storybook's MSW addon?
 

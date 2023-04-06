@@ -65,6 +65,9 @@ Make sure to import the Storybook wrappers for Jest and Testing Library rather t
 
 <CodeSnippets
   paths={[
+    'angular/storybook-interactions-play-function.ts.mdx',
+    'web-components/storybook-interactions-play-function.js.mdx',
+    'web-components/storybook-interactions-play-function.ts.mdx',
     'common/storybook-interactions-play-function.js.mdx',
     'common/storybook-interactions-play-function.ts.mdx',
   ]}

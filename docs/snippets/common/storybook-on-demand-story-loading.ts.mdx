@@ -5,10 +5,13 @@
 import type { StorybookConfig } from '@storybook/your-framework';
 
 const config: StorybookConfig = {
-  stories: [],
-  addons: ['@storybook/addon-essentials'],
+  stories: ['../src/**/*.mdx', '../src/**/*.stories.@(js|jsx|ts|tsx)'],
+  addons: ['@storybook/addon-essentials', '@storybook/addon-interactions'],
+  framework: {
+    name: '@storybook/react-webpack5',
+  },
   features: {
-    storyStoreV7: false,
+    storyStoreV7: false, // 👈 Opt out of on-demand story loading
   },
 };
 

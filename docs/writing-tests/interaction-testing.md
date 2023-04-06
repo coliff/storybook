@@ -8,7 +8,12 @@ In a nutshell, you start by supplying the appropriate props for the initial stat
 
 In Storybook, this familiar workflow happens in your browser. That makes it easier to debug failures because you're running tests in the same environment as you develop components: the browser.
 
-![Storybook interaction testing](./storybook-interaction-tests.gif)
+<video autoPlay muted playsInline loop>
+  <source
+    src="component-interaction-testing.mp4"
+    type="video/mp4"
+  />
+</video>
 
 ## How does component testing in Storybook work?
 
@@ -61,10 +66,8 @@ The test itself is defined inside a `play` function connected to a story. Here's
     'react/login-form-with-play-function.js.mdx',
     'react/login-form-with-play-function.ts.mdx',
     'angular/login-form-with-play-function.ts.mdx',
-    'vue/login-form-with-play-function.2.js.mdx',
-    'vue/login-form-with-play-function.ts-2.ts.mdx',
-    'vue/login-form-with-play-function.3.js.mdx',
-    'vue/login-form-with-play-function.ts-3.ts.mdx',
+    'vue/login-form-with-play-function.js.mdx',
+    'vue/login-form-with-play-function.ts.mdx',
     'web-components/login-form-with-play-function.js.mdx',
     'web-components/login-form-with-play-function.ts.mdx',
     'svelte/login-form-with-play-function.js.mdx',
@@ -110,7 +113,11 @@ For complex flows, it can be worthwhile to group sets of related interactions to
 
 <CodeSnippets
   paths={[
+    'angular/storybook-interactions-step-function.ts.mdx',
+    'web-components/storybook-interactions-step-function.js.mdx',
+    'web-components/storybook-interactions-step-function.ts.mdx',
     'common/storybook-interactions-step-function.js.mdx',
+    'common/storybook-interactions-step-function.ts.mdx',
   ]}
   usesCsf3
   csf2Path="writing-tests/interaction-testing#snippet-storybook-interactions-step-function"
@@ -170,6 +177,19 @@ Storybook only runs the interaction test when you're viewing a story. Therefore,
 ## Automate
 
 Once you're ready to push your code into a pull request, you'll want to automatically run all your checks using a Continuous Integration (CI) service before merging it. Read our [documentation](./test-runner.md#set-up-ci-to-run-tests) for a detailed guide on setting up a CI environment to run tests.
+
+## Troubleshooting
+
+### The TypeScript types aren't recognized
+
+If you're writing interaction tests with TypeScript, you may run into a situation where the TypeScript types aren't recognized in your IDE. This a known issue with newer package managers (e.g., pnpm, Yarn) and how they hoist dependencies. If you're working with Yarn the process happens automatically and the types should be recognized. However, if you're working with pnpm, you'll need to create a `.npmrc` file in the root of your project and add the following:
+
+```text
+// .npmrc
+public-hoist-pattern[]=@types*
+```
+
+If you're still encountering issues, you can always add the [`@types/testing-library__jest-dom`](https://www.npmjs.com/package/@types/testing-library__jest-dom) package to your project.
 
 ---
 

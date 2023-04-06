@@ -19,13 +19,12 @@ body:
     attributes:
       label: To Reproduce
       description: >-
-        Please create a reproduction by running `npx sb@next sandbox` and
+        Please create a reproduction using [storybook.new](https://storybook.new), or by running `npx sb@next sandbox` and
         following the instructions. Read our
         [documentation](https://storybook.js.org/docs/react/contribute/how-to-reproduce)
         to learn more about creating reproductions.
       placeholder: >-
-        Paste your repository and deployed reproduction here. We prioritize
-        issues with reproductions over those without.
+        Paste a link to your reproduction here. We prioritize issues with reproductions over those without.
   - type: textarea
     id: system
     attributes:

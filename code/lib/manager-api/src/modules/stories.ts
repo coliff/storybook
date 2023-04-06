@@ -1,5 +1,21 @@
 import { global } from '@storybook/global';
 import { toId, sanitize } from '@storybook/csf';
+import type {
+  StoryKind,
+  ComponentTitle,
+  StoryName,
+  StoryId,
+  Args,
+  API_ComposedRef,
+  API_HashEntry,
+  API_LeafEntry,
+  API_PreparedStoryIndex,
+  SetStoriesPayload,
+  API_StoryEntry,
+  StoryIndex,
+  API_LoadedRefData,
+  API_IndexHash,
+} from '@storybook/types';
 import {
   PRELOAD_ENTRIES,
   STORY_PREPARED,
@@ -18,19 +34,6 @@ import {
 } from '@storybook/core-events';
 import { logger } from '@storybook/client-logger';
 
-import type {
-  StoryId,
-  Args,
-  API_ComposedRef,
-  API_HashEntry,
-  API_LeafEntry,
-  API_PreparedStoryIndex,
-  SetStoriesPayload,
-  API_StoryEntry,
-  StoryIndex,
-  API_LoadedRefData,
-  API_IndexHash,
-} from '@storybook/types';
 // eslint-disable-next-line import/no-cycle
 import { getEventMetadata } from '../lib/events';
 
@@ -134,6 +137,9 @@ export const init: ModuleFn<SubAPI, SubState, true> = ({
     },
     resolveStory: (storyId, refId) => {
       const { refs, index } = store.getState();
+      if (refId && !refs[refId]) {
+        return null;
+      }
       if (refId) {
         return refs[refId].index ? refs[refId].index[storyId] : undefined;
       }
@@ -480,21 +486,25 @@ export const init: ModuleFn<SubAPI, SubState, true> = ({
       SELECT_STORY,
       function handler({
         kind,
+        title = kind,
         story,
+        name = story,
         storyId,
         ...rest
       }: {
-        kind: string;
-        story: string;
+        kind?: StoryKind;
+        title?: ComponentTitle;
+        story?: StoryName;
+        name?: StoryName;
         storyId: string;
         viewMode: ViewMode;
       }) {
         const { ref } = getEventMetadata(this, fullAPI);
 
         if (!ref) {
-          fullAPI.selectStory(storyId || kind, story, rest);
+          fullAPI.selectStory(storyId || title, name, rest);
         } else {
-          fullAPI.selectStory(storyId || kind, story, { ...rest, ref: ref.id });
+          fullAPI.selectStory(storyId || title, name, { ...rest, ref: ref.id });
         }
       }
     );

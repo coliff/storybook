@@ -89,11 +89,6 @@ export async function add(
     return;
   }
   const main = await readConfig(mainConfig);
-  const addons = main.getFieldValue(['addons']);
-  if (addons && !Array.isArray(addons)) {
-    logger.error('Expected addons array in main.js config');
-  }
-
   logger.log(`Verifying ${addonName}`);
   const latestVersion = packageManager.latestVersion(addonName);
   if (!latestVersion) {
@@ -109,8 +104,7 @@ export async function add(
 
   // add to main.js
   logger.log(`Adding '${addon}' to main.js addons field.`);
-  const updatedAddons = [...(addons || []), addonName];
-  main.setFieldValue(['addons'], updatedAddons);
+  main.appendValueToArray(['addons'], addonName);
   await writeConfig(main);
 
   if (!options.skipPostinstall) {

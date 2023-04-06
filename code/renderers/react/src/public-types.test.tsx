@@ -228,3 +228,49 @@ test('StoryObj<typeof meta> is allowed when all arguments are optional', () => {
 test('Meta can be used without generic', () => {
   expectTypeOf({ component: Button }).toMatchTypeOf<Meta>();
 });
+
+test('Props can be defined as interfaces, issue #21768', () => {
+  interface Props {
+    label: string;
+  }
+
+  const Component = ({ label }: Props) => <>{label}</>;
+
+  const withDecorator: Decorator = (Story) => (
+    <>
+      <Story />
+    </>
+  );
+
+  const meta = {
+    component: Component,
+    args: {
+      label: 'label',
+    },
+    decorators: [withDecorator],
+  } satisfies Meta<Props>;
+
+  const Basic: StoryObj<typeof meta> = {};
+
+  type Expected = ReactStory<Props, SetOptional<Props, 'label'>>;
+  expectTypeOf(Basic).toEqualTypeOf<Expected>();
+});
+
+test('Components without Props can be used, issue #21768', () => {
+  const Component = () => <>Foo</>;
+  const withDecorator: Decorator = (Story) => (
+    <>
+      <Story />
+    </>
+  );
+
+  const meta = {
+    component: Component,
+    decorators: [withDecorator],
+  } satisfies Meta<typeof Component>;
+
+  const Basic: StoryObj<typeof meta> = {};
+
+  type Expected = ReactStory<{}, {}>;
+  expectTypeOf(Basic).toEqualTypeOf<Expected>();
+});

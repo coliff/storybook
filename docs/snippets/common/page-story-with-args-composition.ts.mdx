@@ -1,22 +1,22 @@
 ```ts
 // YourPage.stories.ts|tsx
 
-import { DocumentScreen } from './YourPage';
-
 // Replace your-framework with the name of your framework
 import type { Meta, StoryObj } from '@storybook/your-framework';
 
+import { DocumentScreen } from './YourPage';
+
 // 👇 Imports the required stories
-import PageLayout from './PageLayout.stories';
-import DocumentHeader from './DocumentHeader.stories';
-import DocumentList from './DocumentList.stories';
+import * as PageLayout from './PageLayout.stories';
+import * as DocumentHeader from './DocumentHeader.stories';
+import * as DocumentList from './DocumentList.stories';
 
 const meta: Meta<typeof DocumentScreen> = {
   title: 'DocumentScreen',
   component: DocumentScreen,
 };
-export default meta;
 
+export default meta;
 type Story = StoryObj<typeof DocumentScreen>;
 
 export const Simple: Story = {

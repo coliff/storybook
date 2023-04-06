@@ -154,21 +154,11 @@ describe('getStorySortParameter', () => {
 
     describe('unsupported', () => {
       it('invalid parameters', () => {
-        expect(() =>
+        expect(
           getStorySortParameter(dedent`
           export const parameters = [];
         `)
-        ).toThrowErrorMatchingInlineSnapshot(`
-          "Unexpected 'parameters'. Parameter 'options.storySort' should be defined inline e.g.:
-
-          export default {
-            parameters = {
-              options: {
-                storySort: <array | object | function>
-              },
-            },
-          };"
-        `);
+        ).toBeUndefined();
       });
 
       it('parameters var', () => {
@@ -206,7 +196,7 @@ describe('getStorySortParameter', () => {
           "Unexpected 'options'. Parameter 'options.storySort' should be defined inline e.g.:
 
           export default {
-            parameters = {
+            parameters: {
               options: {
                 storySort: <array | object | function>
               },
@@ -233,7 +223,7 @@ describe('getStorySortParameter', () => {
           "Unexpected 'storySort'. Parameter 'options.storySort' should be defined inline e.g.:
 
           export default {
-            parameters = {
+            parameters: {
               options: {
                 storySort: <array | object | function>
               },
@@ -260,7 +250,7 @@ describe('getStorySortParameter', () => {
           "Unexpected 'order'. Parameter 'options.storySort' should be defined inline e.g.:
 
           export default {
-            parameters = {
+            parameters: {
               options: {
                 storySort: <array | object | function>
               },
@@ -313,6 +303,54 @@ describe('getStorySortParameter', () => {
           export default config
         `)
         ).toBeUndefined();
+      });
+
+      it('variable parameters without storysort', () => {
+        expect(
+          getStorySortParameter(dedent`
+          const parameters = {
+            actions: { argTypesRegex: '^on[A-Z].*' },
+            controls: {
+              matchers: {
+                color: /(background|color)$/i,
+                date: /Date$/,
+              },
+            },
+          };
+
+          const preview = {
+            parameters,
+          };
+          export default preview;
+        `)
+        ).toBeUndefined();
+      });
+
+      it('variable parameters with storysort', () => {
+        expect(
+          getStorySortParameter(dedent`
+          const parameters = {
+            options: {
+              storySort: [
+                "Intro",
+                "*",
+                "WIP",    
+              ]
+            }
+          };
+
+          const preview = {
+            parameters,
+          };
+          export default preview;
+        `)
+        ).toMatchInlineSnapshot(`
+        Array [
+          "Intro",
+          "*",
+          "WIP",
+        ]
+      `);
       });
 
       it('inline typescript', () => {

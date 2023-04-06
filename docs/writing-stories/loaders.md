@@ -1,12 +1,12 @@
 ---
-title: 'Loaders (experimental)'
+title: 'Loaders'
 ---
 
-Loaders (experimental) are asynchronous functions that load data for a story and its [decorators](./decorators.md). A story's loaders run before the story renders, and the loaded data injected into the story via its render context.
+Loaders are asynchronous functions that load data for a story and its [decorators](./decorators.md). A story's loaders run before the story renders, and the loaded data injected into the story via its render context.
 
 Loaders can be used to load any asset, lazy load components, or fetch data from a remote API. This feature was designed as a performance optimization to handle large story imports. However, [args](./args.md) is the recommended way to manage story data. We're building up an ecosystem of tools and techniques around Args that might not be compatible with loaded data.
 
-They are an advanced feature (i.e., escape hatch), and we only recommend using them if you have a specific need that other means can't fulfill. They are experimental in Storybook 6.1, and the APIs are subject to change outside of the normal semver cycle.
+They are an advanced feature (i.e., escape hatch), and we only recommend using them if you have a specific need that other means can't fulfill.
 
 ## Fetching API data
 
@@ -20,8 +20,8 @@ Loaders are helpful when you need to load story data externally (e.g., from a re
   paths={[
     'react/loader-story.js.mdx',
     'react/loader-story.ts.mdx',
-    'vue/loader-story.3.js.mdx',
-    'vue/loader-story.ts-3.ts.mdx',
+    'vue/loader-story.js.mdx',
+    'vue/loader-story.ts.mdx',
     'angular/loader-story.ts.mdx',
     'web-components/loader-story.js.mdx',
     'web-components/loader-story.ts.mdx',
@@ -44,6 +44,7 @@ We can also set a loader for **all stories** via the `loaders` export of your [`
 <CodeSnippets
   paths={[
     'common/storybook-preview-global-loader.js.mdx',
+    'common/storybook-preview-global-loader.ts.mdx',
   ]}
 />
 
@@ -63,12 +64,3 @@ All loaders, defined at all levels that apply to a story, run before the story r
   - Global loaders, in the order they are defined
   - Component loaders, in the order they are defined
   - Story loaders, in the order they are defined
-
-## Known limitations
-
-Loaders have the following known limitations:
-
-- They are not yet compatible with the storyshots addon ([#12703](https://github.com/storybookjs/storybook/issues/12703)).
-- They are not yet compatible with inline-rendered stories in Storybook Docs ([#12726](https://github.com/storybookjs/storybook/issues/12726)).
-
-If you're interested in contributing to this feature, read our [contribution guide](../contribute/how-to-contribute.md) and submit a pull request with your work.

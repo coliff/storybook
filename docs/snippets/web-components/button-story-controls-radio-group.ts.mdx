@@ -1,0 +1,19 @@
+```ts
+// Button.stories.ts
+
+// Replace your-framework with the name of your framework
+import type { Meta } from '@storybook/web-components';
+
+const meta: Meta = {
+  title: 'Button',
+  component: 'demo-button',
+  argTypes: {
+    variant: {
+      options: ['primary', 'secondary'],
+      control: { type: 'radio' },
+    },
+  },
+};
+
+export default meta;
+```

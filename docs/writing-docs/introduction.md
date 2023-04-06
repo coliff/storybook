@@ -6,12 +6,7 @@ When you write component stories during development, you also create basic docum
 
 Storybook gives you tools to expand this essential documentation with prose and layout that feature your components and stories prominently. That allows you to create UI library usage guidelines, design system sites, and more.
 
-<video autoPlay muted playsInline loop width="720" height="480">
-  <source
-    src="storybook-docs-ui-optimized.mp4"
-    type="video/mp4"
-  />
-</video>
+![Docs page](./docs-completed.png)
 
 If you're including Storybook in your project for the [first time](../get-started/install.md), we provide you with a [documentation page](./autodocs.md) ("Autodocs" for short), positioned near your stories. It's a baseline template automatically generated, listing your existing stories and relevant metadata.
 

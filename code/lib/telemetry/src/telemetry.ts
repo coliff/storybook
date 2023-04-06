@@ -31,6 +31,7 @@ export async function sendTelemetry(
     : {
         anonymousId: getAnonymousProjectId(),
         inCI: Boolean(process.env.CI),
+        isTTY: process.stdout.isTTY,
       };
   const eventId = nanoid();
   const body = { ...rest, eventType, eventId, sessionId, metadata, payload, context };

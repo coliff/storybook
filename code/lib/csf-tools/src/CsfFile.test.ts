@@ -507,6 +507,33 @@ describe('CsfFile', () => {
               __id: foo-bar--a
       `);
     });
+
+    it('support for parameter decorators', () => {
+      expect(
+        parse(dedent`
+        import { Component, Input, Output, EventEmitter, Inject, HostBinding } from '@angular/core';
+        import { CHIP_COLOR } from './chip-color.token';
+
+        @Component({
+          selector: 'storybook-chip',
+        })
+        export class ChipComponent {
+          // The error occurs on the Inject decorator used on a parameter
+          constructor(@Inject(CHIP_COLOR) chipColor: string) {
+            this.backgroundColor = chipColor;
+          }
+        }
+
+        export default {
+          title: 'Chip',
+        }
+      `)
+      ).toMatchInlineSnapshot(`
+      meta:
+        title: Chip
+      stories: []
+      `);
+    });
   });
 
   describe('error handling', () => {
@@ -556,7 +583,7 @@ describe('CsfFile', () => {
         `,
           true
         )
-      ).toThrow('CSF: unexpected storiesOf call');
+      ).toThrow('Unexpected `storiesOf` usage:');
     });
 
     it('function exports', () => {

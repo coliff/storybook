@@ -96,15 +96,13 @@ In both use cases (MDX and automatic docs), many of the doc blocks can be custom
 For example, you can filter out the `style` prop from all [`Controls`](../api/doc-block-controls.md) tables through your Storybook:
 
 <!-- prettier-ignore-start -->
-```js
-// .storybook/preview.js
+<CodeSnippets
+  paths={[
+    'common/storybook-preview-doc-blocks-controls-exclude-prop.js.mdx',
+    'common/storybook-preview-doc-blocks-controls-exclude-prop.ts.mdx',
+  ]}
+/>
 
-export const parameters = {
-  docs: {
-    controls: { exclude: ['style'] }
-  }
-}
-```
 <!-- prettier-ignore-end -->
 
 <div class="aside">

@@ -1,5 +1,5 @@
 ```js
-// .storybook/my-addon/manager.js
+// my-addon/src/manager.js|ts
 
 import React from 'react';
 
@@ -10,16 +10,13 @@ import { AddonPanel } from '@storybook/components';
 const ADDON_ID = 'myaddon';
 const PANEL_ID = `${ADDON_ID}/panel`;
 
-// give a unique name for the panel
-const MyPanel = () => <div>MyAddon</div>;
-
 addons.register(ADDON_ID, (api) => {
   addons.add(PANEL_ID, {
     type: types.PANEL,
     title: 'My Addon',
     render: ({ active, key }) => (
       <AddonPanel active={active} key={key}>
-        <MyPanel />
+        <div> Storybook addon panel </div>
       </AddonPanel>
     ),
   });

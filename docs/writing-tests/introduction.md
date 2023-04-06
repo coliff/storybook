@@ -6,7 +6,12 @@ Storybook provides a clean-room environment for testing components in isolation.
 
 That means stories are a pragmatic starting point for your UI testing strategy. You already write stories as a natural part of UI development, testing those stories is a low-effort way to prevent UI bugs over time.
 
-![Stories are tests](./stories-are-tests-cropped.gif)
+<video autoPlay muted playsInline loop>
+  <source
+    src="stories-are-tests-optimized.mp4"
+    type="video/mp4"
+  />
+</video>
 
 The simplest testing method is manual “spot checking”. You run Storybook locally, then eyeball every story to verify its appearance and behavior. [Publish](../sharing/publish-storybook.md) your Storybook online to share reproductions and get teammates involved.
 

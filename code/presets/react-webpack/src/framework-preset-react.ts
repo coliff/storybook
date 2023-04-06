@@ -1,10 +1,12 @@
-import path from 'path';
+import { dirname, join } from 'path';
 import ReactRefreshWebpackPlugin from '@pmmmwh/react-refresh-webpack-plugin';
 
 import { logger } from '@storybook/node-logger';
 
 import type { Options, Preset } from '@storybook/core-webpack';
 import type { StorybookConfig, ReactOptions } from './types';
+
+const wrapForPnP = (input: string) => dirname(require.resolve(join(input, 'package.json')));
 
 const applyFastRefresh = async (options: Options) => {
   const isDevelopment = options.configType === 'DEVELOPMENT';
@@ -24,13 +26,11 @@ export const babel: StorybookConfig['babel'] = async (config, options) => {
     ],
   };
 };
-const storybookReactDirName = path.dirname(
-  require.resolve('@storybook/preset-react-webpack/package.json')
-);
+const storybookReactDirName = wrapForPnP('@storybook/preset-react-webpack');
 // TODO: improve node_modules detection
 const context = storybookReactDirName.includes('node_modules')
-  ? path.join(storybookReactDirName, '../../') // Real life case, already in node_modules
-  : path.join(storybookReactDirName, '../../node_modules'); // SB Monorepo
+  ? join(storybookReactDirName, '../../') // Real life case, already in node_modules
+  : join(storybookReactDirName, '../../node_modules'); // SB Monorepo
 
 const hasJsxRuntime = () => {
   try {

@@ -1,6 +1,6 @@
 {
   "name": "@storybook/core-server",
-  "version": "7.0.0-beta.62",
+  "version": "7.1.0-alpha.0",
   "description": "Storybook framework-agnostic API",
   "keywords": [
     "storybook"
@@ -54,18 +54,18 @@
   "dependencies": {
     "@aw-web-design/x-default-browser": "1.4.88",
     "@discoveryjs/json-ext": "^0.5.3",
-    "@storybook/builder-manager": "7.0.0-beta.62",
-    "@storybook/core-common": "7.0.0-beta.62",
-    "@storybook/core-events": "7.0.0-beta.62",
-    "@storybook/csf": "next",
-    "@storybook/csf-tools": "7.0.0-beta.62",
-    "@storybook/docs-mdx": "next",
+    "@storybook/builder-manager": "7.1.0-alpha.0",
+    "@storybook/core-common": "7.1.0-alpha.0",
+    "@storybook/core-events": "7.1.0-alpha.0",
+    "@storybook/csf": "^0.1.0",
+    "@storybook/csf-tools": "7.1.0-alpha.0",
+    "@storybook/docs-mdx": "^0.1.0",
     "@storybook/global": "^5.0.0",
-    "@storybook/manager": "7.0.0-beta.62",
-    "@storybook/node-logger": "7.0.0-beta.62",
-    "@storybook/preview-api": "7.0.0-beta.62",
-    "@storybook/telemetry": "7.0.0-beta.62",
-    "@storybook/types": "7.0.0-beta.62",
+    "@storybook/manager": "7.1.0-alpha.0",
+    "@storybook/node-logger": "7.1.0-alpha.0",
+    "@storybook/preview-api": "7.1.0-alpha.0",
+    "@storybook/telemetry": "7.1.0-alpha.0",
+    "@storybook/types": "7.1.0-alpha.0",
     "@types/detect-port": "^1.3.0",
     "@types/node": "^16.0.0",
     "@types/node-fetch": "^2.5.7",
@@ -89,7 +89,6 @@
     "read-pkg-up": "^7.0.1",
     "semver": "^7.3.7",
     "serve-favicon": "^2.5.0",
-    "slash": "^3.0.0",
     "telejson": "^7.0.3",
     "ts-dedent": "^2.0.0",
     "util-deprecate": "^1.0.2",
@@ -103,6 +102,7 @@
     "@types/ws": "^8",
     "jest-os-detection": "^1.3.1",
     "jest-specific-snapshot": "^7.0.0",
+    "slash": "^5.0.0",
     "typescript": "~4.9.3"
   },
   "publishConfig": {
@@ -115,5 +115,5 @@
       "./src/presets/common-preset.ts"
     ]
   },
-  "gitHead": "f70dcdb599363bfd6e6d2b63f8fadd02e9cbe00a"
+  "gitHead": "8ff2938f8ac0c2d524ae653cd89251e5cd4721a4"
 }

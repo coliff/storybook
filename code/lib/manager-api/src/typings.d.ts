@@ -5,7 +5,6 @@ declare var __STORYBOOK_ADDONS_MANAGER: any;
 declare var FEATURES:
   | {
       storyStoreV7?: boolean;
-      breakingChangesV7?: boolean;
       argTypeTargetsV7?: boolean;
     }
   | undefined;

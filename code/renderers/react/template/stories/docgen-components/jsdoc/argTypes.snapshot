@@ -27,13 +27,15 @@ Object {
     "table": Object {
       "defaultValue": null,
       "jsDocTags": Object {
+        "deprecated": null,
+        "ignore": false,
         "params": Array [
           Object {
             "description": null,
             "name": "event",
           },
         ],
-        "returns": false,
+        "returns": null,
       },
       "type": Object {
         "detail": undefined,
@@ -51,13 +53,15 @@ Object {
     "table": Object {
       "defaultValue": null,
       "jsDocTags": Object {
+        "deprecated": null,
+        "ignore": false,
         "params": Array [
           Object {
             "description": null,
             "name": "event",
           },
         ],
-        "returns": false,
+        "returns": null,
       },
       "type": Object {
         "detail": undefined,
@@ -75,13 +79,15 @@ Object {
     "table": Object {
       "defaultValue": null,
       "jsDocTags": Object {
+        "deprecated": null,
+        "ignore": false,
         "params": Array [
           Object {
             "description": "React's original event",
             "name": "event",
           },
         ],
-        "returns": false,
+        "returns": null,
       },
       "type": Object {
         "detail": undefined,
@@ -99,13 +105,15 @@ Object {
     "table": Object {
       "defaultValue": null,
       "jsDocTags": Object {
+        "deprecated": null,
+        "ignore": false,
         "params": Array [
           Object {
             "description": null,
             "name": "SyntheticEvent",
           },
         ],
-        "returns": false,
+        "returns": null,
       },
       "type": Object {
         "detail": undefined,
@@ -139,13 +147,15 @@ Object {
     "table": Object {
       "defaultValue": null,
       "jsDocTags": Object {
+        "deprecated": null,
+        "ignore": false,
         "params": Array [
           Object {
             "description": "React's original event",
             "name": "event",
           },
         ],
-        "returns": false,
+        "returns": null,
       },
       "type": Object {
         "detail": undefined,
@@ -163,13 +173,15 @@ Object {
     "table": Object {
       "defaultValue": null,
       "jsDocTags": Object {
+        "deprecated": null,
+        "ignore": false,
         "params": Array [
           Object {
             "description": "React's original event",
             "name": "event",
           },
         ],
-        "returns": false,
+        "returns": null,
       },
       "type": Object {
         "detail": undefined,
@@ -187,6 +199,8 @@ Object {
     "table": Object {
       "defaultValue": null,
       "jsDocTags": Object {
+        "deprecated": null,
+        "ignore": false,
         "params": Array [
           Object {
             "description": null,
@@ -195,6 +209,11 @@ Object {
         ],
         "returns": Object {
           "description": null,
+          "getTypeName": [Function],
+          "type": Object {
+            "name": "string",
+            "type": "NameExpression",
+          },
         },
       },
       "type": Object {
@@ -266,13 +285,15 @@ description",
     "table": Object {
       "defaultValue": null,
       "jsDocTags": Object {
+        "deprecated": null,
+        "ignore": false,
         "params": Array [
           Object {
             "description": null,
             "name": "event",
           },
         ],
-        "returns": false,
+        "returns": null,
       },
       "type": Object {
         "detail": undefined,
@@ -290,13 +311,15 @@ description",
     "table": Object {
       "defaultValue": null,
       "jsDocTags": Object {
+        "deprecated": null,
+        "ignore": false,
         "params": Array [
           Object {
             "description": null,
             "name": "event",
           },
         ],
-        "returns": false,
+        "returns": null,
       },
       "type": Object {
         "detail": undefined,
@@ -314,6 +337,8 @@ description",
     "table": Object {
       "defaultValue": null,
       "jsDocTags": Object {
+        "deprecated": null,
+        "ignore": false,
         "params": Array [
           Object {
             "description": null,
@@ -328,7 +353,7 @@ description",
             "name": "numberValue",
           },
         ],
-        "returns": false,
+        "returns": null,
       },
       "type": Object {
         "detail": undefined,
@@ -362,9 +387,16 @@ description",
     "table": Object {
       "defaultValue": null,
       "jsDocTags": Object {
-        "params": false,
+        "deprecated": null,
+        "ignore": false,
+        "params": undefined,
         "returns": Object {
           "description": null,
+          "getTypeName": [Function],
+          "type": Object {
+            "name": "SyntheticEvent",
+            "type": "NameExpression",
+          },
         },
       },
       "type": Object {
@@ -383,9 +415,16 @@ description",
     "table": Object {
       "defaultValue": null,
       "jsDocTags": Object {
-        "params": false,
+        "deprecated": null,
+        "ignore": false,
+        "params": undefined,
         "returns": Object {
           "description": "React's original event",
+          "getTypeName": [Function],
+          "type": Object {
+            "name": "SyntheticEvent",
+            "type": "NameExpression",
+          },
         },
       },
       "type": Object {
@@ -404,6 +443,8 @@ description",
     "table": Object {
       "defaultValue": null,
       "jsDocTags": Object {
+        "deprecated": null,
+        "ignore": false,
         "params": Array [
           Object {
             "description": null,
@@ -412,6 +453,11 @@ description",
         ],
         "returns": Object {
           "description": "React's original event",
+          "getTypeName": [Function],
+          "type": Object {
+            "name": "SyntheticEvent",
+            "type": "NameExpression",
+          },
         },
       },
       "type": Object {
@@ -430,6 +476,8 @@ description",
     "table": Object {
       "defaultValue": null,
       "jsDocTags": Object {
+        "deprecated": null,
+        "ignore": false,
         "params": Array [
           Object {
             "description": null,
@@ -442,6 +490,11 @@ description",
         ],
         "returns": Object {
           "description": "React's original event",
+          "getTypeName": [Function],
+          "type": Object {
+            "name": "SyntheticEvent",
+            "type": "NameExpression",
+          },
         },
       },
       "type": Object {
@@ -460,9 +513,16 @@ description",
     "table": Object {
       "defaultValue": null,
       "jsDocTags": Object {
-        "params": false,
+        "deprecated": null,
+        "ignore": false,
+        "params": undefined,
         "returns": Object {
           "description": "Second returns",
+          "getTypeName": [Function],
+          "type": Object {
+            "name": "string",
+            "type": "NameExpression",
+          },
         },
       },
       "type": Object {
@@ -481,13 +541,15 @@ description",
     "table": Object {
       "defaultValue": null,
       "jsDocTags": Object {
+        "deprecated": null,
+        "ignore": false,
         "params": Array [
           Object {
             "description": "React's original event",
             "name": "event",
           },
         ],
-        "returns": false,
+        "returns": null,
       },
       "type": Object {
         "detail": undefined,
@@ -524,13 +586,15 @@ description",
     "table": Object {
       "defaultValue": null,
       "jsDocTags": Object {
+        "deprecated": null,
+        "ignore": false,
         "params": Array [
           Object {
             "description": null,
             "name": "myType",
           },
         ],
-        "returns": false,
+        "returns": null,
       },
       "type": Object {
         "detail": undefined,
@@ -548,13 +612,15 @@ description",
     "table": Object {
       "defaultValue": null,
       "jsDocTags": Object {
+        "deprecated": null,
+        "ignore": false,
         "params": Array [
           Object {
             "description": null,
             "name": "myType",
           },
         ],
-        "returns": false,
+        "returns": null,
       },
       "type": Object {
         "detail": undefined,
@@ -572,13 +638,15 @@ description",
     "table": Object {
       "defaultValue": null,
       "jsDocTags": Object {
+        "deprecated": null,
+        "ignore": false,
         "params": Array [
           Object {
             "description": null,
             "name": "myType",
           },
         ],
-        "returns": false,
+        "returns": null,
       },
       "type": Object {
         "detail": undefined,
@@ -596,13 +664,15 @@ description",
     "table": Object {
       "defaultValue": null,
       "jsDocTags": Object {
+        "deprecated": null,
+        "ignore": false,
         "params": Array [
           Object {
             "description": null,
             "name": "myType",
           },
         ],
-        "returns": false,
+        "returns": null,
       },
       "type": Object {
         "detail": undefined,
@@ -620,13 +690,15 @@ description",
     "table": Object {
       "defaultValue": null,
       "jsDocTags": Object {
+        "deprecated": null,
+        "ignore": false,
         "params": Array [
           Object {
             "description": null,
             "name": "myType",
           },
         ],
-        "returns": false,
+        "returns": null,
       },
       "type": Object {
         "detail": undefined,
@@ -644,13 +716,15 @@ description",
     "table": Object {
       "defaultValue": null,
       "jsDocTags": Object {
+        "deprecated": null,
+        "ignore": false,
         "params": Array [
           Object {
             "description": null,
             "name": "myType",
           },
         ],
-        "returns": false,
+        "returns": null,
       },
       "type": Object {
         "detail": undefined,
@@ -668,13 +742,15 @@ description",
     "table": Object {
       "defaultValue": null,
       "jsDocTags": Object {
+        "deprecated": null,
+        "ignore": false,
         "params": Array [
           Object {
             "description": null,
             "name": "myType",
           },
         ],
-        "returns": false,
+        "returns": null,
       },
       "type": Object {
         "detail": undefined,
@@ -692,13 +768,15 @@ description",
     "table": Object {
       "defaultValue": null,
       "jsDocTags": Object {
+        "deprecated": null,
+        "ignore": false,
         "params": Array [
           Object {
             "description": null,
             "name": "my.type",
           },
         ],
-        "returns": false,
+        "returns": null,
       },
       "type": Object {
         "detail": undefined,
@@ -716,9 +794,33 @@ description",
     "table": Object {
       "defaultValue": null,
       "jsDocTags": Object {
-        "params": false,
+        "deprecated": null,
+        "ignore": false,
+        "params": undefined,
         "returns": Object {
           "description": null,
+          "getTypeName": [Function],
+          "type": Object {
+            "fields": Array [
+              Object {
+                "key": "a",
+                "type": "FieldType",
+                "value": Object {
+                  "name": "number",
+                  "type": "NameExpression",
+                },
+              },
+              Object {
+                "key": "b",
+                "type": "FieldType",
+                "value": Object {
+                  "name": "string",
+                  "type": "NameExpression",
+                },
+              },
+            ],
+            "type": "RecordType",
+          },
         },
       },
       "type": Object {
@@ -737,9 +839,25 @@ description",
     "table": Object {
       "defaultValue": null,
       "jsDocTags": Object {
-        "params": false,
+        "deprecated": null,
+        "ignore": false,
+        "params": undefined,
         "returns": Object {
           "description": null,
+          "getTypeName": [Function],
+          "type": Object {
+            "applications": Array [
+              Object {
+                "name": "string",
+                "type": "NameExpression",
+              },
+            ],
+            "expression": Object {
+              "name": "Array",
+              "type": "NameExpression",
+            },
+            "type": "TypeApplication",
+          },
         },
       },
       "type": Object {
@@ -761,13 +879,15 @@ description",
     "table": Object {
       "defaultValue": null,
       "jsDocTags": Object {
+        "deprecated": null,
+        "ignore": false,
         "params": Array [
           Object {
             "description": null,
             "name": "event",
           },
         ],
-        "returns": false,
+        "returns": null,
       },
       "type": Object {
         "detail": undefined,
@@ -785,9 +905,25 @@ description",
     "table": Object {
       "defaultValue": null,
       "jsDocTags": Object {
-        "params": false,
+        "deprecated": null,
+        "ignore": false,
+        "params": undefined,
         "returns": Object {
           "description": null,
+          "getTypeName": [Function],
+          "type": Object {
+            "elements": Array [
+              Object {
+                "name": "number",
+                "type": "NameExpression",
+              },
+              Object {
+                "name": "boolean",
+                "type": "NameExpression",
+              },
+            ],
+            "type": "UnionType",
+          },
         },
       },
       "type": Object {
@@ -806,9 +942,15 @@ description",
     "table": Object {
       "defaultValue": null,
       "jsDocTags": Object {
-        "params": false,
+        "deprecated": null,
+        "ignore": false,
+        "params": undefined,
         "returns": Object {
           "description": null,
+          "getTypeName": [Function],
+          "type": Object {
+            "type": "AllLiteral",
+          },
         },
       },
       "type": Object {
@@ -827,9 +969,16 @@ description",
     "table": Object {
       "defaultValue": null,
       "jsDocTags": Object {
-        "params": false,
+        "deprecated": null,
+        "ignore": false,
+        "params": undefined,
         "returns": Object {
           "description": null,
+          "getTypeName": [Function],
+          "type": Object {
+            "name": "string",
+            "type": "NameExpression",
+          },
         },
       },
       "type": Object {
@@ -848,9 +997,16 @@ description",
     "table": Object {
       "defaultValue": null,
       "jsDocTags": Object {
-        "params": false,
+        "deprecated": null,
+        "ignore": false,
+        "params": undefined,
         "returns": Object {
           "description": null,
+          "getTypeName": [Function],
+          "type": Object {
+            "name": "void",
+            "type": "NameExpression",
+          },
         },
       },
       "type": Object {
@@ -872,13 +1028,15 @@ description",
     "table": Object {
       "defaultValue": null,
       "jsDocTags": Object {
+        "deprecated": null,
+        "ignore": false,
         "params": Array [
           Object {
             "description": null,
             "name": "event",
           },
         ],
-        "returns": false,
+        "returns": null,
       },
       "type": Object {
         "detail": undefined,
@@ -947,13 +1105,15 @@ description",
     "table": Object {
       "defaultValue": null,
       "jsDocTags": Object {
+        "deprecated": null,
+        "ignore": false,
         "params": Array [
           Object {
             "description": null,
             "name": "event",
           },
         ],
-        "returns": false,
+        "returns": null,
       },
       "type": Object {
         "detail": undefined,

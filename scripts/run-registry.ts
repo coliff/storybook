@@ -29,6 +29,7 @@ const startVerdaccio = async () => {
         self_path: cache,
       };
 
+      // @ts-expect-error (verdaccio's interface is wrong)
       runServer(config).then((app: Server) => {
         app.listen(6001, () => {
           resolved = true;

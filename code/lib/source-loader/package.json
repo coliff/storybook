@@ -1,6 +1,6 @@
 {
   "name": "@storybook/source-loader",
-  "version": "7.0.0-beta.62",
+  "version": "7.1.0-alpha.0",
   "description": "Source loader",
   "keywords": [
     "lib",
@@ -44,8 +44,8 @@
     "prep": "../../../scripts/prepare/bundle.ts"
   },
   "dependencies": {
-    "@storybook/csf": "next",
-    "@storybook/types": "7.0.0-beta.62",
+    "@storybook/csf": "^0.1.0",
+    "@storybook/types": "7.1.0-alpha.0",
     "estraverse": "^5.2.0",
     "lodash": "^4.17.21",
     "prettier": "^2.8.0"
@@ -66,5 +66,5 @@
       "./src/index.ts"
     ]
   },
-  "gitHead": "f70dcdb599363bfd6e6d2b63f8fadd02e9cbe00a"
+  "gitHead": "8ff2938f8ac0c2d524ae653cd89251e5cd4721a4"
 }

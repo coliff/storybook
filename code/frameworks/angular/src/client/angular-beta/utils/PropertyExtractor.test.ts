@@ -39,9 +39,9 @@ const extractProviders = (metadata: NgModuleMetadata, component?: any) => {
   const { providers } = new PropertyExtractor(metadata, component);
   return providers;
 };
-const extractSingletons = (metadata: NgModuleMetadata, component?: any) => {
-  const { singletons } = new PropertyExtractor(metadata, component);
-  return singletons;
+const extractApplicationProviders = (metadata: NgModuleMetadata, component?: any) => {
+  const { applicationProviders } = new PropertyExtractor(metadata, component);
+  return applicationProviders;
 };
 
 describe('PropertyExtractor', () => {
@@ -50,50 +50,50 @@ describe('PropertyExtractor', () => {
       const metadata = {
         imports: [BrowserModule],
       };
-      const { imports, providers, singletons } = analyzeMetadata(metadata);
+      const { imports, providers, applicationProviders } = analyzeMetadata(metadata);
       expect(imports.flat(Number.MAX_VALUE)).toEqual([CommonModule]);
       expect(providers.flat(Number.MAX_VALUE)).toEqual([]);
-      expect(singletons.flat(Number.MAX_VALUE)).toEqual([]);
+      expect(applicationProviders.flat(Number.MAX_VALUE)).toEqual([]);
     });
 
     it('should remove BrowserAnimationsModule and use its providers instead', () => {
       const metadata = {
         imports: [BrowserAnimationsModule],
       };
-      const { imports, providers, singletons } = analyzeMetadata(metadata);
+      const { imports, providers, applicationProviders } = analyzeMetadata(metadata);
       expect(imports.flat(Number.MAX_VALUE)).toEqual([CommonModule]);
       expect(providers.flat(Number.MAX_VALUE)).toEqual([]);
-      expect(singletons.flat(Number.MAX_VALUE)).toEqual(provideAnimations());
+      expect(applicationProviders.flat(Number.MAX_VALUE)).toEqual(provideAnimations());
     });
 
     it('should remove NoopAnimationsModule and use its providers instead', () => {
       const metadata = {
         imports: [NoopAnimationsModule],
       };
-      const { imports, providers, singletons } = analyzeMetadata(metadata);
+      const { imports, providers, applicationProviders } = analyzeMetadata(metadata);
       expect(imports.flat(Number.MAX_VALUE)).toEqual([CommonModule]);
       expect(providers.flat(Number.MAX_VALUE)).toEqual([]);
-      expect(singletons.flat(Number.MAX_VALUE)).toEqual(provideNoopAnimations());
+      expect(applicationProviders.flat(Number.MAX_VALUE)).toEqual(provideNoopAnimations());
     });
 
     it('should remove Browser/Animations modules recursively', () => {
       const metadata = {
         imports: [BrowserAnimationsModule, BrowserModule],
       };
-      const { imports, providers, singletons } = analyzeMetadata(metadata);
+      const { imports, providers, applicationProviders } = analyzeMetadata(metadata);
       expect(imports.flat(Number.MAX_VALUE)).toEqual([CommonModule]);
       expect(providers.flat(Number.MAX_VALUE)).toEqual([]);
-      expect(singletons.flat(Number.MAX_VALUE)).toEqual(provideAnimations());
+      expect(applicationProviders.flat(Number.MAX_VALUE)).toEqual(provideAnimations());
     });
 
     it('should not destructure Angular official module', () => {
       const metadata = {
         imports: [WithOfficialModule],
       };
-      const { imports, providers, singletons } = analyzeMetadata(metadata);
+      const { imports, providers, applicationProviders } = analyzeMetadata(metadata);
       expect(imports.flat(Number.MAX_VALUE)).toEqual([CommonModule, WithOfficialModule]);
       expect(providers.flat(Number.MAX_VALUE)).toEqual([]);
-      expect(singletons.flat(Number.MAX_VALUE)).toEqual([]);
+      expect(applicationProviders.flat(Number.MAX_VALUE)).toEqual([]);
     });
   });
 
@@ -146,7 +146,7 @@ describe('PropertyExtractor', () => {
     });
 
     it('should return an array of singletons extracted', () => {
-      const singeltons = extractSingletons({
+      const singeltons = extractApplicationProviders({
         imports: [BrowserAnimationsModule],
       });
 

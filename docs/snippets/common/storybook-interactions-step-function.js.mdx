@@ -1,5 +1,20 @@
 ```js
-Submitted = {
+// MyComponent.stories.js|jsx
+
+import { userEvent, within } from '@storybook/testing-library';
+
+import { MyComponent } from './MyComponent';
+
+export default {
+  title: 'MyComponent',
+  component: MyComponent,
+};
+
+/*
+ * See https://storybook.js.org/docs/react/writing-stories/play-function#working-with-the-canvas
+ * to learn more about using the canvasElement to query the DOM
+ */
+export const Submitted = {
   play: async ({ args, canvasElement, step }) => {
     const canvas = within(canvasElement);
 

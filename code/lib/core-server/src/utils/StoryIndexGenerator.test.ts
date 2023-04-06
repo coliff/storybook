@@ -11,7 +11,7 @@ import { normalizeStoriesEntry } from '@storybook/core-common';
 import type { NormalizedStoriesSpecifier, StoryIndexer, StoryIndexEntry } from '@storybook/types';
 import { loadCsf, getStorySortParameter } from '@storybook/csf-tools';
 import { toId } from '@storybook/csf';
-import { logger } from '@storybook/node-logger';
+import { logger, once } from '@storybook/node-logger';
 
 import { StoryIndexGenerator } from './StoryIndexGenerator';
 
@@ -61,6 +61,7 @@ describe('StoryIndexGenerator', () => {
     const actual = jest.requireActual('@storybook/csf-tools');
     loadCsfMock.mockImplementation(actual.loadCsf);
     jest.mocked(logger.warn).mockClear();
+    jest.mocked(once.warn).mockClear();
   });
   describe('extraction', () => {
     const storiesSpecifier: NormalizedStoriesSpecifier = normalizeStoriesEntry(
@@ -925,8 +926,23 @@ describe('StoryIndexGenerator', () => {
       });
     });
 
+    describe('warnings', () => {
+      it('when entries do not match any files', async () => {
+        const generator = new StoryIndexGenerator(
+          [normalizeStoriesEntry('./src/docs2/wrong.js', options)],
+          options
+        );
+        await generator.initialize();
+        await generator.getIndex();
+
+        expect(once.warn).toHaveBeenCalledTimes(1);
+        const logMessage = jest.mocked(once.warn).mock.calls[0][0];
+        expect(logMessage).toContain(`No story files found for the specified pattern`);
+      });
+    });
+
     describe('duplicates', () => {
-      it('warns when two MDX entries reference the same CSF file without a name', async () => {
+      it('errors when two MDX entries reference the same CSF file without a name', async () => {
         const docsErrorSpecifier: NormalizedStoriesSpecifier = normalizeStoriesEntry(
           './errors/**/A.mdx',
           options
@@ -938,25 +954,12 @@ describe('StoryIndexGenerator', () => {
         );
         await generator.initialize();
 
-        expect(Object.keys((await generator.getIndex()).entries)).toMatchInlineSnapshot(`
-          Array [
-            "a--story-one",
-            "componentreference--docs",
-            "a--metaof",
-            "notitle--docs",
-            "a--second-docs",
-            "docs2-yabbadabbadooo--docs",
-            "a--docs",
-          ]
-        `);
-
-        expect(logger.warn).toHaveBeenCalledTimes(1);
-        expect(jest.mocked(logger.warn).mock.calls[0][0]).toMatchInlineSnapshot(
-          `"🚨 You have two component docs pages with the same name A:docs. Use \`<Meta of={} name=\\"Other Name\\">\` to distinguish them."`
+        await expect(generator.getIndex()).rejects.toThrowErrorMatchingInlineSnapshot(
+          `"Unable to index ./errors/A.mdx,./errors/duplicate/A.mdx"`
         );
       });
 
-      it('warns when a MDX entry has the same name as a story', async () => {
+      it('errors when a MDX entry has the same name as a story', async () => {
         const docsErrorSpecifier: NormalizedStoriesSpecifier = normalizeStoriesEntry(
           './errors/MetaOfClashingName.mdx',
           options
@@ -968,24 +971,12 @@ describe('StoryIndexGenerator', () => {
         );
         await generator.initialize();
 
-        expect(Object.keys((await generator.getIndex()).entries)).toMatchInlineSnapshot(`
-          Array [
-            "a--story-one",
-            "componentreference--docs",
-            "a--metaof",
-            "notitle--docs",
-            "a--second-docs",
-            "docs2-yabbadabbadooo--docs",
-          ]
-        `);
-
-        expect(logger.warn).toHaveBeenCalledTimes(1);
-        expect(jest.mocked(logger.warn).mock.calls[0][0]).toMatchInlineSnapshot(
-          `"🚨 You have a story for A with the same name as your component docs page (Story One), so the docs page is being dropped. Use \`<Meta of={} name=\\"Other Name\\">\` to distinguish them."`
+        await expect(generator.getIndex()).rejects.toThrowErrorMatchingInlineSnapshot(
+          `"Unable to index ./src/A.stories.js,./errors/MetaOfClashingName.mdx"`
         );
       });
 
-      it('warns when a story has the default docs name', async () => {
+      it('errors when a story has the default docs name', async () => {
         const docsErrorSpecifier: NormalizedStoriesSpecifier = normalizeStoriesEntry(
           './errors/A.mdx',
           options
@@ -1000,23 +991,11 @@ describe('StoryIndexGenerator', () => {
         );
         await generator.initialize();
 
-        expect(Object.keys((await generator.getIndex()).entries)).toMatchInlineSnapshot(`
-          Array [
-            "a--story-one",
-            "componentreference--story-one",
-            "a--metaof",
-            "notitle--story-one",
-            "a--second-docs",
-            "docs2-yabbadabbadooo--story-one",
-          ]
-        `);
-
-        expect(logger.warn).toHaveBeenCalledTimes(1);
-        expect(jest.mocked(logger.warn).mock.calls[0][0]).toMatchInlineSnapshot(
-          `"🚨 You have a story for A with the same name as your default docs entry name (Story One), so the docs page is being dropped. Consider changing the story name."`
+        await expect(generator.getIndex()).rejects.toThrowErrorMatchingInlineSnapshot(
+          `"Unable to index ./src/A.stories.js,./errors/A.mdx"`
         );
       });
-      it('warns when two duplicate stories exists, with duplicated entries details', async () => {
+      it('errors when two duplicate stories exists, with duplicated entries details', async () => {
         const generator = new StoryIndexGenerator([storiesSpecifier, docsSpecifier], {
           ...options,
         });
@@ -1033,7 +1012,7 @@ describe('StoryIndexGenerator', () => {
         }).toThrowErrorMatchingInlineSnapshot(`"Duplicate stories with id: StoryId"`);
       });
 
-      it('DOES NOT warns when the same MDX file matches two specifiers', async () => {
+      it('DOES NOT error when the same MDX file matches two specifiers', async () => {
         const generator = new StoryIndexGenerator(
           [storiesSpecifier, docsSpecifier, docsSpecifier],
           options

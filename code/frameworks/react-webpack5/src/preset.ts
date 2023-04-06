@@ -1,11 +1,13 @@
 /* eslint-disable no-param-reassign */
 
-import path from 'path';
+import { dirname, join } from 'path';
 import type { PresetProperty, Options } from '@storybook/types';
 import type { FrameworkOptions, StorybookConfig } from './types';
 
+const wrapForPnP = (input: string) => dirname(require.resolve(join(input, 'package.json')));
+
 export const addons: PresetProperty<'addons', StorybookConfig> = [
-  path.dirname(require.resolve(path.join('@storybook/preset-react-webpack', 'package.json'))),
+  wrapForPnP('@storybook/preset-react-webpack'),
 ];
 
 const defaultFrameworkOptions: FrameworkOptions = {
@@ -26,7 +28,7 @@ export const frameworkOptions = async (
   }
   if (typeof config === 'undefined') {
     return {
-      name: require.resolve('@storybook/react-webpack5') as '@storybook/react-webpack5',
+      name: wrapForPnP('@storybook/react-webpack5') as '@storybook/react-webpack5',
       options: defaultFrameworkOptions,
     };
   }
@@ -46,12 +48,10 @@ export const core: PresetProperty<'core', StorybookConfig> = async (config, opti
   return {
     ...config,
     builder: {
-      name: path.dirname(
-        require.resolve(path.join('@storybook/builder-webpack5', 'package.json'))
-      ) as '@storybook/builder-webpack5',
+      name: wrapForPnP('@storybook/builder-webpack5') as '@storybook/builder-webpack5',
       options: typeof framework === 'string' ? {} : framework.options.builder || {},
     },
-    renderer: path.dirname(require.resolve(path.join('@storybook/react', 'package.json'))),
+    renderer: wrapForPnP('@storybook/react'),
   };
 };
 
@@ -60,9 +60,7 @@ export const webpack: StorybookConfig['webpack'] = async (config) => {
 
   config.resolve.alias = {
     ...config.resolve?.alias,
-    '@storybook/react': path.dirname(
-      require.resolve(path.join('@storybook/react', 'package.json'))
-    ),
+    '@storybook/react': wrapForPnP('@storybook/react'),
   };
   return config;
 };

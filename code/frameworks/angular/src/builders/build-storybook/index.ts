@@ -7,14 +7,19 @@ import {
 } from '@angular-devkit/architect';
 import { JsonObject } from '@angular-devkit/core';
 import { Observable, from, of, throwError } from 'rxjs';
-import { CLIOptions } from '@storybook/types';
 import { catchError, map, mapTo, switchMap } from 'rxjs/operators';
 import { sync as findUpSync } from 'find-up';
 import { sync as readUpSync } from 'read-pkg-up';
 import { BrowserBuilderOptions, StylePreprocessorOptions } from '@angular-devkit/build-angular';
 
+import { CLIOptions } from '@storybook/types';
+import { getEnvConfig } from '@storybook/cli';
+
 import { buildStaticStandalone, withTelemetry } from '@storybook/core-server';
-import { StyleElement } from '@angular-devkit/build-angular/src/builders/browser/schema';
+import {
+  AssetPattern,
+  StyleElement,
+} from '@angular-devkit/build-angular/src/builders/browser/schema';
 import { StandaloneOptions } from '../utils/standalone-options';
 import { runCompodoc } from '../utils/run-compodoc';
 import { errorSummary, printErrorDetails } from '../utils/error-handler';
@@ -27,6 +32,7 @@ export type StorybookBuilderOptions = JsonObject & {
   compodocArgs: string[];
   styles?: StyleElement[];
   stylePreprocessorOptions?: StylePreprocessorOptions;
+  assets?: AssetPattern[];
 } & Pick<
     // makes sure the option exists
     CLIOptions,
@@ -54,6 +60,12 @@ function commandBuilder(
       return runCompodoc$.pipe(mapTo({ tsConfig }));
     }),
     map(({ tsConfig }) => {
+      getEnvConfig(options, {
+        staticDir: 'SBCONFIG_STATIC_DIR',
+        outputDir: 'SBCONFIG_OUTPUT_DIR',
+        configDir: 'SBCONFIG_CONFIG_DIR',
+      });
+
       const {
         browserTarget,
         stylePreprocessorOptions,
@@ -65,6 +77,7 @@ function commandBuilder(
         quiet,
         webpackStatsJson,
         disableTelemetry,
+        assets,
       } = options;
 
       const standaloneOptions: StandaloneBuildOptions = {
@@ -80,6 +93,7 @@ function commandBuilder(
         angularBuilderOptions: {
           ...(stylePreprocessorOptions ? { stylePreprocessorOptions } : {}),
           ...(styles ? { styles } : {}),
+          ...(assets ? { assets } : {}),
         },
         tsConfig,
         webpackStatsJson,

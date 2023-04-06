@@ -24,6 +24,7 @@ If you want to change the default set of viewports, you can set the global `para
 <CodeSnippets
   paths={[
     'common/storybook-preview-change-viewports.js.mdx',
+    'common/storybook-preview-change-viewports.ts.mdx',
   ]}
 />
 
@@ -56,6 +57,7 @@ Change your [`.storybook/preview.js`](../configure/overview.md#configure-story-r
 <CodeSnippets
   paths={[
     'common/storybook-preview-granular-viewports.js.mdx',
+    'common/storybook-preview-granular-viewports.ts.mdx',
   ]}
 />
 
@@ -86,6 +88,7 @@ Make the following change to use them in your Storybook:
 <CodeSnippets
   paths={[
     'common/storybook-preview-viewport-use-new-devices.js.mdx',
+    'common/storybook-preview-viewport-use-new-devices.ts.mdx',
   ]}
 />
 
@@ -102,6 +105,7 @@ For instance, if you want to use these two with the minimal set of viewports, yo
 <CodeSnippets
   paths={[
     'common/storybook-preview-merge-viewports.js.mdx',
+    'common/storybook-preview-merge-viewports.ts.mdx',
   ]}
 />
 

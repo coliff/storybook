@@ -10,7 +10,7 @@ Addons are integral to the way Storybook works. Many of Storybook's core feature
 
 The most obvious thing addons affect in Storybook is the UI of Storybook itself. Within the UI the **toolbar** and **addons panel** are the two chief places addons will appear.
 
-![Storybook addons locations](./addon-locations.jpg)
+![Storybook addons locations](./addon-locations.png)
 
 Addons can also hook into the rendering of your story in the preview pane via injecting their own [decorators](../writing-stories/decorators.md).
 

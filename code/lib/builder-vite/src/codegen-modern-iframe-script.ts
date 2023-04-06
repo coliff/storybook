@@ -3,7 +3,7 @@ import type { Options, PreviewAnnotation } from '@storybook/types';
 import { virtualStoriesFile, virtualAddonSetupFile } from './virtual-file-names';
 import { processPreviewAnnotation } from './utils/process-preview-annotation';
 
-export async function generateModernIframeScriptCode(options: Options) {
+export async function generateModernIframeScriptCode(options: Options, projectRoot: string) {
   const { presets, configDir } = options;
   const frameworkName = await getFrameworkName(options);
 
@@ -13,9 +13,20 @@ export async function generateModernIframeScriptCode(options: Options) {
     [],
     options
   );
-  const relativePreviewAnnotations = [...previewAnnotations, previewOrConfigFile]
+  const previewAnnotationURLs = [...previewAnnotations, previewOrConfigFile]
     .filter(Boolean)
-    .map(processPreviewAnnotation);
+    .map((path) => processPreviewAnnotation(path, projectRoot));
+
+  // This is pulled out to a variable because it is reused in both the initial page load
+  // and the HMR handler.  We don't use the hot.accept callback params because only the changed
+  // modules are provided, the rest are null.  We can just re-import everything again in that case.
+  const getPreviewAnnotationsFunction = `
+  const getProjectAnnotations = async () => {
+    const configs = await Promise.all([${previewAnnotationURLs
+      .map((previewAnnotation) => `import('${previewAnnotation}')`)
+      .join(',\n')}])
+    return composeConfigs(configs);
+  }`;
 
   // eslint-disable-next-line @typescript-eslint/no-shadow
   const generateHMRHandler = (frameworkName: string): string => {
@@ -34,13 +45,10 @@ export async function generateModernIframeScriptCode(options: Options) {
       window.__STORYBOOK_PREVIEW__.onStoriesChanged({ importFn: newModule.importFn });
       });
 
-    import.meta.hot.accept(${JSON.stringify(
-      relativePreviewAnnotations
-    )}, ([...newConfigEntries]) => {
-      const newGetProjectAnnotations =  () => composeConfigs(newConfigEntries);
-
+    import.meta.hot.accept(${JSON.stringify(previewAnnotationURLs)}, () => {
+      ${getPreviewAnnotationsFunction}
       // getProjectAnnotations has changed so we need to patch the new one in
-      window.__STORYBOOK_PREVIEW__.onGetProjectAnnotationsChanged({ getProjectAnnotations: newGetProjectAnnotations });
+      window.__STORYBOOK_PREVIEW__.onGetProjectAnnotationsChanged({ getProjectAnnotations });
     });
   }`.trim();
   };
@@ -56,13 +64,7 @@ export async function generateModernIframeScriptCode(options: Options) {
   import '${virtualAddonSetupFile}';
   import { importFn } from '${virtualStoriesFile}';
   
-    const getProjectAnnotations = async () => {
-      const configs = await Promise.all([${relativePreviewAnnotations
-        .map((previewAnnotation) => `import('${previewAnnotation}')`)
-        .join(',\n')}])
-      return composeConfigs(configs);
-    }
-
+    ${getPreviewAnnotationsFunction}
 
     window.__STORYBOOK_PREVIEW__ = window.__STORYBOOK_PREVIEW__ || new PreviewWeb();
     

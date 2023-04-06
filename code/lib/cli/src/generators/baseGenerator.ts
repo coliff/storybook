@@ -258,28 +258,6 @@ export async function baseGenerator(
 
   await configurePreview({ frameworkPreviewParts, storybookConfigFolder, language, rendererId });
 
-  // FIXME: temporary workaround for https://github.com/storybookjs/storybook/issues/17516
-  // Vite workaround regex for internal and external frameworks as f.e:
-  // Internal: @storybook/xxxxx-vite
-  // External: storybook-xxxxx-vite
-  if (
-    frameworkPackages.find(
-      (pkg) =>
-        pkg.match(/^(@storybook\/|storybook).*-vite$/) ||
-        pkg === '@storybook/sveltekit' ||
-        pkg === ''
-    )
-  ) {
-    const previewHead = dedent`
-      <script>
-        window.global = window;
-      </script>
-    `;
-    await fse.writeFile(`${storybookConfigFolder}/preview-head.html`, previewHead, {
-      encoding: 'utf8',
-    });
-  }
-
   const babelDependencies =
     addBabel && builder !== CoreBuilder.Vite
       ? await getBabelDependencies(packageManager, packageJson)

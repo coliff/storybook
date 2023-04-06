@@ -1,0 +1,25 @@
+```ts
+// CheckBox.stories.ts
+
+import type { Meta, StoryObj } from '@storybook/angular';
+
+import { Checkbox } from './checkbox.component';
+
+const meta: Meta<Checkbox> = {
+  /* 👇 The title prop is optional.
+   * See https://storybook.js.org/docs/angular/configure/overview#configure-story-loading
+   * to learn how to generate automatic titles
+   */
+  title: 'Checkbox',
+  component: Checkbox,
+};
+
+export default meta;
+type Story = StoryObj<Checkbox>;
+
+export const Unchecked: Story = {
+  args: {
+    label: 'Unchecked',
+  },
+};
+```

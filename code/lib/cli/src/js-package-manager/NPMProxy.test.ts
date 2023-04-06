@@ -276,4 +276,122 @@ describe('NPM Proxy', () => {
       });
     });
   });
+
+  describe('mapDependencies', () => {
+    it('should display duplicated dependencies based on npm output', async () => {
+      // npm ls --depth 10 --json
+      jest.spyOn(npmProxy, 'executeCommand').mockReturnValue(`
+        {
+          "dependencies": {
+            "unrelated-and-should-be-filtered": {
+              "version": "1.0.0"
+            },
+            "@storybook/addon-interactions": {
+              "version": "7.0.0-rc.7",
+              "resolved": "https://registry.npmjs.org/@storybook/addon-interactions/-/addon-interactions-7.0.0-rc.7.tgz",
+              "overridden": false,
+              "dependencies": {
+                "@storybook/instrumenter": {
+                  "version": "6.0.0",
+                  "resolved": "https://registry.npmjs.org/@storybook/instrumenter/-/instrumenter-7.0.0-rc.7.tgz",
+                  "overridden": false,
+                  "dependencies": {
+                    "@storybook/channels": {
+                      "version": "7.0.0-rc.7"
+                    }
+                  }
+                }
+              }
+            },
+            "@storybook/instrumenter": {
+              "version": "7.0.0-beta.11",
+              "resolved": "https://registry.npmjs.org/@storybook/instrumenter/-/instrumenter-7.0.0-beta.11.tgz",
+              "overridden": false,
+              "dependencies": {}
+            },
+            "@storybook/jest": {
+              "version": "0.0.11-next.1",
+              "resolved": "https://registry.npmjs.org/@storybook/jest/-/jest-0.0.11-next.1.tgz",
+              "overridden": false,
+              "dependencies": {
+                "@storybook/instrumenter": {
+                  "version": "7.0.0-alpha.21"
+                }
+              }
+            },
+            "@storybook/testing-library": {
+              "version": "0.0.14-next.1",
+              "resolved": "https://registry.npmjs.org/@storybook/testing-library/-/testing-library-0.0.14-next.1.tgz",
+              "overridden": false,
+              "dependencies": {
+                "@storybook/instrumenter": {
+                  "version": "5.4.2-alpha.0"
+                }
+              }
+            }
+          }
+        }      
+      `);
+
+      const installations = await npmProxy.findInstallations();
+
+      expect(installations).toMatchInlineSnapshot(`
+        Object {
+          "dependencies": Object {
+            "@storybook/addon-interactions": Array [
+              Object {
+                "location": "",
+                "version": "7.0.0-rc.7",
+              },
+            ],
+            "@storybook/channels": Array [
+              Object {
+                "location": "",
+                "version": "7.0.0-rc.7",
+              },
+            ],
+            "@storybook/instrumenter": Array [
+              Object {
+                "location": "",
+                "version": "6.0.0",
+              },
+              Object {
+                "location": "",
+                "version": "7.0.0-beta.11",
+              },
+              Object {
+                "location": "",
+                "version": "7.0.0-alpha.21",
+              },
+              Object {
+                "location": "",
+                "version": "5.4.2-alpha.0",
+              },
+            ],
+            "@storybook/jest": Array [
+              Object {
+                "location": "",
+                "version": "0.0.11-next.1",
+              },
+            ],
+            "@storybook/testing-library": Array [
+              Object {
+                "location": "",
+                "version": "0.0.14-next.1",
+              },
+            ],
+          },
+          "duplicatedDependencies": Object {
+            "@storybook/instrumenter": Array [
+              "5.4.2-alpha.0",
+              "6.0.0",
+              "7.0.0-alpha.21",
+              "7.0.0-beta.11",
+            ],
+          },
+          "infoCommand": "npm ls --depth=1",
+        }
+      `);
+    });
+  });
 });

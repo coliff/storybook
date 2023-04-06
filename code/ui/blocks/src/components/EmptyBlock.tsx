@@ -1,3 +1,4 @@
+import type { FC } from 'react';
 import React from 'react';
 import { transparentize } from 'polished';
 import { styled } from '@storybook/theming';
@@ -17,6 +18,6 @@ const Wrapper = styled.div(withReset, ({ theme }) => ({
   fontSize: theme.typography.size.s2,
 }));
 
-export const EmptyBlock = (props: any) => (
-  <Wrapper {...props} className="docblock-emptyblock sb-unstyled" />
-);
+export const EmptyBlock: FC<
+  React.DetailedHTMLProps<React.HTMLAttributes<HTMLDivElement>, HTMLDivElement>
+> = (props) => <Wrapper {...props} className="docblock-emptyblock sb-unstyled" />;

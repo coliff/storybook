@@ -36,9 +36,11 @@ The following `language` configurations are equivalent:
 
 <CodeSnippets
   paths={[
+    'angular/api-doc-block-source-parameter.ts.mdx',
+    'web-components/api-doc-block-source-parameter.js.mdx',
+    'web-components/api-doc-block-source-parameter.ts.mdx',
     'common/api-doc-block-source-parameter.js.mdx',
     'common/api-doc-block-source-parameter.ts.mdx',
-    'common/api-doc-block-source-parameter.ts-4-9.mdx',
   ]}
 />
 
@@ -100,7 +102,7 @@ Type: `boolean | 'dedent' | BuiltInParserName`
 
 Default: `parameters.docs.source.format` or `true`
 
-Specifies the formatting used on source code. Supports all valid [prettier parser names](https://prettier.io/docs/en/configuration.html#setting-the-parserdocsenoptionshtmlparser-option).
+Specifies the formatting used on source code. Both `true` and `'dedent'` have the same effect of removing any extraneous indentation. Supports all valid [prettier parser names](https://prettier.io/docs/en/configuration.html#setting-the-parserdocsenoptionshtmlparser-option).
 
 ### `language`
 
@@ -121,6 +123,15 @@ Specifies the language used for syntax highlighting.
 Type: Story export
 
 Specifies which story's source is rendered.
+
+### `transform`
+
+Type: `(code: string, storyContext: StoryContext) => string`
+
+Default: `parameters.docs.source.transform`
+
+A function to dynamically transform the source before being rendered, based on the original source and any story context necessary. The returned string is displayed as-is.
+If both [`code`](#code) and `transform` are specified, `transform` will be ignored.
 
 ### `type`
 

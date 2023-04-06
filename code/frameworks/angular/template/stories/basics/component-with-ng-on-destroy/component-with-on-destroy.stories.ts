@@ -1,5 +1,5 @@
 import { OnDestroy, OnInit, Component } from '@angular/core';
-import { Meta, StoryFn } from '@storybook/angular';
+import { Meta, StoryObj } from '@storybook/angular';
 
 @Component({
   selector: 'on-destroy',
@@ -37,6 +37,4 @@ export default {
   },
 } as Meta;
 
-export const SimpleComponent: StoryFn = () => ({
-  component: OnDestroyComponent,
-});
+export const SimpleComponent: StoryObj = {};

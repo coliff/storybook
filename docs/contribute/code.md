@@ -31,7 +31,8 @@ It will install the required prerequisites, build the code, create and link a st
 
 If all goes well, you should see the sandbox running.
 
-![Storybook Sandbox Running](./storybook-sandbox.png)
+![Storybook sandbox running](../get-started/example-welcome.png)
+
 
 ## Running a different sandbox template
 
@@ -89,7 +90,7 @@ If the work you'll be doing affects the `Preview` (the innermost Storybook `ifra
 
 Otherwise, if it affects the `Manager` (the outermost Storybook `iframe` where the addons are displayed), you'll need to refresh manually after saving.
 
-![Storybook UI](./storybook-manager-preview.jpg)
+![Storybook manager preview](../addons/manager-preview.png)
 
 ## Check your work
 

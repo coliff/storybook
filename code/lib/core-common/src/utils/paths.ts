@@ -6,13 +6,21 @@ export const getProjectRoot = () => {
   try {
     const found = findUp.sync('.git', { type: 'directory' });
     if (found) {
-      result = result || path.join(found, '..');
+      result = path.join(found, '..');
     }
   } catch (e) {
     //
   }
   try {
     const found = findUp.sync('.svn', { type: 'directory' });
+    if (found) {
+      result = result || path.join(found, '..');
+    }
+  } catch (e) {
+    //
+  }
+  try {
+    const found = findUp.sync('.yarn', { type: 'directory' });
     if (found) {
       result = result || path.join(found, '..');
     }

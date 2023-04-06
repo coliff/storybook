@@ -194,40 +194,6 @@ describe('decorateStory', () => {
       });
     });
 
-    it('should include legacy story components in decorators', () => {
-      const decorators: DecoratorFunction<AngularRenderer>[] = [
-        (s) => {
-          const story = s();
-          return {
-            ...story,
-            template: `<parent>${story.template}</parent>`,
-          };
-        },
-        (s) => {
-          const story = s();
-          return {
-            ...story,
-            template: `<grandparent>${story.template}</grandparent>`,
-          };
-        },
-        (s) => {
-          const story = s();
-          return {
-            ...story,
-            template: `<great-grandparent>${story.template}</great-grandparent>`,
-          };
-        },
-      ];
-      const decorated = decorateStory(() => ({ component: FooComponent }), decorators);
-
-      expect(decorated(makeContext({}))).toEqual({
-        template:
-          '<great-grandparent><grandparent><parent><foo></foo></parent></grandparent></great-grandparent>',
-        component: FooComponent,
-        userDefinedTemplate: false,
-      });
-    });
-
     it('should keep template with an empty value', () => {
       const decorators: DecoratorFunction<AngularRenderer>[] = [
         componentWrapperDecorator(ParentComponent),

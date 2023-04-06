@@ -1,3 +1,4 @@
+import React from 'react';
 import type { Meta, StoryObj } from '@storybook/react';
 import { Description } from './Description';
 import { Button as ButtonComponent } from '../examples/Button';
@@ -107,8 +108,21 @@ export const OfStoryAsStoryCommentAndParameter: Story = {
   },
   parameters: { relativeCsfPaths: ['../examples/Button.stories'] },
 };
-export const OfUndefinedAttached: Story = {
+export const DefaultAttached: Story = {
   parameters: { relativeCsfPaths: ['../examples/Button.stories'], attached: true },
+};
+export const OfUndefinedAttached: Story = {
+  args: {
+    // @ts-expect-error this is supposed to be undefined
+    // eslint-disable-next-line import/namespace
+    of: DefaultButtonStories.NotDefined,
+  },
+  parameters: {
+    chromatic: { disableSnapshot: true },
+    relativeCsfPaths: ['../examples/Button.stories'],
+    attached: true,
+  },
+  decorators: [(s) => (window?.navigator.userAgent.match(/StorybookTestRunner/) ? <div /> : s())],
 };
 export const OfStringComponentAttached: Story = {
   name: 'Of "component" Attached',

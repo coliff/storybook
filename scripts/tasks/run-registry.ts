@@ -1,23 +1,21 @@
 import detectFreePort from 'detect-port';
-import { resolve } from 'path';
 
+import { CODE_DIRECTORY } from '../utils/constants';
 import { exec } from '../utils/exec';
 import type { Task } from '../task';
-
-const codeDir = resolve(__dirname, '../../code');
 
 export async function runRegistry({ dryRun, debug }: { dryRun?: boolean; debug?: boolean }) {
   const controller = new AbortController();
 
   exec(
-    'CI=true yarn local-registry --open',
-    { cwd: codeDir },
+    'yarn local-registry --open',
+    { cwd: CODE_DIRECTORY, env: { CI: 'true' } },
     { dryRun, debug, signal: controller.signal }
   ).catch((err) => {
     // If aborted, we want to make sure the rejection is handled.
     if (!err.killed) throw err;
   });
-  await exec('yarn wait-on http://localhost:6001', { cwd: codeDir }, { dryRun, debug });
+  await exec('yarn wait-on http://localhost:6001', { cwd: CODE_DIRECTORY }, { dryRun, debug });
 
   return controller;
 }

@@ -1,4 +1,6 @@
 import { global as globalThis } from '@storybook/global';
+import type { StoryContext } from '@storybook/types';
+import dedent from 'ts-dedent';
 
 export default {
   component: globalThis.Components.Button,
@@ -36,8 +38,13 @@ export const Custom = {
 export const Transform = {
   parameters: {
     docs: {
-      transformSource(src: string) {
-        return `// We transformed this!\nconst example = (\n${src}\n);`;
+      source: {
+        transform(src: string, storyContext: StoryContext) {
+          return dedent`// We transformed this!
+          // The current args are: ${JSON.stringify(storyContext.args)}
+          const example = (${src});
+          `;
+        },
       },
     },
   },

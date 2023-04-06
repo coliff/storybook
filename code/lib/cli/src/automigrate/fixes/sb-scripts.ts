@@ -35,7 +35,8 @@ export const getStorybookScripts = (allScripts: Record<string, string>) => {
 
         // in case people have scripts like `yarn start-storybook`
         const isPrependedByPkgManager =
-          previousWord && ['npx', 'run', 'yarn', 'pnpx'].some((cmd) => previousWord.includes(cmd));
+          previousWord &&
+          ['npx', 'run', 'yarn', 'pnpx', 'pnpm dlx'].some((cmd) => previousWord.includes(cmd));
 
         if (isSbBinary && !isPrependedByPkgManager) {
           isStorybookScript = true;

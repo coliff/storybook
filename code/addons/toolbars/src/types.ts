@@ -31,8 +31,6 @@ export interface NormalizedToolbarConfig {
   preventDynamicIcon?: boolean;
   items: ToolbarItem[];
   shortcuts?: ToolbarShortcuts;
-  /** @deprecated "name" no longer dual purposes as title - use "title" if a title is wanted */
-  showName?: boolean;
   /** Change title based on selected value */
   dynamicTitle?: boolean;
 }

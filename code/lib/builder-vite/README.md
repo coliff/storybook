@@ -39,7 +39,7 @@ See https://vitejs.dev/guide/#scaffolding-your-first-vite-project,
 
 ```
 npm create vite@latest # follow the prompts
-npx sb@next init --builder vite && npm run storybook
+npx storybook@latest init --builder vite && npm run storybook
 ```
 
 ### Migration from webpack / CRA

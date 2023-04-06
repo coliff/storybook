@@ -29,7 +29,7 @@ test.describe('addon-interactions', () => {
     const welcome = await sbPage.previewRoot().locator('.welcome');
     await expect(welcome).toContainText('Welcome, Jane Doe!');
 
-    const interactionsTab = await page.locator('#tabbutton-interactions');
+    const interactionsTab = await page.locator('#tabbutton-storybook-interactions-panel');
     await expect(interactionsTab).toContainText(/(1)/);
     await expect(interactionsTab).toBeVisible();
 
@@ -59,7 +59,7 @@ test.describe('addon-interactions', () => {
     const formInput = await sbPage.previewRoot().locator('#interaction-test-form input');
     await expect(formInput).toHaveValue('final value');
 
-    const interactionsTab = await page.locator('#tabbutton-interactions');
+    const interactionsTab = await page.locator('#tabbutton-storybook-interactions-panel');
     await expect(interactionsTab).toContainText(/(3)/);
     await expect(interactionsTab).toBeVisible();
 

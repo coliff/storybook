@@ -120,7 +120,7 @@ export function composeStory<TArgs extends Args = Args>(
  * @param csfExports - e.g. (import * as stories from './Button.stories')
  * @param [projectAnnotations] - e.g. (import * as projectAnnotations from '../.storybook/preview') this can be applied automatically if you use `setProjectAnnotations` in your setup files.
  */
-export function composeStories<TModule extends Store_CSFExports<ReactRenderer>>(
+export function composeStories<TModule extends Store_CSFExports<ReactRenderer, any>>(
   csfExports: TModule,
   projectAnnotations?: ProjectAnnotations<ReactRenderer>
 ) {

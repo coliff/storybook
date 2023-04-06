@@ -10,7 +10,7 @@ CSS-in-JS libraries are designed to use basic JavaScript, and they often work in
 
 ### Importing CSS files
 
-If your component files import their CSS, Storybook's webpack configuration will work out of the box. The noticeable exception to this is if you're using a CSS precompiler. In this case, you can either install and configure a Storybook preset (e.g., [SCSS preset](https://github.com/storybookjs/presets/tree/master/packages/preset-scss)), or customize [Storybook's webpack configuration](../builders/webpack.md#extending-storybooks-webpack-config) and include the appropriate loader.
+If your component files import their CSS, Storybook's webpack configuration will work out of the box. The noticeable exception to this is if you're using a CSS precompiler. In this case, you can either install and configure a Storybook addon (e.g., [`@storybook/addon-styling`](https://github.com/storybookjs/addon-styling#storybookaddon-styling)), or customize [Storybook's webpack configuration](../builders/webpack.md#extending-storybooks-webpack-config) and include the appropriate loader.
 
 <FeatureSnippets paths={['configure/css-troubleshooting/angular.mdx']} />
 

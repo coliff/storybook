@@ -1,0 +1,43 @@
+```ts
+// YourComponent.stories.ts
+
+import type { Meta, StoryObj } from '@storybook/angular';
+
+import { YourComponent } from './YourComponent.component';
+
+const meta: Meta<YourComponent> = {
+  /* 👇 The title prop is optional.
+   * See https://storybook.js.org/docs/angular/configure/overview#configure-story-loading
+   * to learn how to generate automatic titles
+   */
+  title: 'YourComponent',
+  component: YourComponent,
+};
+
+export default meta;
+type Story = StoryObj<YourComponent>;
+
+export const ArrayInclude: Story = {
+  parameters: {
+    controls: { include: ['foo', 'bar'] },
+  },
+};
+
+export const RegexInclude: Story = {
+  parameters: {
+    controls: { include: /^hello*/ },
+  },
+};
+
+export const ArrayExclude: Story = {
+  parameters: {
+    controls: { exclude: ['foo', 'bar'] },
+  },
+};
+
+export const RegexExclude: Story = {
+  parameters: {
+    controls: { exclude: /^hello*/ },
+  },
+};
+```

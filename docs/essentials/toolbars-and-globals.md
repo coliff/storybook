@@ -6,6 +6,8 @@ title: 'Toolbars & globals'
 
 Storybook ships with toolbar addons to control the [viewport](./viewport.md) and [background](./backgrounds.md) the story renders in. You can also create your own toolbar items which control special “globals” which you can then read to create [decorators](../writing-stories/decorators.md) to control story rendering.
 
+![Toolbars and globals](./toolbars-and-globals.png)
+
 ## Globals
 
 Globals in Storybook represents “global” (as in not story-specific) inputs to the rendering of the story. As they aren’t specific to the story, they aren’t passed in the `args` argument to the story function (although they are accessible as `context.globals`), but typically you use them in decorators, which apply to all stories.
@@ -21,6 +23,7 @@ Storybook has a simple, declarative syntax for configuring toolbar menus. In you
 <CodeSnippets
   paths={[
     'common/storybook-preview-configure-globaltypes.js.mdx',
+    'common/storybook-preview-configure-globaltypes.ts.mdx',
   ]}
 />
 
@@ -45,6 +48,7 @@ For example, suppose you are using `styled-components`. You can add a theme prov
 <CodeSnippets
   paths={[
     'common/storybook-preview-use-global-type.js.mdx',
+    'common/storybook-preview-use-global-type.ts.mdx',
   ]}
 />
 
@@ -63,6 +67,7 @@ In your [`.storybook/preview.js`](../configure/overview.md#configure-story-rende
 <CodeSnippets
   paths={[
     'common/storybook-preview-locales-globaltype.js.mdx',
+    'common/storybook-preview-locales-globaltype.ts.mdx',
   ]}
 />
 

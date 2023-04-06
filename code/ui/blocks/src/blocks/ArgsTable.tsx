@@ -34,6 +34,7 @@ type OfProps = BaseProps & {
 };
 
 type ComponentsProps = BaseProps & {
+  parameters: Parameters;
   components: {
     [label: string]: Component;
   };
@@ -123,14 +124,14 @@ export const getComponent = (props: ArgsTableProps = {}, component: Component): 
 const addComponentTabs = (
   tabs: Record<string, PureArgsTableProps>,
   components: Record<string, Component>,
-  context: DocsContextProps,
+  parameters: Parameters,
   include?: PropDescriptor,
   exclude?: PropDescriptor,
   sort?: SortType
 ) => ({
   ...tabs,
   ...mapValues(components, (comp) => ({
-    rows: extractComponentArgTypes(comp, context, include, exclude),
+    rows: extractComponentArgTypes(comp, parameters, include, exclude),
     sort,
   })),
 });
@@ -187,7 +188,7 @@ export const StoryTable: FC<
     }
 
     if (component && (!storyHasArgsWithControls || showComponent)) {
-      tabs = addComponentTabs(tabs, { [mainLabel]: component }, context, include, exclude);
+      tabs = addComponentTabs(tabs, { [mainLabel]: component }, story.parameters, include, exclude);
     }
 
     if (subcomponents) {
@@ -196,7 +197,7 @@ export const StoryTable: FC<
           `Unexpected subcomponents array. Expected an object whose keys are tab labels and whose values are components.`
         );
       }
-      tabs = addComponentTabs(tabs, subcomponents, context, include, exclude);
+      tabs = addComponentTabs(tabs, subcomponents, story.parameters, include, exclude);
     }
     return <TabbedArgsTable tabs={tabs} sort={sort} />;
   } catch (err) {
@@ -205,10 +206,9 @@ export const StoryTable: FC<
 };
 
 export const ComponentsTable: FC<ComponentsProps> = (props) => {
-  const context = useContext(DocsContext);
-  const { components, include, exclude, sort } = props;
+  const { components, include, exclude, sort, parameters } = props;
 
-  const tabs = addComponentTabs({}, components, context, include, exclude);
+  const tabs = addComponentTabs({}, components, parameters, include, exclude);
   return <TabbedArgsTable tabs={tabs} sort={sort} />;
 };
 
@@ -226,6 +226,9 @@ export const ArgsTable: FC<ArgsTableProps> = (props) => {
     ({ parameters, component, subcomponents } = context.storyById());
   } catch (err) {
     const { of } = props as OfProps;
+    if ('of' in props && of === undefined) {
+      throw new Error('Unexpected `of={undefined}`, did you mistype a CSF file reference?');
+    }
     ({
       projectAnnotations: { parameters },
     } = context.resolveOf(of, ['component']));
@@ -253,7 +256,9 @@ export const ArgsTable: FC<ArgsTableProps> = (props) => {
   }
 
   if (components) {
-    return <ComponentsTable {...(props as ComponentsProps)} {...{ components, sort }} />;
+    return (
+      <ComponentsTable {...(props as ComponentsProps)} {...{ components, sort, parameters }} />
+    );
   }
 
   const mainLabel = getComponentName(main);
@@ -262,6 +267,7 @@ export const ArgsTable: FC<ArgsTableProps> = (props) => {
       {...(props as ComponentsProps)}
       components={{ [mainLabel]: main, ...subcomponents }}
       sort={sort}
+      parameters={parameters}
     />
   );
 };

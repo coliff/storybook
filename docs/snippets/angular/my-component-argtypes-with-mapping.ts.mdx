@@ -1,0 +1,27 @@
+```ts
+// MyComponent.stories.ts
+
+import type { Meta } from '@storybook/angular';
+
+import { MyComponent } from './MyComponent';
+
+const meta: Meta<MyComponent> = {
+  /* 👇 The title prop is optional.
+   * See https://storybook.js.org/docs/angular/configure/overview#configure-story-loading
+   * to learn how to generate automatic titles
+   */
+  title: 'MyComponent',
+  component: MyComponent,
+  argTypes: {
+    label: {
+      options: ['Normal', 'Bold', 'Italic'],
+      mapping: {
+        Bold: <b>Bold</b>,
+        Italic: <i>Italic</i>,
+      },
+    },
+  },
+};
+
+export default meta;
+```

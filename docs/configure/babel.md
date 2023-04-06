@@ -81,7 +81,7 @@ For detailed instructions on migrating from `V6` mode, please see [MIGRATION.md]
 If your app does not include a babelrc file, and you need one, you can create it by running the following command in your project directory:
 
 ```sh
-npx storybook@next babelrc
+npx storybook@latest babelrc
 ```
 
 Once the command completes, you should have a `.babelrc.json` file created in the root directory of your project, similar to the following example:

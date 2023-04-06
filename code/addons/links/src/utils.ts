@@ -1,7 +1,7 @@
 import { global } from '@storybook/global';
 import { addons, makeDecorator } from '@storybook/preview-api';
 import { STORY_CHANGED, SELECT_STORY } from '@storybook/core-events';
-import type { StoryId, StoryName, ComponentTitle } from '@storybook/types';
+import type { StoryId, StoryName, ComponentTitle, StoryKind } from '@storybook/types';
 import { toId } from '@storybook/csf';
 import { PARAM_KEY } from './constants';
 
@@ -11,8 +11,10 @@ interface ParamsId {
   storyId: StoryId;
 }
 interface ParamsCombo {
-  kind?: ComponentTitle;
+  kind?: StoryKind;
+  title?: ComponentTitle;
   story?: StoryName;
+  name?: StoryName;
 }
 
 function parseQuery(queryString: string) {
@@ -41,7 +43,11 @@ export const hrefTo = (title: ComponentTitle, name: StoryName): Promise<string> 
     // @ts-expect-error (Converted from ts-ignore)
     const titleToLink = title || existingId.split('--', 2)[0];
     const id = toId(titleToLink, name);
-    const url = `${location.origin + location.pathname}?${Object.entries({ ...query, id })
+    const path = `/story/${id}`;
+
+    // Drop the `iframe.html` from the preview path
+    const sbPath = location.pathname.replace(/iframe\.html$/, '');
+    const url = `${location.origin + sbPath}?${Object.entries({ path })
       .map((item) => `${item[0]}=${item[1]}`)
       .join('&')}`;
 

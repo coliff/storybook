@@ -1,5 +1,5 @@
 import type { FC } from 'react';
-import React, { Fragment, useCallback, useMemo, memo } from 'react';
+import React, { useState, Fragment, useCallback, useMemo, memo } from 'react';
 import memoize from 'memoizerific';
 
 import { useParameter, useGlobals } from '@storybook/manager-api';
@@ -82,7 +82,7 @@ export const BackgroundSelector: FC = memo(function BackgroundSelector() {
     BACKGROUNDS_PARAM_KEY,
     DEFAULT_BACKGROUNDS_CONFIG
   );
-
+  const [isTooltipVisible, setIsTooltipVisible] = useState(false);
   const [globals, updateGlobals] = useGlobals();
 
   const globalsBackgroundColor = globals[BACKGROUNDS_PARAM_KEY]?.value;
@@ -133,11 +133,12 @@ export const BackgroundSelector: FC = memo(function BackgroundSelector() {
             />
           );
         }}
+        onVisibleChange={setIsTooltipVisible}
       >
         <IconButton
           key="background"
           title="Change the background of the preview"
-          active={selectedBackgroundColor !== 'transparent'}
+          active={selectedBackgroundColor !== 'transparent' || isTooltipVisible}
         >
           <Icons icon="photo" />
         </IconButton>

@@ -414,9 +414,10 @@ export class CsfFile {
           const { callee } = node;
           if (t.isIdentifier(callee) && callee.name === 'storiesOf') {
             throw new Error(dedent`
-              CSF: unexpected storiesOf call ${formatLocation(node, self._fileName)}
+              Unexpected \`storiesOf\` usage: ${formatLocation(node, self._fileName)}.
 
-              More info: https://github.com/storybookjs/storybook/blob/next/MIGRATION.md#story-store-v7
+              In SB7, we use the next-generation \`storyStoreV7\` by default, which does not support \`storiesOf\`. 
+              More info, with details about how to opt-out here: https://github.com/storybookjs/storybook/blob/next/MIGRATION.md#storystorev7-enabled-by-default
             `);
           }
         },
@@ -516,8 +517,15 @@ export const loadCsf = (code: string, options: CsfOptions) => {
   return new CsfFile(ast, options);
 };
 
-export const formatCsf = (csf: CsfFile) => {
-  const { code } = generate.default(csf._ast, {});
+interface FormatOptions {
+  sourceMaps?: boolean;
+}
+export const formatCsf = (csf: CsfFile, options: FormatOptions = { sourceMaps: false }) => {
+  const result = generate.default(csf._ast, options);
+  if (options.sourceMaps) {
+    return result;
+  }
+  const { code } = result;
   return code;
 };
 
@@ -529,5 +537,5 @@ export const readCsf = async (fileName: string, options: CsfOptions) => {
 export const writeCsf = async (csf: CsfFile, fileName?: string) => {
   const fname = fileName || csf._fileName;
   if (!fname) throw new Error('Please specify a fileName for writeCsf');
-  await fs.writeFile(fileName as string, await formatCsf(csf));
+  await fs.writeFile(fileName as string, (await formatCsf(csf)) as string);
 };

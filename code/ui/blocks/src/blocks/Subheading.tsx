@@ -1,10 +1,10 @@
-import type { FC } from 'react';
+import type { FC, PropsWithChildren } from 'react';
 import React from 'react';
 import { H3 } from '@storybook/components';
 import { HeaderMdx } from './mdx';
 import type { HeadingProps } from './Heading';
 
-export const Subheading: FC<HeadingProps> = ({ children, disableAnchor }) => {
+export const Subheading: FC<PropsWithChildren<HeadingProps>> = ({ children, disableAnchor }) => {
   if (disableAnchor || typeof children !== 'string') {
     return <H3>{children}</H3>;
   }

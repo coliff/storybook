@@ -6,7 +6,7 @@ Teams publish Storybook online to review and collaborate on works in progress. T
 
 <video autoPlay muted playsInline loop>
   <source
-    src="storybook-publish-review-optimized.mp4"
+    src="storybook-workflow-publish.mp4"
     type="video/mp4"
   />
 </video>

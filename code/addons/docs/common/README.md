@@ -15,7 +15,7 @@ Popular frameworks like [React](../react/README.md)/[Vue](../vue/README.md)/[Ang
 First add the package. Make sure that the versions for your `@storybook/*` packages match:
 
 ```sh
-yarn add -D @storybook/addon-docs@next
+yarn add -D @storybook/addon-docs
 ```
 
 Then add the following to your `.storybook/main.js` addons:

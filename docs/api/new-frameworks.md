@@ -18,7 +18,7 @@ We recommend using `@storybook/html` as a starter framework since it’s the sim
 
 Supporting a new framework in Storybook typically consists of two main aspects:
 
-1. Configuring the server. In Storybook, the server is the node process that runs when you run `start-storybook` or `build-storybook`. Configuring the server typically means configuring babel and webpack in framework-specific ways.
+1. Configuring the server. In Storybook, the server is the node process that runs when you run `storybook dev` or `storybook build`. Configuring the server typically means configuring babel and webpack in framework-specific ways.
 
 2. Configuring the client. The client is the code that runs in the browser, and configuring it, means providing a framework-specific story rendering function.
 
@@ -33,7 +33,7 @@ It's helpful to understand Storybook's package structure before adding a framewo
 ```json
 {
   "bin": {
-    "start-storybook": "./bin/index.js",
+    "storybook": "./bin/index.js",
     "build-storybook": "./bin/build.js"
   }
 }
@@ -41,7 +41,7 @@ It's helpful to understand Storybook's package structure before adding a framewo
 
 These scripts pass an `options` object to `@storybook/core/server`, a library that abstracts all of Storybook’s framework-independent code.
 
-For example, here’s the boilerplate to start the dev server in `start-storybook`:
+For example, here’s the boilerplate to start the dev server with `storybook dev`:
 
 <!-- prettier-ignore-start -->
 
@@ -123,7 +123,8 @@ Consider the following hypothetical example:
 
 <CodeSnippets
   paths={[
-    'common/button-story-hypothetical-example.js.mdx'
+    'common/button-story-hypothetical-example.js.mdx',
+    'common/button-story-hypothetical-example.ts.mdx'
   ]}
   usesCsf3
   csf2Path="api/new-frameworks#snippet-button-story-hypothetical-example"

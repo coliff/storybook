@@ -20,6 +20,7 @@ import {
 export function codeGeneratorPlugin(options: Options): Plugin {
   const iframePath = require.resolve('@storybook/builder-vite/input/iframe.html');
   let iframeId: string;
+  let projectRoot: string;
 
   // noinspection JSUnusedGlobalSymbols
   return {
@@ -44,7 +45,7 @@ export function codeGeneratorPlugin(options: Options): Plugin {
 
       server.watcher.on('add', (path) => {
         // TODO maybe use the stories declaration in main
-        if (/\.stories\.([tj])sx?$/.test(path) || /\.(story|stories).mdx$/.test(path)) {
+        if (/\.stories\.([tj])sx?$/.test(path) || /\.mdx$/.test(path)) {
           // We need to emit a change event to trigger HMR
           server.watcher.emit('change', virtualStoriesFile);
         }
@@ -66,6 +67,7 @@ export function codeGeneratorPlugin(options: Options): Plugin {
       }
     },
     configResolved(config) {
+      projectRoot = config.root;
       iframeId = `${config.root}/iframe.html`;
     },
     resolveId(source) {
@@ -87,7 +89,7 @@ export function codeGeneratorPlugin(options: Options): Plugin {
 
       return undefined;
     },
-    async load(id) {
+    async load(id, config) {
       const storyStoreV7 = options.features?.storyStoreV7;
       if (id === virtualStoriesFile) {
         if (storyStoreV7) {
@@ -106,9 +108,9 @@ export function codeGeneratorPlugin(options: Options): Plugin {
 
       if (id === virtualFileId) {
         if (storyStoreV7) {
-          return generateModernIframeScriptCode(options);
+          return generateModernIframeScriptCode(options, projectRoot);
         }
-        return generateIframeScriptCode(options);
+        return generateIframeScriptCode(options, projectRoot);
       }
 
       if (id === iframeId) {

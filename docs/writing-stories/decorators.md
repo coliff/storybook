@@ -2,6 +2,8 @@
 title: 'Decorators'
 ---
 
+<YouTubeCallout id="4yi_yCTkgng" title="Storybook Decorators Crash Course" />
+
 A decorator is a way to wrap a story in extra “rendering” functionality. Many addons define decorators to augment your stories with extra rendering or gather details about how your story renders.
 
 When writing stories, decorators are typically used to wrap stories with extra markup or context mocking.
@@ -17,12 +19,9 @@ Some components require a “harness” to render in a useful way. For instance,
 <CodeSnippets
   paths={[
     'react/your-component-with-decorator.js.mdx',
-    'react/your-component-with-decorator.story-function-js.js.mdx',
     'react/your-component-with-decorator.ts.mdx',
-    'react/your-component-with-decorator.story-function-ts.ts.mdx',
     'vue/your-component-with-decorator.js.mdx',
-    'vue/your-component-with-decorator.ts-2.ts.mdx',
-    'vue/your-component-with-decorator.ts-3.ts.mdx',
+    'vue/your-component-with-decorator.ts.mdx',
     'angular/your-component-with-decorator.ts.mdx',
     'web-components/your-component-with-decorator.js.mdx',
     'web-components/your-component-with-decorator.ts.mdx',
@@ -45,12 +44,17 @@ For example, if you're working with React's Styled Components and your component
 <CodeSnippets
   paths={[
     'react/storybook-preview-with-styled-components-decorator.js.mdx',
-    'react/storybook-preview-with-styled-components-decorator.story-function.js.mdx',
-    'vue/storybook-preview-with-library-decorator.2-library.js.mdx',
-    'vue/storybook-preview-with-library-decorator.3-library.js.mdx',
-    'vue/storybook-preview-with-hoc-component-decorator.2-component.js.mdx',
-    'vue/storybook-preview-with-hoc-component-decorator.3-component.js.mdx',
-    'vue/storybook-preview-with-mixin-decorator.2-mixin.js.mdx',
+    'react/storybook-preview-with-styled-components-decorator.ts.mdx',
+    'vue/storybook-preview-with-library-decorator.library-2.js.mdx',
+    'vue/storybook-preview-with-library-decorator.library-2.ts.mdx',
+    'vue/storybook-preview-with-library-decorator.library-3.js.mdx',
+    'vue/storybook-preview-with-library-decorator.library-3.ts.mdx',
+    'vue/storybook-preview-with-hoc-component-decorator.component-2.js.mdx',
+    'vue/storybook-preview-with-hoc-component-decorator.component-2.ts.mdx',
+    'vue/storybook-preview-with-hoc-component-decorator.component-3.js.mdx',
+    'vue/storybook-preview-with-hoc-component-decorator.component-3.ts.mdx',
+    'vue/storybook-preview-with-mixin-decorator.mixin-2.js.mdx',
+    'vue/storybook-preview-with-mixin-decorator.mixin-2.ts.mdx',
     'angular/add-localize-package-to-polyfills.ts.mdx',
     'angular/storybook-preview-with-angular-polyfills.js.mdx',
   ]}
@@ -86,11 +90,9 @@ To define a decorator for a single story, use the `decorators` key on a named ex
 <CodeSnippets
   paths={[
     'react/button-story-decorator.js.mdx',
-    'react/button-story-decorator.story-function.js.mdx',
     'react/button-story-decorator.ts.mdx',
     'vue/button-story-decorator.js.mdx',
-    'vue/button-story-decorator.ts-2.ts.mdx',
-    'vue/button-story-decorator.ts-3.ts.mdx',
+    'vue/button-story-decorator.ts.mdx',
     'angular/button-story-decorator.ts.mdx',
     'web-components/button-story-decorator.js.mdx',
     'web-components/button-story-decorator.ts.mdx',
@@ -116,8 +118,7 @@ To define a decorator for all stories of a component, use the `decorators` key o
     'react/button-story-component-decorator.js.mdx',
     'react/button-story-component-decorator.ts.mdx',
     'vue/button-story-component-decorator.js.mdx',
-    'vue/button-story-component-decorator.ts-2.ts.mdx',
-    'vue/button-story-component-decorator.ts-3.ts.mdx',
+    'vue/button-story-component-decorator.ts.mdx',
     'angular/button-story-component-decorator.ts.mdx',
     'web-components/button-story-component-decorator.js.mdx',
     'web-components/button-story-component-decorator.ts.mdx',
@@ -136,8 +137,9 @@ We can also set a decorator for **all stories** via the `decorators` export of y
 <CodeSnippets
   paths={[
     'react/storybook-preview-global-decorator.js.mdx',
-    'react/storybook-preview-global-decorator.story-function.js.mdx',
+    'react/storybook-preview-global-decorator.ts.mdx',
     'vue/storybook-preview-global-decorator.js.mdx',
+    'vue/storybook-preview-global-decorator.ts.mdx',
     'angular/storybook-preview-global-decorator.ts.mdx',
     'web-components/storybook-preview-global-decorator.js.mdx',
     'svelte/storybook-preview-global-decorator.js.mdx',

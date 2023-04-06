@@ -42,9 +42,12 @@ The following `exclude` configurations are equivalent:
 
 <CodeSnippets
   paths={[
+    'angular/api-doc-block-argtypes-parameter.ts.mdx',
+    'web-components/api-doc-block-argtypes-parameter.js.mdx',
+    'web-components/api-doc-block-argtypes-parameter.ts.mdx',
+    'web-components/api-doc-block-argtypes-parameter.ts.mdx',
     'common/api-doc-block-argtypes-parameter.js.mdx',
     'common/api-doc-block-argtypes-parameter.ts.mdx',
-    'common/api-doc-block-argtypes-parameter.ts-4-9.mdx',
   ]}
 />
 

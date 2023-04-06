@@ -44,9 +44,11 @@ The following `autoplay` configurations are equivalent:
 
 <CodeSnippets
   paths={[
+    'angular/api-doc-block-story-parameter.ts.mdx',
+    'web-components/api-doc-block-story-parameter.js.mdx',
+    'web-components/api-doc-block-story-parameter.ts.mdx',
     'common/api-doc-block-story-parameter.js.mdx',
     'common/api-doc-block-story-parameter.ts.mdx',
-    'common/api-doc-block-story-parameter.ts-4-9.mdx',
   ]}
 />
 

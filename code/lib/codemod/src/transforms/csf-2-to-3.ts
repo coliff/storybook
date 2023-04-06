@@ -38,12 +38,6 @@ const isStoryAnnotation = (stmt: t.Statement, objectExports: Record<string, any>
   t.isIdentifier(stmt.expression.left.object) &&
   objectExports[stmt.expression.left.object.name];
 
-const isTemplateDeclaration = (stmt: t.Statement, templates: Record<string, any>) =>
-  t.isVariableDeclaration(stmt) &&
-  stmt.declarations.length === 1 &&
-  t.isIdentifier(stmt.declarations[0].id) &&
-  templates[stmt.declarations[0].id.name];
-
 const getNewExport = (stmt: t.Statement, objectExports: Record<string, any>) => {
   if (
     t.isExportNamedDeclaration(stmt) &&
@@ -94,6 +88,28 @@ const isReactGlobalRenderFn = (csf: CsfFile, storyFn: t.Expression) => {
 const isSimpleCSFStory = (init: t.Expression, annotations: t.ObjectProperty[]) =>
   annotations.length === 0 && t.isArrowFunctionExpression(init) && init.params.length === 0;
 
+function removeUnusedTemplates(csf: CsfFile) {
+  Object.entries(csf._templates).forEach(([template, templateExpression]) => {
+    const references: NodePath[] = [];
+    babel.traverse(csf._ast, {
+      Identifier: (path) => {
+        if (path.node.name === template) references.push(path);
+      },
+    });
+    // if there is only one reference and this reference is the variable declaration initializing the template
+    // then we are sure the template is unused
+    if (references.length === 1) {
+      const reference = references[0];
+      if (
+        reference.parentPath.isVariableDeclarator() &&
+        reference.parentPath.node.init === templateExpression
+      ) {
+        reference.parentPath.remove();
+      }
+    }
+  });
+}
+
 export default function transform(info: FileInfo, api: API, options: { parser?: string }) {
   const makeTitle = (userTitle?: string) => {
     return userTitle || 'FIXME';
@@ -137,15 +153,18 @@ export default function transform(info: FileInfo, api: API, options: { parser?: 
         return;
       }
 
-      // Remove the render function when we can hoist the template
-      // const Template = (args) => <Cat {...args} />;
-      // export const A = Template.bind({});
-      let storyFn: t.Expression = template && (csf._templates[template] as any as t.Expression);
+      let storyFn: t.Expression = template && t.identifier(template);
       if (!storyFn) {
         storyFn = init;
       }
 
-      const renderAnnotation = isReactGlobalRenderFn(csf, storyFn)
+      // Remove the render function when we can hoist the template
+      // const Template = (args) => <Cat {...args} />;
+      // export const A = Template.bind({});
+      const renderAnnotation = isReactGlobalRenderFn(
+        csf,
+        template ? csf._templates[template] : storyFn
+      )
         ? []
         : [t.objectProperty(t.identifier('render'), storyFn)];
 
@@ -160,15 +179,10 @@ export default function transform(info: FileInfo, api: API, options: { parser?: 
     }
   });
 
-  importHelper.removeDeprecatedStoryImport();
-
   csf._ast.program.body = csf._ast.program.body.reduce((acc, stmt) => {
     const statement = stmt as t.Statement;
     // remove story annotations & template declarations
-    if (
-      isStoryAnnotation(statement, objectExports) ||
-      isTemplateDeclaration(statement, csf._templates)
-    ) {
+    if (isStoryAnnotation(statement, objectExports)) {
       return acc;
     }
 
@@ -185,6 +199,8 @@ export default function transform(info: FileInfo, api: API, options: { parser?: 
   }, []);
 
   upgradeDeprecatedTypes(file);
+  importHelper.removeDeprecatedStoryImport();
+  removeUnusedTemplates(csf);
 
   let output = recast.print(csf._ast, {}).code;
 

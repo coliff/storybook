@@ -123,9 +123,6 @@ describe('configurePreview', () => {
       "/** @type { import('@storybook/react').Preview } */
       const preview = {
         parameters: {
-          backgrounds: {
-            default: 'light',
-          },
           actions: { argTypesRegex: '^on[A-Z].*' },
           controls: {
             matchers: {
@@ -157,9 +154,6 @@ describe('configurePreview', () => {
 
       const preview: Preview = {
         parameters: {
-          backgrounds: {
-            default: 'light',
-          },
           actions: { argTypesRegex: '^on[A-Z].*' },
           controls: {
             matchers: {
@@ -211,9 +205,6 @@ describe('configurePreview', () => {
 
       const preview: Preview = {
         parameters: {
-          backgrounds: {
-            default: 'light',
-          },
           actions: { argTypesRegex: '^on[A-Z].*' },
           controls: {
             matchers: {

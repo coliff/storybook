@@ -10,6 +10,7 @@ import type {
   Store_CSFExports,
   StoryContext,
   Parameters,
+  PreparedStoryFn,
 } from '@storybook/types';
 
 import { HooksContext } from '../../../addons';
@@ -35,7 +36,7 @@ export function composeStory<TRenderer extends Renderer = Renderer, TArgs extend
   projectAnnotations: ProjectAnnotations<TRenderer> = GLOBAL_STORYBOOK_PROJECT_ANNOTATIONS,
   defaultConfig: ProjectAnnotations<TRenderer> = {},
   exportsName?: string
-) {
+): PreparedStoryFn<TRenderer, Partial<TArgs>> {
   if (storyAnnotations === undefined) {
     throw new Error('Expected a story but received undefined.');
   }
@@ -84,8 +85,8 @@ export function composeStory<TRenderer extends Renderer = Renderer, TArgs extend
   };
 
   composedStory.storyName = storyName;
-  composedStory.args = story.initialArgs;
-  composedStory.play = story.playFunction as ComposedStoryPlayFn;
+  composedStory.args = story.initialArgs as Partial<TArgs>;
+  composedStory.play = story.playFunction as ComposedStoryPlayFn<TRenderer, Partial<TArgs>>;
   composedStory.parameters = story.parameters as Parameters;
 
   return composedStory;

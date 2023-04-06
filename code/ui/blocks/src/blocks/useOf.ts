@@ -1,6 +1,5 @@
 import type {
   DocsContextProps,
-  ModuleExport,
   ResolvedModuleExportType,
   ResolvedModuleExportFromType,
 } from '@storybook/types';
@@ -16,7 +15,7 @@ export type Of = Parameters<DocsContextProps['resolveOf']>[0];
  * if the resolved module is a component it will include the project annotations
  */
 export const useOf = <TType extends ResolvedModuleExportType>(
-  moduleExportOrType: ModuleExport | TType,
+  moduleExportOrType: Of,
   validTypes?: TType[]
 ): ResolvedModuleExportFromType<TType> => {
   const context = useContext(DocsContext);

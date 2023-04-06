@@ -424,7 +424,7 @@ export const newFrameworks: Fix<NewFrameworkRunOptions> = {
       ${migrationSteps}
 
       To learn more about the new framework format, see: ${chalk.yellow(
-        'https://github.com/storybookjs/storybook/blob/next/MIGRATION.md##new-framework-api'
+        'https://github.com/storybookjs/storybook/blob/next/MIGRATION.md#new-framework-api'
       )}${disclaimer}
     `;
   },

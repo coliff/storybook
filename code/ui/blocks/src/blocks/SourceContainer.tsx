@@ -1,4 +1,4 @@
-import type { FC, Context } from 'react';
+import type { FC, Context, PropsWithChildren } from 'react';
 import React, { createContext, useEffect, useState } from 'react';
 
 import { dequal as deepEqual } from 'dequal';
@@ -38,7 +38,10 @@ type SnippetRenderedEvent = {
 
 export const UNKNOWN_ARGS_HASH = '--unknown--';
 
-export const SourceContainer: FC<{ channel: Channel }> = ({ children, channel }) => {
+export const SourceContainer: FC<PropsWithChildren<{ channel: Channel }>> = ({
+  children,
+  channel,
+}) => {
   const [sources, setSources] = useState<StorySources>({});
 
   useEffect(() => {

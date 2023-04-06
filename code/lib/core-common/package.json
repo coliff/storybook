@@ -1,6 +1,6 @@
 {
   "name": "@storybook/core-common",
-  "version": "7.0.0-beta.62",
+  "version": "7.1.0-alpha.0",
   "description": "Storybook framework-agnostic API",
   "keywords": [
     "storybook"
@@ -43,14 +43,14 @@
     "prep": "../../../scripts/prepare/bundle.ts"
   },
   "dependencies": {
-    "@storybook/node-logger": "7.0.0-beta.62",
-    "@storybook/types": "7.0.0-beta.62",
+    "@storybook/node-logger": "7.1.0-alpha.0",
+    "@storybook/types": "7.1.0-alpha.0",
     "@types/node": "^16.0.0",
     "@types/pretty-hrtime": "^1.0.0",
     "chalk": "^4.1.0",
     "enhanced-resolve": "^5.12.0",
-    "esbuild": "^0.16.4",
-    "esbuild-register": "^3.3.3",
+    "esbuild": "^0.17.0",
+    "esbuild-register": "^3.4.0",
     "file-system-cache": "^2.0.0",
     "find-up": "^5.0.0",
     "fs-extra": "^11.1.0",
@@ -71,6 +71,7 @@
     "@types/mock-fs": "^4.13.1",
     "@types/picomatch": "^2.3.0",
     "mock-fs": "^5.2.0",
+    "slash": "^5.0.0",
     "type-fest": "^2.19.0",
     "typescript": "~4.9.3"
   },
@@ -82,5 +83,5 @@
       "./src/index.ts"
     ]
   },
-  "gitHead": "f70dcdb599363bfd6e6d2b63f8fadd02e9cbe00a"
+  "gitHead": "8ff2938f8ac0c2d524ae653cd89251e5cd4721a4"
 }

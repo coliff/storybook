@@ -8,7 +8,7 @@ export const Link: FC<AnchorHTMLAttributes<HTMLAnchorElement>> = ({
 }) => {
   const isStorybookPath = /^\//.test(input);
   const isAnchorUrl = /^#.*/.test(input);
-  const href = isStorybookPath ? `?path=${input}` : input;
+  const href = isStorybookPath ? `./?path=${input}` : input;
   const target = isAnchorUrl ? '_self' : '_top';
 
   return (

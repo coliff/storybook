@@ -44,5 +44,25 @@ describe('interpret-files', () => {
     expect(file).toBeUndefined();
   });
 
+  it('will interpret file as file.mts when it exists in fs', () => {
+    mock({
+      'path/to/file.mts': 'ts file contents',
+    });
+
+    const file = getInterpretedFile('path/to/file');
+
+    expect(file).toEqual('path/to/file.mts');
+  });
+
+  it('will interpret file as file.cts when it exists in fs', () => {
+    mock({
+      'path/to/file.cts': 'ts file contents',
+    });
+
+    const file = getInterpretedFile('path/to/file');
+
+    expect(file).toEqual('path/to/file.cts');
+  });
+
   afterEach(mock.restore);
 });

@@ -22,6 +22,7 @@ But you're not restricted to these backgrounds, you can configure your own set o
 <CodeSnippets
   paths={[
     'common/storybook-preview-configure-background-colors.js.mdx',
+    'common/storybook-preview-configure-background-colors.ts.mdx',
   ]}
 />
 
@@ -37,6 +38,9 @@ You can also define backgrounds per-component or per-story basis through [parame
 
 <CodeSnippets
   paths={[
+    'angular/storybook-addon-backgrounds-configure-backgrounds.ts.mdx',
+    'web-components/storybook-addon-backgrounds-configure-backgrounds.js.mdx',
+    'web-components/storybook-addon-backgrounds-configure-backgrounds.ts.mdx',
     'common/storybook-addon-backgrounds-configure-backgrounds.js.mdx',
     'common/storybook-addon-backgrounds-configure-backgrounds.ts.mdx',
   ]}
@@ -50,6 +54,9 @@ You can also override a single key on the `backgrounds` parameter, for instance,
 
 <CodeSnippets
   paths={[
+    'angular/storybook-addon-backgrounds-override-background-color.ts.mdx',
+    'web-components/storybook-addon-backgrounds-override-background-color.js.mdx',
+    'web-components/storybook-addon-backgrounds-override-background-color.ts.mdx',
     'common/storybook-addon-backgrounds-override-background-color.js.mdx',
     'common/storybook-addon-backgrounds-override-background-color.ts.mdx',
   ]}
@@ -67,6 +74,9 @@ If you want to disable backgrounds in a story, you can do so by setting the `bac
 
 <CodeSnippets
   paths={[
+    'angular/storybook-addon-backgrounds-disable-backgrounds.ts.mdx',
+    'web-components/storybook-addon-backgrounds-disable-backgrounds.js.mdx',
+    'web-components/storybook-addon-backgrounds-disable-backgrounds.ts.mdx',
     'common/storybook-addon-backgrounds-disable-backgrounds.js.mdx',
     'common/storybook-addon-backgrounds-disable-backgrounds.ts.mdx',
   ]}
@@ -86,6 +96,9 @@ You don't need additional configuration to get started. But its properties are f
 
 <CodeSnippets
   paths={[
+    'angular/storybook-addon-backgrounds-configure-grid.ts.mdx',
+    'web-components/storybook-addon-backgrounds-configure-grid.js.mdx',
+    'web-components/storybook-addon-backgrounds-configure-grid.ts.mdx',
     'common/storybook-addon-backgrounds-configure-grid.js.mdx',
     'common/storybook-addon-backgrounds-configure-grid.ts.mdx',
   ]}
@@ -101,6 +114,9 @@ If you need to disable the grid for a specific story, set the `backgrounds` para
 
 <CodeSnippets
   paths={[
+    'angular/storybook-addon-backgrounds-disable-grid.ts.mdx',
+    'web-components/storybook-addon-backgrounds-disable-grid.js.mdx',
+    'web-components/storybook-addon-backgrounds-disable-grid.ts.mdx',
     'common/storybook-addon-backgrounds-disable-grid.js.mdx',
     'common/storybook-addon-backgrounds-disable-grid.ts.mdx',
   ]}

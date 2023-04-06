@@ -38,7 +38,7 @@ const generator: Generator<{ projectName: string }> = async (
 
   paddedLog(`Adding Storybook support to your "${angularProjectName}" project`);
 
-  const { root } = angularJSON.getProjectSettingsByName(angularProjectName);
+  const { root, projectType } = angularJSON.getProjectSettingsByName(angularProjectName);
   const { projects } = angularJSON;
   const useCompodoc = commandOptions.yes ? true : await promptForCompoDocs();
   const storybookFolder = root ? `${root}/.storybook` : '.storybook';
@@ -79,11 +79,12 @@ const generator: Generator<{ projectName: string }> = async (
     });
   }
 
-  const templateDir = join(getCliDir(), 'templates', 'angular');
+  const templateDir = join(getCliDir(), 'templates', 'angular', projectType || 'application');
   copyTemplate(templateDir, root || undefined);
 
   return {
     projectName: angularProjectName,
+    configDir: storybookFolder,
   };
 };
 

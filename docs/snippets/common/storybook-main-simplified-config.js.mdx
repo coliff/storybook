@@ -2,6 +2,12 @@
 // .storybook/main.js
 
 export default {
+  stories: ['../src/**/*.mdx', '../src/**/*.stories.@(js|jsx|ts|tsx)'],
+  addons: [
+    '@storybook/addon-links',
+    '@storybook/addon-essentials',
+    '@storybook/addon-interactions',
+  ],
   webpackFinal: async (config) => {
     config.plugins.push(...);
     return config;

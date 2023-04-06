@@ -22,6 +22,7 @@ addons.register(ADDON_ID, (api) => {
       const totalNb = violationsNb + incompleteNb;
       return totalNb !== 0 ? `Accessibility (${totalNb})` : 'Accessibility';
     },
+    id: 'accessibility',
     type: types.PANEL,
     render: ({ active = true, key }) => (
       <A11yContextProvider key={key} active={active}>

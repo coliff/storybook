@@ -12,7 +12,7 @@
 Follow the prompts after running this command in your Preact project's root directory:
 
 ```bash
-npx storybook@next init
+npx storybook@latest init
 ```
 
 [More on getting started with Storybook](https://storybook.js.org/docs/preact/get-started/install)
@@ -22,7 +22,7 @@ npx storybook@next init
 This framework is designed to work with Storybook 7. If you’re not already using v7, upgrade with this command:
 
 ```bash
-npx storybook@next upgrade --prerelease
+npx storybook@latest upgrade --prerelease
 ```
 
 #### Manual migration
@@ -30,7 +30,7 @@ npx storybook@next upgrade --prerelease
 Install the framework:
 
 ```bash
-yarn add --dev @storybook/preact-vite@next
+yarn add --dev @storybook/preact-vite
 ```
 
 Update your `main.js` to change the framework property:

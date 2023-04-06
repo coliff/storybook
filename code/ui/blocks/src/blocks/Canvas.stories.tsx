@@ -33,26 +33,36 @@ export default meta;
 
 type Story = StoryObj<typeof meta>;
 
-export const DefaultAttached: Story = {
+export const OfAttached: Story = {
   args: {
     of: ButtonStories.Primary,
   },
 };
 
-export const DefaultUnattached: Story = {
+export const OfUnattached: Story = {
   args: {
     of: ButtonStories.Primary,
   },
   parameters: { attached: false },
 };
 
-export const DefaultError: Story = {
+export const OfError: Story = {
   args: {
     of: ButtonStories.ErrorStory,
   },
 };
 
-export const UndefinedOf: Story = {};
+export const DefaultAttached: Story = {};
+
+export const OfUndefined: Story = {
+  args: {
+    // @ts-expect-error this is supposed to be undefined
+    // eslint-disable-next-line import/namespace
+    of: ButtonStories.NotDefined,
+  },
+  parameters: { chromatic: { disableSnapshot: true } },
+  decorators: [(s) => (window?.navigator.userAgent.match(/StorybookTestRunner/) ? <div /> : s())],
+};
 
 export const PropWithToolbar: Story = {
   name: 'Prop withToolbar = true',

@@ -247,30 +247,6 @@ describe('jsxDecorator', () => {
     expect(mockChannel.emit).not.toHaveBeenCalled();
   });
 
-  it('allows the snippet output to be modified by transformSource', async () => {
-    const storyFn = (args: any) => <div>args story</div>;
-    const transformSource = (dom: string) => `<p>${dom}</p>`;
-    const jsx = { transformSource };
-    const context = makeContext('args', { __isArgsStory: true, jsx }, {});
-    jsxDecorator(storyFn, context);
-    await new Promise((r) => setTimeout(r, 0));
-
-    expect(mockChannel.emit).toHaveBeenCalledWith(SNIPPET_RENDERED, {
-      id: 'jsx-test--args',
-      args: {},
-      source: '<p><div>\n  args story\n</div></p>',
-    });
-  });
-
-  it('provides the story context to transformSource', () => {
-    const storyFn = (args: any) => <div>args story</div>;
-    const transformSource = jest.fn();
-    const jsx = { transformSource };
-    const context = makeContext('args', { __isArgsStory: true, jsx }, {});
-    jsxDecorator(storyFn, context);
-    expect(transformSource).toHaveBeenCalledWith('<div>\n  args story\n</div>', context);
-  });
-
   it('renders MDX properly', async () => {
     // FIXME: generate this from actual MDX
     const mdxElement: ReturnType<typeof createElement> = {

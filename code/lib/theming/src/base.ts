@@ -44,7 +44,7 @@ export const color = {
 };
 
 export const background = {
-  app: '#F5FBFF',
+  app: '#F6F9FC',
   bar: color.lightest,
   content: color.lightest,
   gridCellSize: 10,

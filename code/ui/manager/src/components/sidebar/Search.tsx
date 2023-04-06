@@ -20,7 +20,7 @@ import type {
 } from './types';
 import { isSearchResult, isExpandType, isClearType, isCloseType } from './types';
 
-import { searchItem } from './utils';
+import { scrollIntoView, searchItem } from './utils';
 
 const { document } = global;
 
@@ -293,6 +293,7 @@ export const Search = React.memo<{
       stateReducer={stateReducer}
       // @ts-expect-error (Converted from ts-ignore)
       itemToString={(result) => result?.item?.name || ''}
+      scrollIntoView={(e) => scrollIntoView(e)}
     >
       {({
         isOpen,

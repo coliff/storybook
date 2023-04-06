@@ -1,7 +1,8 @@
 ```ts
 // MyComponent.stories.ts
 
-import type { Meta, StoryObj } from '@storybook/vue'; // Replace with '@storybook/vue3' if you're working with Vue3 project
+// Replace vue3 with vue if you are using Storybook for Vue 2
+import type { Meta, StoryObj } from '@storybook/vue3';
 
 import Layout from './Layout.vue';
 
@@ -9,7 +10,7 @@ import MyComponent from './MyComponent.vue';
 
 const meta: Meta<typeof MyComponent> = {
   /* 👇 The title prop is optional.
-   * See https://storybook.js.org/docs/7.0/vue/configure/overview#configure-story-loading
+   * See https://storybook.js.org/docs/vue/configure/overview#configure-story-loading
    * to learn how to generate automatic titles
    */
   title: 'MyComponent',

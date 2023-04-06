@@ -207,7 +207,7 @@ export const SearchResults: FC<{
     const refId = currentTarget.getAttribute('data-refid');
     const item = api.getData(storyId, refId === 'storybook_internal' ? undefined : refId);
 
-    if (item.isComponent) {
+    if (item?.isComponent) {
       api.emit(PRELOAD_ENTRIES, {
         // @ts-expect-error (TODO)
         ids: [item.isLeaf ? item.id : item.children[0]],

@@ -1,0 +1,30 @@
+```ts
+// Button.stories.ts|tsx
+
+// Replace your-framework with the name of your framework
+import type { Meta } from '@storybook/your-framework';
+
+import { Button } from './Button';
+
+const meta = {
+  /* 👇 The title prop is optional.
+   * See https://storybook.js.org/docs/react/configure/overview#configure-story-loading
+   * to learn how to generate automatic titles
+   */
+  title: 'Button',
+  component: Button,
+  argTypes: {
+    // Button can be passed a label or an image, not both
+    label: {
+      control: 'text',
+      if: { arg: 'image', truthy: false },
+    },
+    image: {
+      control: { type: 'select', options: ['foo.jpg', 'bar.jpg'] },
+      if: { arg: 'label', truthy: false },
+    },
+  },
+} satisfies Meta<typeof Button>;
+
+export default meta;
+```

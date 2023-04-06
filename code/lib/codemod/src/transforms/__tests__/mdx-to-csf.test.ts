@@ -15,22 +15,39 @@ beforeEach(() => {
   fs.existsSync.mockImplementation(() => false);
 });
 
-test('drop invalid story nodes', () => {
+test('update import even when no stories can be extracted', () => {
   const input = dedent`
-      import { Meta } from '@storybook/addon-docs';
+      import { Heading } from '@storybook/addon-docs';
 
-      <Meta title="Foobar" />
-      
-      <Story>No name!</Story>  
-      
-      <Story name="Primary">Story</Story>
-     
+      <Heading />     
     `;
 
   const mdx = jscodeshift({ source: input, path: 'Foobar.stories.mdx' });
 
   expect(mdx).toMatchInlineSnapshot(`
-    import { Meta } from '@storybook/addon-docs';
+    import { Heading } from '@storybook/blocks';
+
+    <Heading />
+
+  `);
+});
+
+test('drop invalid story nodes', () => {
+  const input = dedent`
+      import { Meta, Story } from '@storybook/addon-docs';
+
+      <Meta title="Foobar" />
+      
+      <Story>No name!</Story>  
+      
+      <Story name="Primary">Story</Story>     
+    `;
+
+  const mdx = jscodeshift({ source: input, path: 'Foobar.stories.mdx' });
+
+  expect(mdx).toMatchInlineSnapshot(`
+    import { Meta, Story } from '@storybook/blocks';
+    import * as FoobarStories from './Foobar.stories';
 
     <Meta of={FoobarStories} />
 
@@ -96,7 +113,7 @@ test('Comment out story nodes with id', () => {
 
     <Meta of={FoobarStories} />
 
-    {/* <Story id="button--primary" /> is deprecated, please migrate it to <Story of={referenceToStory} /> */}
+    {/* <Story id="button--primary" /> is deprecated, please migrate it to <Story of={referenceToStory} /> see: https://storybook.js.org/migration-guides/7.0 */}
 
     <Story id="button--primary" />
 
@@ -134,6 +151,30 @@ test('convert correct story nodes', () => {
       render: () => 'Story',
       name: 'Primary',
     };
+
+  `);
+});
+
+test('convert addon-docs imports', () => {
+  const input = dedent`
+      import { Meta } from '@storybook/addon-docs';
+      import { Story } from '@storybook/addon-docs/blocks';
+
+      <Meta title="Foobar" />
+      
+      <Story name="Primary">Story</Story>
+    `;
+
+  const mdx = jscodeshift({ source: input, path: 'Foobar.stories.mdx' });
+
+  expect(mdx).toMatchInlineSnapshot(`
+    import { Meta } from '@storybook/blocks';
+    import { Story } from '@storybook/blocks';
+    import * as FoobarStories from './Foobar.stories';
+
+    <Meta of={FoobarStories} />
+
+    <Story of={FoobarStories.Primary} />
 
   `);
 });

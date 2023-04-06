@@ -1,14 +1,12 @@
 import memoize from 'memoizerific';
-import { resolve } from 'path';
+import { CODE_DIRECTORY } from './constants';
 import { execaCommand } from './exec';
 
 export type Workspace = { name: string; location: string };
 
-const codeDir = resolve(__dirname, '../../code');
-
 async function getWorkspaces() {
   const { stdout } = await execaCommand('yarn workspaces list --json', {
-    cwd: codeDir,
+    cwd: CODE_DIRECTORY,
     shell: true,
   });
   return JSON.parse(`[${stdout.split('\n').join(',')}]`) as Workspace[];

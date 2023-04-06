@@ -178,18 +178,12 @@ export const RefIndicator = React.memo(
         [list]
       );
 
-      const changeVersion = useCallback(
-        ((event, item) => {
-          event.preventDefault();
-          api.changeRefVersion(ref.id, item.href);
-        }) as ClickHandler,
-        []
-      );
-
       return (
         <IndicatorPlacement ref={forwardedRef}>
           <WithTooltip
             placement="bottom-start"
+            trigger="click"
+            closeOnOutsideClick
             tooltip={
               <MessageWrapper>
                 <Spaced row={0}>
@@ -217,17 +211,23 @@ export const RefIndicator = React.memo(
           {ref.versions && Object.keys(ref.versions).length ? (
             <WithTooltip
               placement="bottom-start"
-              tooltip={
+              trigger="click"
+              closeOnOutsideClick
+              tooltip={(tooltip) => (
                 <TooltipLinkList
                   links={Object.entries(ref.versions).map(([id, href]) => ({
                     icon: href === ref.url ? 'check' : undefined,
                     id,
                     title: id,
                     href,
-                    onClick: changeVersion,
+                    onClick: (event, item) => {
+                      event.preventDefault();
+                      api.changeRefVersion(ref.id, item.href);
+                      tooltip.onHide();
+                    },
                   }))}
                 />
-              }
+              )}
             >
               <CurrentVersion url={ref.url} versions={ref.versions} />
             </WithTooltip>

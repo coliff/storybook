@@ -117,7 +117,8 @@ export const Ref: FC<RefType & RefProps> = React.memo(function Ref(props) {
   const indicatorRef = useRef<HTMLElement>(null);
 
   const isMain = refId === DEFAULT_REF_ID;
-  const isLoadingInjected = type === 'auto-inject' && !previewInitialized;
+  const isLoadingInjected =
+    (type === 'auto-inject' && !previewInitialized) || type === 'server-checked';
   const isLoading = isLoadingMain || isLoadingInjected || type === 'unknown';
   const isError = !!indexError;
   const isEmpty = !isLoading && length === 0;
@@ -125,6 +126,7 @@ export const Ref: FC<RefType & RefProps> = React.memo(function Ref(props) {
 
   const state = getStateType(isLoading, isAuthRequired, isError, isEmpty);
   const [isExpanded, setExpanded] = useState<boolean>(expanded);
+
   const handleClick = useCallback(() => setExpanded((value) => !value), [setExpanded]);
 
   const setHighlightedItemId = useCallback(
@@ -136,6 +138,7 @@ export const Ref: FC<RefType & RefProps> = React.memo(function Ref(props) {
     (storyId: string) => api && api.selectStory(storyId, undefined, { ref: !isMain && refId }),
     [api, isMain, refId]
   );
+
   return (
     <>
       {isMain || (

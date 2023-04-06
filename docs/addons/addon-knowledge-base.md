@@ -26,6 +26,9 @@ Then when adding a story, you can pass a disabled parameter.
 
 <CodeSnippets
   paths={[
+    'angular/button-story-disable-addon.ts.mdx',
+    'web-components/button-story-disable-addon.js.mdx',
+    'web-components/button-story-disable-addon.ts.mdx',
     'common/button-story-disable-addon.js.mdx',
     'common/button-story-disable-addon.ts.mdx',
   ]}

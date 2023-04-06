@@ -84,46 +84,4 @@ describe('sourceDecorator', () => {
       source: '<div>args story</div>',
     });
   });
-
-  it('allows the snippet output to be modified by transformSource', async () => {
-    const storyFn = (args: any) => html`<div>args story</div>`;
-    const transformSource = (dom: string) => `<p>${dom}</p>`;
-    const docs = { transformSource };
-    const context = makeContext('args', { __isArgsStory: true, docs }, {});
-    sourceDecorator(storyFn, context);
-    await tick();
-    expect(mockChannel.emit).toHaveBeenCalledWith(SNIPPET_RENDERED, {
-      id: 'lit-test--args',
-      args: {},
-      source: '<p><div>args story</div></p>',
-    });
-  });
-
-  it('provides the story context to transformSource', () => {
-    const storyFn = (args: any) => html`<div>args story</div>`;
-    const transformSource = jest.fn((x) => x);
-    const docs = { transformSource };
-    const context = makeContext('args', { __isArgsStory: true, docs }, {});
-    sourceDecorator(storyFn, context);
-    expect(transformSource).toHaveBeenCalledWith('<div>args story</div>', context);
-  });
-
-  it('should clean lit expression comments', async () => {
-    const storyFn = (args: any) => html`<div>${args.slot}</div>`;
-    const context = makeContext(
-      'args',
-      { __isArgsStory: true },
-      { slot: 'some content' },
-      { originalStoryFn: storyFn }
-    );
-    // bind args to storyFn, as it's done in Storybook
-    const boundStoryFn = storyFn.bind(null, context.args);
-    sourceDecorator(boundStoryFn, context);
-    await tick();
-    expect(mockChannel.emit).toHaveBeenCalledWith(SNIPPET_RENDERED, {
-      id: 'lit-test--args',
-      args: { slot: 'some content' },
-      source: '<div>some content</div>',
-    });
-  });
 });

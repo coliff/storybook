@@ -221,9 +221,7 @@ const WithToolTipState: FC<
     };
   });
 
-  return (
-    <WithTooltipPure {...rest} defaultVisible={tooltipShown} onVisibleChange={onVisibilityChange} />
-  );
+  return <WithTooltipPure {...rest} visible={tooltipShown} onVisibleChange={onVisibilityChange} />;
 };
 
 export { WithTooltipPure, WithToolTipState, WithToolTipState as WithTooltip };

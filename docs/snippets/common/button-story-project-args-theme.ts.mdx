@@ -1,0 +1,16 @@
+```ts
+// .storybook/preview.ts
+
+// Replace your-framework with the framework you are using (e.g., react, vue3)
+import { Preview } from '@storybook/your-framework';
+
+const preview: Preview = {
+  // All stories expect a theme arg
+  argTypes: { theme: { control: 'select', options: ['light', 'dark'] } },
+
+  // The default value of the theme arg to all stories
+  args: { theme: 'light' },
+};
+
+export default preview;
+```

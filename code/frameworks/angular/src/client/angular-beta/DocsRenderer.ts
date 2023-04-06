@@ -38,8 +38,8 @@ export class DocsRenderer extends AbstractRenderer {
     await super.render({ ...options, forced: false });
   }
 
-  async beforeFullRender(): Promise<void> {
-    DocsRenderer.resetApplications();
+  async beforeFullRender(domNode?: HTMLElement): Promise<void> {
+    DocsRenderer.resetApplications(domNode);
   }
 
   async afterFullRender(): Promise<void> {

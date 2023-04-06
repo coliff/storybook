@@ -19,6 +19,12 @@ const setField = (path: string[], value: any, source: string) => {
   return formatConfig(config);
 };
 
+const appendToArray = (path: string[], value: any, source: string) => {
+  const config = loadConfig(source).parse();
+  config.appendValueToArray(path, value);
+  return formatConfig(config);
+};
+
 const removeField = (path: string[], source: string) => {
   const config = loadConfig(source).parse();
   config.removeField(path);
@@ -447,6 +453,69 @@ describe('ConfigFile', () => {
           };
         `);
       });
+    });
+  });
+
+  describe('appendToArray', () => {
+    it('missing export', () => {
+      expect(
+        appendToArray(
+          ['addons'],
+          'docs',
+          dedent`
+              export default { core: { builder: 'webpack5' } };
+            `
+        )
+      ).toMatchInlineSnapshot(`
+        export default {
+          core: {
+            builder: 'webpack5'
+          },
+          addons: ['docs']
+        };
+      `);
+    });
+    it('found scalar', () => {
+      expect(() =>
+        appendToArray(
+          ['addons'],
+          'docs',
+          dedent`
+              export default { addons: 5 };
+            `
+        )
+      ).toThrowErrorMatchingInlineSnapshot(`Expected array at 'addons', got 'NumericLiteral'`);
+    });
+    it('array of simple values', () => {
+      expect(
+        appendToArray(
+          ['addons'],
+          'docs',
+          dedent`
+              export default { addons: ['a11y', 'viewport'] };
+            `
+        )
+      ).toMatchInlineSnapshot(`
+        export default {
+          addons: ['a11y', 'viewport', 'docs']
+        };
+      `);
+    });
+
+    it('array of complex values', () => {
+      expect(
+        appendToArray(
+          ['addons'],
+          'docs',
+          dedent`
+              export default { addons: [require.resolve('a11y'), someVariable] };
+            `
+        )
+      ).toMatchInlineSnapshot(`
+        export default {
+          addons: [require.resolve('a11y'), someVariable, 'docs']
+        };
+      `);
     });
   });
 

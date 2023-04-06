@@ -1,15 +1,18 @@
 import { StoryFnAngularReturnType } from '../types';
 import { createStorybookWrapperComponent } from './StorybookWrapperComponent';
 import { computesTemplateFromComponent } from './ComputesTemplateFromComponent';
+import { PropertyExtractor } from './utils/PropertyExtractor';
 
 export const getApplication = ({
   storyFnAngular,
   component,
   targetSelector,
+  analyzedMetadata,
 }: {
   storyFnAngular: StoryFnAngularReturnType;
   component?: any;
   targetSelector: string;
+  analyzedMetadata: PropertyExtractor;
 }) => {
   const { props, styles, moduleMetadata = {} } = storyFnAngular;
   let { template } = storyFnAngular;
@@ -22,14 +25,15 @@ export const getApplication = ({
   /**
    * Create a component that wraps generated template and gives it props
    */
-  return createStorybookWrapperComponent(
-    targetSelector,
-    template,
-    component,
-    styles,
+  return createStorybookWrapperComponent({
     moduleMetadata,
-    props
-  );
+    selector: targetSelector,
+    template,
+    storyComponent: component,
+    styles,
+    initialProps: props,
+    analyzedMetadata,
+  });
 };
 
 function hasNoTemplate(template: string | null | undefined): template is undefined {

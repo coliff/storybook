@@ -115,7 +115,10 @@ const useDeprecatedPreviewProps = (
   const stories = useStories(storyIds, docsContext);
   const isLoading = stories.some((s) => !s);
   const sourceProps = useSourceProps(
-    mdxSource ? { code: decodeURI(mdxSource), of: props.of } : { ids: storyIds, of: props.of },
+    {
+      ...(mdxSource ? { code: decodeURI(mdxSource) } : { ids: storyIds }),
+      ...(props.of && { of: props.of }),
+    },
     docsContext,
     sourceContext
   );
@@ -155,6 +158,10 @@ export const Canvas: FC<CanvasProps & DeprecatedCanvasProps> = (props) => {
   const docsContext = useContext(DocsContext);
   const sourceContext = useContext(SourceContext);
   const { children, of, source } = props;
+  if ('of' in props && of === undefined) {
+    throw new Error('Unexpected `of={undefined}`, did you mistype a CSF file reference?');
+  }
+
   const { isLoading, previewProps } = useDeprecatedPreviewProps(props, docsContext, sourceContext);
 
   let story: PreparedStory;
@@ -175,7 +182,7 @@ export const Canvas: FC<CanvasProps & DeprecatedCanvasProps> = (props) => {
     }
   }
   try {
-    sourceProps = useSourceProps({ ...source, of }, docsContext, sourceContext);
+    sourceProps = useSourceProps({ ...source, ...(of && { of }) }, docsContext, sourceContext);
   } catch (error) {
     if (!children) {
       hookError = error;

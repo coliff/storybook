@@ -47,19 +47,13 @@
     "compodocArgs": {
       "type": "array",
       "description": "Compodoc options : https://compodoc.app/guides/options.html. Options `-p` with tsconfig path and `-d` with workspace root is always given.",
-      "default": [
-        "-e",
-        "json"
-      ],
+      "default": ["-e", "json"],
       "items": {
         "type": "string"
       }
     },
     "webpackStatsJson": {
-      "type": [
-        "boolean",
-        "string"
-      ],
+      "type": ["boolean", "string"],
       "description": "Write Webpack Stats JSON to disk",
       "default": false
     },
@@ -85,10 +79,56 @@
       },
       "additionalProperties": false,
       "default": ""
+    },
+    "assets": {
+      "type": "array",
+      "description": "List of static application assets.",
+      "default": [],
+      "items": {
+        "$ref": "#/definitions/assetPattern"
+      }
     }
   },
   "additionalProperties": false,
   "definitions": {
+    "assetPattern": {
+      "oneOf": [
+        {
+          "type": "object",
+          "properties": {
+            "followSymlinks": {
+              "type": "boolean",
+              "default": false,
+              "description": "Allow glob patterns to follow symlink directories. This allows subdirectories of the symlink to be searched."
+            },
+            "glob": {
+              "type": "string",
+              "description": "The pattern to match."
+            },
+            "input": {
+              "type": "string",
+              "description": "The input directory path in which to apply 'glob'. Defaults to the project root."
+            },
+            "ignore": {
+              "description": "An array of globs to ignore.",
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            "output": {
+              "type": "string",
+              "description": "Absolute path within the output."
+            }
+          },
+          "additionalProperties": false,
+          "required": ["glob", "input", "output"]
+        },
+        {
+          "type": "string"
+        }
+      ]
+    },
     "styleElement": {
       "oneOf": [
         {
@@ -110,9 +150,7 @@
             }
           },
           "additionalProperties": false,
-          "required": [
-            "input"
-          ]
+          "required": ["input"]
         },
         {
           "type": "string",

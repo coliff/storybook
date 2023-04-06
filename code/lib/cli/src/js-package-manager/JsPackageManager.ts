@@ -7,6 +7,8 @@ import fs from 'fs';
 import { commandLog } from '../helpers';
 import type { PackageJson, PackageJsonWithDepsAndDevDeps } from './PackageJson';
 import storybookPackagesVersions from '../versions';
+import type { InstallationMetadata } from './types';
+import { HandledError } from '../HandledError';
 
 const logger = console;
 
@@ -78,7 +80,7 @@ export abstract class JsPackageManager {
       this.runInstall();
     } catch (e) {
       done('An error occurred while installing dependencies.');
-      process.exit(1);
+      throw new HandledError(e);
     }
     done();
   }
@@ -203,7 +205,7 @@ export abstract class JsPackageManager {
       } catch (e) {
         logger.error('An error occurred while installing dependencies.');
         logger.log(e.message);
-        process.exit(1);
+        throw new HandledError(e);
       }
     }
   }
@@ -247,7 +249,7 @@ export abstract class JsPackageManager {
       } catch (e) {
         logger.error('An error occurred while removing dependencies.');
         logger.log(e.message);
-        process.exit(1);
+        throw new HandledError(e);
       }
     }
   }
@@ -307,7 +309,7 @@ export abstract class JsPackageManager {
       }
 
       logger.error(`\n     ${chalk.red(e.message)}`);
-      process.exit(1);
+      throw new HandledError(e);
     }
 
     const versionToUse =
@@ -408,6 +410,7 @@ export abstract class JsPackageManager {
   Promise<T extends true ? string[] : string>;
 
   public abstract runPackageCommand(command: string, args: string[], cwd?: string): string;
+  public abstract findInstallations(pattern?: string[]): InstallationMetadata | undefined;
 
   public executeCommand(
     command: string,

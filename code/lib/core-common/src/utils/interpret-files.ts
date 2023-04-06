@@ -1,6 +1,6 @@
 import fs from 'fs';
 
-export const boost = new Set(['.js', '.jsx', '.ts', '.tsx', '.cjs', '.mjs']);
+export const boost = new Set(['.js', '.jsx', '.ts', '.tsx', '.cts', '.mts', '.cjs', '.mjs']);
 
 function sortExtensions() {
   return [...Array.from(boost)];

@@ -1,11 +1,11 @@
-import path from 'path';
+import { dirname, join } from 'path';
 import type { PresetProperty } from '@storybook/types';
 import type { StorybookConfig } from './types';
 
+const wrapForPnP = (input: string) => dirname(require.resolve(join(input, 'package.json')));
+
 export const addons: PresetProperty<'addons', StorybookConfig> = [
-  path.dirname(
-    require.resolve(path.join('@storybook/preset-web-components-webpack', 'package.json'))
-  ),
+  wrapForPnP('@storybook/preset-web-components-webpack'),
 ];
 
 export const core: PresetProperty<'core', StorybookConfig> = async (config, options) => {
@@ -14,11 +14,9 @@ export const core: PresetProperty<'core', StorybookConfig> = async (config, opti
   return {
     ...config,
     builder: {
-      name: path.dirname(
-        require.resolve(path.join('@storybook/builder-webpack5', 'package.json'))
-      ) as '@storybook/builder-webpack5',
+      name: wrapForPnP('@storybook/builder-webpack5') as '@storybook/builder-webpack5',
       options: typeof framework === 'string' ? {} : framework.options.builder || {},
     },
-    renderer: path.dirname(require.resolve(path.join('@storybook/web-components', 'package.json'))),
+    renderer: wrapForPnP('@storybook/web-components'),
   };
 };

@@ -1,18 +1,35 @@
 ```js
-// /my-addon/manager.js
+// my-addon/manager.js|ts
 
 import React from 'react';
 
 import { useAddonState } from '@storybook/manager-api';
 
-export const Panel = () => {
-  const [state, setState] = useAddonState('my/addon-id', 'initial state');
+import { AddonPanel, Button, IconButton } from '@storybook/components';
 
-  return <button onClick={() => setState('a new value')}>the state = "{state}"</button>;
+export const Panel = () => {
+  const [state, setState] = useAddonState('addon-unique-identifier', 'initial state');
+
+  return (
+    <AddonPanel key="custom-panel" active="true">
+      <Button onClick={() => setState('Example')}>
+        Click to update Storybook's internal state
+      </Button>
+    </AddonPanel>
+  );
 };
 export const Tool = () => {
-  const [state, setState] = useAddonState('my/addon-id', 'initial state');
+  const [state, setState] = useAddonState('addon-unique-identifier', 'initial state');
 
-  return <button onClick={() => setState('a new value')}>the state = "{state}"</button>;
+  return (
+    <IconButton
+      key="custom-toolbar"
+      active="true"
+      title="Enable my addon"
+      onClick={() => setState('Example')}
+    >
+      <Icons icon="lightning" />
+    </IconButton>
+  );
 };
 ```

@@ -164,7 +164,8 @@ type ModuleWithoutInit<APIType = unknown, StateType = unknown> = Omit<
 >;
 
 export type ModuleFn<APIType = unknown, StateType = unknown, HasInit = false> = (
-  m: ModuleArgs
+  m: ModuleArgs,
+  options?: any
 ) => HasInit extends true
   ? ModuleWithInit<APIType, StateType>
   : ModuleWithoutInit<APIType, StateType>;
@@ -485,7 +486,7 @@ export function useArgs(): [Args, (newArgs: Args) => void, (argNames?: string[])
   const { getCurrentStoryData, updateStoryArgs, resetStoryArgs } = useStorybookApi();
 
   const data = getCurrentStoryData();
-  const args = data.type === 'story' ? data.args : {};
+  const args = data?.type === 'story' ? data.args : {};
   const updateArgs = useCallback(
     (newArgs: Args) => updateStoryArgs(data as API_StoryEntry, newArgs),
     [data, updateStoryArgs]

@@ -1,18 +1,18 @@
 ```ts
-// MyForm.stories.ts
+// Form.stories.ts|tsx
 
-import { expect } from '@storybook/jest';
+// Replace your-framework with the name of your framework
+import type { Meta, StoryObj } from '@storybook/<your-framework>';
 
 import { userEvent, waitFor, within } from '@storybook/testing-library';
 
-// Replace your-framework with the name of your framework
-import type { Meta } from '@storybook/your-framework';
+import { expect } from '@storybook/jest';
 
-import { MyForm } from './MyForm';
+import { Form } from './Form';
 
-const meta: Meta<typeof MyForm> = {
+const meta: Meta<typeof Form> = {
   /* 👇 The title prop is optional.
-   * See https://storybook.js.org/docs/7.0/react/configure/overview#configure-story-loading
+   * See https://storybook.js.org/docs/react/configure/overview#configure-story-loading
    * to learn how to generate automatic titles
    */
   title: 'MyComponent',
@@ -23,10 +23,10 @@ const meta: Meta<typeof MyForm> = {
 };
 
 export default meta;
-type Story = StoryObj<typeof MyForm>;
+type Story = StoryObj<typeof Form>;
 
 /*
- * See https://storybook.js.org/docs/7.0/react/writing-stories/play-function#working-with-the-canvas
+ * See https://storybook.js.org/docs/react/writing-stories/play-function#working-with-the-canvas
  * to learn more about using the canvasElement to query the DOM
  */
 export const Submitted: Story = {

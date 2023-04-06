@@ -5,12 +5,7 @@ import type { ParserOptions } from '@babel/parser';
 export const parserOptions: ParserOptions = {
   sourceType: 'module',
   // FIXME: we should get this from the project config somehow?
-  plugins: [
-    'jsx',
-    'typescript',
-    ['decorators', { decoratorsBeforeExport: true }],
-    'classProperties',
-  ],
+  plugins: ['jsx', 'typescript', 'decorators-legacy', 'classProperties'],
   tokens: true,
 };
 

@@ -1,6 +1,6 @@
 {
   "name": "@storybook/builder-manager",
-  "version": "7.0.0-beta.62",
+  "version": "7.1.0-alpha.0",
   "description": "Storybook manager builder",
   "keywords": [
     "storybook"
@@ -44,24 +44,24 @@
   },
   "dependencies": {
     "@fal-works/esbuild-plugin-global-externals": "^2.1.2",
-    "@storybook/core-common": "7.0.0-beta.62",
-    "@storybook/manager": "7.0.0-beta.62",
-    "@storybook/node-logger": "7.0.0-beta.62",
+    "@storybook/core-common": "7.1.0-alpha.0",
+    "@storybook/manager": "7.1.0-alpha.0",
+    "@storybook/node-logger": "7.1.0-alpha.0",
     "@types/ejs": "^3.1.1",
     "@types/find-cache-dir": "^3.2.1",
     "@yarnpkg/esbuild-plugin-pnp": "^3.0.0-rc.10",
     "browser-assert": "^1.2.1",
     "ejs": "^3.1.8",
-    "esbuild": "^0.16.4",
+    "esbuild": "^0.17.0",
     "esbuild-plugin-alias": "^0.2.1",
     "express": "^4.17.3",
     "find-cache-dir": "^3.0.0",
     "fs-extra": "^11.1.0",
     "process": "^0.11.10",
-    "slash": "^3.0.0",
     "util": "^0.12.4"
   },
   "devDependencies": {
+    "slash": "^5.0.0",
     "typescript": "~4.9.3"
   },
   "publishConfig": {
@@ -72,5 +72,5 @@
       "./src/index.ts"
     ]
   },
-  "gitHead": "f70dcdb599363bfd6e6d2b63f8fadd02e9cbe00a"
+  "gitHead": "8ff2938f8ac0c2d524ae653cd89251e5cd4721a4"
 }

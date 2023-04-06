@@ -1,5 +1,5 @@
-```tsx
-// Button.stories.ts
+```ts
+// Button.stories.ts|tsx
 
 import type { Meta } from '@storybook/react';
 
@@ -8,10 +8,8 @@ import { Button } from './Button';
 const meta = {
   title: 'Button',
   component: Button,
-
   //👇 Enables auto-generated documentation for the component story
   tags: ['autodocs'],
-
   argTypes: {
     backgroundColor: { control: 'color' },
   },

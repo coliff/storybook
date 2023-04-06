@@ -1,6 +1,7 @@
 /* eslint-disable no-param-reassign */
 import type { RenderContext, ArgsStoryFn } from '@storybook/types';
 import type { SvelteComponentTyped } from 'svelte';
+import { RESET_STORY_ARGS } from '@storybook/core-events';
 // ! DO NOT change this PreviewRender import to a relative path, it will break it.
 // ! A relative import will be compiled at build time, and Svelte will be unable to
 // ! render the component together with the user's Svelte components
@@ -8,6 +9,7 @@ import type { SvelteComponentTyped } from 'svelte';
 // ! with the same bundle as the user's Svelte components
 // eslint-disable-next-line import/no-extraneous-dependencies
 import PreviewRender from '@storybook/svelte/templates/PreviewRender.svelte';
+import { addons } from '@storybook/preview-api';
 
 import type { SvelteRenderer } from './types';
 
@@ -24,6 +26,20 @@ function teardown(canvasElement: SvelteRenderer['canvasElement']) {
   componentsByDomElement.delete(canvasElement);
 }
 
+/**
+ * This is a workaround for the issue that when resetting args,
+ * the story needs to be remounted completely to revert to the component's default props.
+ * This is because Svelte does not itself revert to defaults when a prop is undefined.
+ * See https://github.com/storybookjs/storybook/issues/21470#issuecomment-1467056479
+ *
+ * We listen for the RESET_STORY_ARGS event and store the storyId to be reset
+ * We then use this in the renderToCanvas function to force remount the story
+ */
+const storyIdsToRemountFromResetArgsEvent = new Set<string>();
+addons.getChannel().on(RESET_STORY_ARGS, ({ storyId }) => {
+  storyIdsToRemountFromResetArgsEvent.add(storyId);
+});
+
 export function renderToCanvas(
   {
     storyFn,
@@ -38,11 +54,18 @@ export function renderToCanvas(
 ) {
   const existingComponent = componentsByDomElement.get(canvasElement);
 
-  if (forceRemount) {
+  let remount = forceRemount;
+
+  if (storyIdsToRemountFromResetArgsEvent.has(storyContext.id)) {
+    remount = true;
+    storyIdsToRemountFromResetArgsEvent.delete(storyContext.id);
+  }
+
+  if (remount) {
     teardown(canvasElement);
   }
 
-  if (!existingComponent || forceRemount) {
+  if (!existingComponent || remount) {
     const createdComponent = new PreviewRender({
       target: canvasElement,
       props: {

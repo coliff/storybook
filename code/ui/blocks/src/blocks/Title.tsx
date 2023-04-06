@@ -1,11 +1,11 @@
 import type { ComponentTitle } from '@storybook/types';
-import type { FunctionComponent } from 'react';
+import type { FunctionComponent, ReactNode } from 'react';
 import React, { useContext } from 'react';
 import { Title as PureTitle } from '../components';
 import { DocsContext } from './DocsContext';
 
 interface TitleProps {
-  children?: JSX.Element | string;
+  children?: ReactNode;
 }
 
 const STORY_KIND_PATH_SEPARATOR = /\s*\/\s*/;
@@ -17,9 +17,7 @@ export const extractTitle = (title: ComponentTitle) => {
 
 export const Title: FunctionComponent<TitleProps> = ({ children }) => {
   const context = useContext(DocsContext);
-  let text: JSX.Element | string = children;
-  if (!text) {
-    text = extractTitle(context.storyById().title);
-  }
-  return text ? <PureTitle className="sbdocs-title sb-unstyled">{text}</PureTitle> : null;
+  const content = children || extractTitle(context.storyById().title);
+
+  return content ? <PureTitle className="sbdocs-title sb-unstyled">{content}</PureTitle> : null;
 };

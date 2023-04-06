@@ -1,6 +1,7 @@
 /// <reference types="node" />
 
 import { addons } from '@storybook/preview-api';
+import { global } from '@storybook/global';
 import { FORCE_REMOUNT, STORY_RENDER_PHASE_CHANGED } from '@storybook/core-events';
 import type {
   Renderer,

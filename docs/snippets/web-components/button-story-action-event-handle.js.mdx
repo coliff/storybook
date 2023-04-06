@@ -1,0 +1,16 @@
+```js
+// Button.stories.js
+
+import { withActions } from '@storybook/addon-actions/decorator';
+
+export default {
+  title: 'Button',
+  component: 'demo-button',
+  parameters: {
+    actions: {
+      handles: ['mouseover', 'click .btn'],
+    },
+  },
+  decorators: [withActions],
+};
+```

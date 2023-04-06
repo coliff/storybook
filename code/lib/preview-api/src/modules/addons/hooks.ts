@@ -134,7 +134,7 @@ function hookify<TRenderer extends Renderer>(
   decorator: DecoratorFunction<TRenderer>
 ): DecoratorFunction<TRenderer>;
 function hookify<TRenderer extends Renderer>(fn: AbstractFunction) {
-  return (...args: any[]) => {
+  const hookified = (...args: any[]) => {
     const { hooks }: { hooks: HooksContext<TRenderer> } =
       typeof args[0] === 'function' ? args[1] : args[0];
 
@@ -172,6 +172,9 @@ function hookify<TRenderer extends Renderer>(fn: AbstractFunction) {
     hooks.currentDecoratorName = prevDecoratorName;
     return result;
   };
+
+  hookified.originalFn = fn;
+  return hookified;
 }
 
 // Counter to prevent infinite loops.

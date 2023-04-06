@@ -445,6 +445,22 @@ export class ConfigFile {
     }
   }
 
+  appendValueToArray(path: string[], value: any) {
+    const node = this.valueToNode(value);
+    this.appendNodeToArray(path, node);
+  }
+
+  appendNodeToArray(path: string[], node: t.Expression) {
+    const current = this.getFieldNode(path);
+    if (!current) {
+      this.setFieldNode(path, t.arrayExpression([node]));
+    } else if (t.isArrayExpression(current)) {
+      current.elements.push(node);
+    } else {
+      throw new Error(`Expected array at '${path.join('.')}', got '${current.type}'`);
+    }
+  }
+
   _inferQuotes() {
     if (!this._quotes) {
       // first 500 tokens for efficiency
@@ -462,7 +478,7 @@ export class ConfigFile {
     return this._quotes;
   }
 
-  setFieldValue(path: string[], value: any) {
+  valueToNode(value: any) {
     const quotes = this._inferQuotes();
     let valueNode;
     // we do this rather than t.valueToNode because apparently
@@ -488,6 +504,11 @@ export class ConfigFile {
       // double quotes is the default so we can skip all that
       valueNode = t.valueToNode(value);
     }
+    return valueNode;
+  }
+
+  setFieldValue(path: string[], value: any) {
+    const valueNode = this.valueToNode(value);
     if (!valueNode) {
       throw new Error(`Unexpected value ${JSON.stringify(value)}`);
     }

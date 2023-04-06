@@ -6,7 +6,7 @@ import { STORY_CHANGED } from '@storybook/core-events';
 
 import { ActionLogger as ActionLoggerComponent } from '../../components/ActionLogger';
 import type { ActionDisplay } from '../../models';
-import { EVENT_ID } from '../../constants';
+import { CLEAR_ID, EVENT_ID } from '../../constants';
 
 interface ActionLoggerProps {
   active: boolean;
@@ -77,6 +77,10 @@ export default class ActionLogger extends Component<ActionLoggerProps, ActionLog
   };
 
   clearActions = () => {
+    const { api } = this.props;
+
+    // clear number of actions
+    api.emit(CLEAR_ID);
     this.setState({ actions: [] });
   };
 

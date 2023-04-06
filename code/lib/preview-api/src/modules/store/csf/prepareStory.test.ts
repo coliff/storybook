@@ -11,9 +11,6 @@ import { prepareStory, prepareMeta } from './prepareStory';
 jest.mock('@storybook/global', () => ({
   global: {
     ...(jest.requireActual('@storybook/global') as any),
-    FEATURES: {
-      breakingChangesV7: true,
-    },
   },
 }));
 
@@ -26,10 +23,6 @@ const moduleExport = {};
 const stringType: SBScalarType = { name: 'string' };
 const numberType: SBScalarType = { name: 'number' };
 const booleanType: SBScalarType = { name: 'boolean' };
-
-beforeEach(() => {
-  global.FEATURES = { breakingChangesV7: true };
-});
 
 describe('prepareStory', () => {
   describe('tags', () => {
@@ -519,7 +512,7 @@ describe('prepareStory', () => {
 
   describe('with `FEATURES.argTypeTargetsV7`', () => {
     beforeEach(() => {
-      global.FEATURES = { breakingChangesV7: true, argTypeTargetsV7: true };
+      global.FEATURES = { argTypeTargetsV7: true };
     });
     it('filters out targeted args', () => {
       const renderMock = jest.fn();

@@ -1,18 +1,18 @@
 ```js
-// .storybook/my-addon/manager.js
+// my-addon/src/decorator.js|ts
 
 import { makeDecorator } from '@storybook/preview-api';
 
-export makeDecorator({
+export const withAddonDecorator = makeDecorator({
   name: 'withSomething',
-  parameterName: 'something',
-  wrapper: (storyFn, context, { parameters }) => {
-    // Do something with `parameters`, which are set via { something: ... }
-
-    // Note you may alter the story output if you like.
-    // Although generally that's not advised.
-
-    return storyFn(context);
-  }
-})
+  parameterName: 'CustomParameter',
+  skipIfNoParametersOrOptions: true
+  wrapper: (getStory, context, { parameters }) => {
+    /*
+    * Write your custom logic here based on the parameters passed in Storybook's stories.
+    * Although not advised, you can also alter the story output based on the parameters.
+    */
+    return getStory(context);
+  },
+});
 ```

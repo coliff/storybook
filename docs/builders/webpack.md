@@ -2,47 +2,86 @@
 title: 'Webpack'
 ---
 
-Storybook displays your components in a custom web application built using [Webpack](https://webpack.js.org/). Webpack is a complex tool, but our default configuration is intended to cover most use cases. [Addons](https://storybook.js.org/addons/) are also available that extend the configuration for other everyday use cases.
+Storybook Webpack builder is the default builder for Storybook. This builder enables you to create a seamless development and testing experience for your components and provides an efficient way to develop UI components in isolation allowing you to leverage your existing Webpack configuration with Storybook.
 
-You can customize Storybook's Webpack setup by providing a `webpackFinal` field in [`.storybook/main.js`](../configure/overview.md#configure-your-storybook-project) file.
+## Configure
 
-The value should be an async function that receives a Webpack config and eventually returns a Webpack config.
+By default, Storybook provides zero-config support for Webpack and automatically sets up a baseline configuration created to work with the most common use cases. However, you can extend your Storybook configuration file (i.e., `.storybook/main.js|ts`) and provide additional options to improve your Storybook's performance or customize it to your needs. Listed below are the available options and examples of how to use them.
 
-### Default configuration
-
-By default, Storybook's Webpack configuration will allow you to:
-
-#### Import images and other static files
-
-You can import images and other local files and have them built into the Storybook:
+| Option            | Description                                                                                                                                                                                       |
+| ----------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `storyStoreV7`    | Enabled by default.<br/> Configures Webpack's [code splitting](https://webpack.js.org/guides/code-splitting/) feature<br/> `features: { storyStoreV7: false }`                                    |
+| `lazyCompilation` | Enables Webpack's experimental [`lazy compilation`](https://webpack.js.org/configuration/experiments/#experimentslazycompilation)<br/>`core: { builder: { options: { lazyCompilation: true } } }` |
+| `fsCache`         | Configures Webpack's filesystem [caching](https://webpack.js.org/configuration/cache/#cachetype) feature<br/> `core: { builder: { options: { fsCache: true } } }`                                 |
 
 <!-- prettier-ignore-start -->
 
 <CodeSnippets
   paths={[
-    'common/my-component-story-import-static-asset.js.mdx',
+    'common/storybook-main-webpack-options.js.mdx',
+    'common/storybook-main-webpack-options.ts.mdx',
   ]}
 />
 
 <!-- prettier-ignore-end -->
 
-#### Import JSON as JavaScript
+### Override the default configuration
 
-You can import `.json` files and have them expanded to a JavaScript object:
+Storybook's Webpack configuration is based on [Webpack 5](https://webpack.js.org/), allowing it to be extended to fit your project's needs. If you need to add a loader or a plugin, you can provide the `webpackFinal` configuration element in your [`.storybook/main.js|ts`](../configure/overview.md#configure-your-storybook-project) file. The configuration element should export a function that receives the baseline configuration as the first argument and Storybook's options object as the second argument. For example:
 
 <!-- prettier-ignore-start -->
 
 <CodeSnippets
   paths={[
-    'common/my-component-story-import-json.js.mdx',
+    'common/storybook-main-add-sass-config.js.mdx',
+    'common/storybook-main-add-sass-config.ts.mdx',
   ]}
 />
 
 <!-- prettier-ignore-end -->
 
-If you want to know the exact details of the Webpack config, the best way is to run either of the following commands:
+When Storybook starts, it automatically merges the configuration into its own. However, when providing the `webpackFinal` configuration element, you're responsible for merging the configuration yourself. We recommend that you handle the changes to the `config` object responsibly, preserving both the `entry` and `output` properties.
 
-For development mode:
+#### Working with Webpack plugins
+
+Another way to customize your Storybook configuration is to add a custom plugin or loader to help with code optimization, asset management, or other tasks. Nevertheless, since Storybook relies on the `HtmlWebpackPlugin` to generate the preview page, we recommend that you append the changes to the `config.plugins` array rather than overwriting it. For example:
+
+<!-- prettier-ignore-start -->
+
+<CodeSnippets
+  paths={[
+    'common/storybook-main-simplified-config.js.mdx',
+    'common/storybook-main-simplified-config.ts.mdx',
+  ]}
+/>
+
+<!-- prettier-ignore-end -->
+
+Additionally, when working with Webpack loaders that don't explicitly include specific file extensions (i.e., via the `test` property), you should `exclude` the `.ejs` file extension for that loader.
+
+### Import a custom Webpack configuration
+
+If you already have an existing Webpack configuration file that you need to reuse with Storybook, you can import it and merge it into the default configuration. For example:
+
+<!-- prettier-ignore-start -->
+
+<CodeSnippets
+  paths={[
+    'common/storybook-main-using-existing-config.js.mdx',
+    'common/storybook-main-using-existing-config.ts.mdx',
+  ]}
+/>
+
+<!-- prettier-ignore-end -->
+
+<div class="aside">
+💡 Projects scaffolded based on generators may require that you import their specific Webpack configuration files. We suggest reading your generator's documentation for more information.
+
+</div>
+
+### Debug Webpack configuration
+
+If you intend to debug the Webpack configuration used by Storybook, you can use the Storybook CLI to help you. If you're running in [development mode](../api/cli-options.md#dev), you can use the following command:
 
 <!-- prettier-ignore-start -->
 
@@ -55,7 +94,7 @@ For development mode:
 
 <!-- prettier-ignore-end -->
 
-For production mode:
+Additionally, if you're generating a [static build](../api/cli-options.md#build) of your Storybook, you can use the following command:
 
 <!-- prettier-ignore-start -->
 
@@ -68,150 +107,30 @@ For production mode:
 
 <!-- prettier-ignore-end -->
 
-### Code splitting
+## What about Webpack 4 support?
 
-Starting with Storybook 6.4, [code splitting](https://v4.webpack.js.org/guides/code-splitting/) is supported through a configuration flag. Update your Storybook configuration and add the `storyStoreV7` flag:
+Support for Webpack 4 has been removed and is no longer being maintained. If you're upgrading your Storybook, it will automatically use Webpack 5 and attempt to migrate your configuration. However, if you're working with a custom Webpack configuration, you may need to update it to work with Webpack 5. The migration process is necessary to ensure that your project runs smoothly with the latest version of Storybook. You can follow the instructions provided on the Webpack [website](https://webpack.js.org/migrate/5/) to update your configuration.
 
-<!-- prettier-ignore-start -->
+## Troubleshooting
 
-<CodeSnippets
-  paths={[
-    'common/storybook-on-demand-story-loading.js.mdx',
-  ]}
-/>
+### TypeScript modules are not resolved within Storybook
 
-<!-- prettier-ignore-end -->
-
-When you start your Storybook, you'll see an improvement in loading times. Read more about it in the [announcement post](https://storybook.js.org/blog/storybook-on-demand-architecture/) and the [configuration documentation](../configure/overview.md#configure-your-storybook-project).
-
-### Webpack 5
-
-Storybook builds your project with Webpack 4 by default. If your project uses Webpack 5, you can opt into the Webpack 5 builder by installing the required dependencies (i.e., `@storybook/builder-webpack5`, `@storybook/manager-webpack5`) and update your Storybook configuration as follows:
-
-<!-- prettier-ignore-start -->
-
-<CodeSnippets
-  paths={[
-    'common/storybook-main-webpack5.js.mdx',
-  ]}
-/>
-
-<!-- prettier-ignore-end -->
-
-Once you are using Webpack 5, you can further opt into some features to optimize your build:
-
-#### Lazy Compilation
-
-Storybook supports Webpack's experimental [lazy compilation](https://webpack.js.org/configuration/experiments/#experimentslazycompilation) feature, via the `lazyCompilation` builder flag:
-
-<!-- prettier-ignore-start -->
-
-<CodeSnippets
-  paths={[
-    'common/storybook-main-webpack5-lazyCompilation.js.mdx',
-  ]}
-/>
-
-<!-- prettier-ignore-end -->
-
-This feature applies in development mode, and will mean your Storybook will start up faster, at the cost of slightly slower browsing time when you change stories.
-
-#### Filesystem Caching
-
-Storybook supports Webpack's [filesystem caching](https://webpack.js.org/configuration/cache/#cachetype) feature, via the `fsCache` builder flag:
-
-<!-- prettier-ignore-start -->
-
-<CodeSnippets
-  paths={[
-    'common/storybook-main-webpack5-fsCache.js.mdx',
-  ]}
-/>
-
-<!-- prettier-ignore-end -->
-
-This feature will mean build output is cached between runs of Storybook, speeding up subsequent startup times.
-
-### Extending Storybook’s Webpack config
-
-To extend the above configuration, use the `webpackFinal` field of [`.storybook/main.js`](../configure/overview.md#configure-your-storybook-project).
-
-The value should export a `function`, which will receive the default config as its first argument. The second argument is an options object from Storybook, and this will have information about where config came from, whether we're in production or development mode, etc.
-
-For example, if you wanted to add [Sass](https://sass-lang.com/) support, you can adjust your configuration as such:
-
-<!-- prettier-ignore-start -->
-
-<CodeSnippets
-  paths={[
-    'common/storybook-main-add-sass-config.js.mdx',
-  ]}
-/>
-
-<!-- prettier-ignore-end -->
-
-Storybook uses the config returned from the above function to render your components in Storybook's "preview" iframe. Note that Storybook has an entirely separate Webpack config for its UI (also referred to as the "manager"), so the customizations you make only apply to the rendering of your stories, i.e., you can completely replace `config.module.rules` if you want.
-
-Nevertheless, edit `config` with care. Make sure to preserve the following config options:
-
-- **entry**
-- **output**
-
-Furthermore, `config` requires the `HtmlWebpackplugin` to generate the preview page, so rather than overwriting `config.plugins` you should probably append to it (or overwrite it with care), see [the following issue](https://github.com/storybookjs/storybook/issues/6020) for examples on how to handle this:
-
-<!-- prettier-ignore-start -->
-
-<CodeSnippets
-  paths={[
-    'common/storybook-main-simplified-config.js.mdx',
-  ]}
-/>
-
-<!-- prettier-ignore-end -->
-
-Finally, if your custom Webpack config uses a loader that does not explicitly include specific file extensions via the `test` property, in that case, it is necessary to `exclude` the `.ejs` file extension from that loader.
-
-If you're using a non-standard Storybook config directory, you should put `main.js` there instead of `.storybook` and update the `include` path to ensure it resolves to your project root.
-
-### Using your existing config
-
-Suppose you have an existing Webpack config for your project and want to reuse this app's configuration. In that case, you can import your main Webpack config into Storybook's [`.storybook/main.js`](../configure/overview.md#configure-your-storybook-project) and merge both:
-
-The following code snippet shows how you can replace the loaders from Storybook with the ones from your app's `webpack.config.js`:
-
-<!-- prettier-ignore-start -->
-
-<CodeSnippets
-  paths={[
-    'common/storybook-main-using-existing-config.js.mdx',
-  ]}
-/>
-
-<!-- prettier-ignore-end -->
-
-<div class="aside">
-
-💡 Projects initialized via generators (e.g, Vue CLI) may require that you import their own Webpack config file (i.e., <code>/projectRoot/node_modules/@vue/cli-service/webpack.config.js</code>) to use a certain feature with Storybook. For other generators, make sure to check the documentation for instructions.
-
-</div>
-
-### TypeScript Module Resolution
-
-When working with TypeScript projects, the default Webpack configuration may fail to resolve module aliases defined in your [`tsconfig` file](https://www.typescriptlang.org/tsconfig). To work around this issue you may use [`tsconfig-paths-webpack-plugin`](https://github.com/dividab/tsconfig-paths-webpack-plugin#tsconfig-paths-webpack-plugin) while [extending Storybook's Webpack config](#extending-storybooks-webpack-config) like:
+Storybook's default Webpack configuration provides support for most project setups without the need for any additional configuration. Nevertheless, depending on your project configuration, or the framework of choice, you may run into issues with TypeScript modules not being resolved within Storybook when aliased from your [`tsconfig` file](https://www.typescriptlang.org/tsconfig). If you encounter this issue, you can use [`tsconfig-paths-webpack-plugin`](https://github.com/dividab/tsconfig-paths-webpack-plugin#tsconfig-paths-webpack-plugin) while [extending Storybook's Webpack config](#override-the-default-configuration) as follows:
 
 <!-- prettier-ignore-start -->
 
 <CodeSnippets
   paths={[
     'common/storybook-main-ts-module-resolution.js.mdx',
+    'common/storybook-main-ts-module-resolution.ts.mdx',
   ]}
 />
 
 <!-- prettier-ignore-end -->
 
-<div class="aside">
-💡 Learn more about Storybook's <a href="../configure/typescript">built-in TypeScript support</a> or see <a href="https://github.com/storybookjs/storybook/issues/14087">this issue</a> for more information.
-</div>
+### Pre-bundled assets do not show in the Storybook UI
+
+As Storybook relies on [esbuild](https://esbuild.github.io/) to build its internal manager, support for bundling assets with the `managerWebpack` will no longer have an impact on the Storybook UI. We recommend removing existing `managerWebpack` configuration elements from your Storybook configuration file and bundling assets other than images or CSS into JavaScript beforehand.
 
 #### Learn more about builders
 

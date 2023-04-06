@@ -163,6 +163,17 @@ const RangeLabel = styled.span({
   fontVariantNumeric: 'tabular-nums',
 });
 
+const RangeCurrentAndMaxLabel = styled(RangeLabel)<{
+  numberOFDecimalsPlaces: number;
+  max: number;
+}>(({ numberOFDecimalsPlaces, max }) => ({
+  // Fixed width of "current / max" label to avoid slider width changes
+  // 3 = size of separator " / "
+  width: `${numberOFDecimalsPlaces + max.toString().length * 2 + 3}ch`,
+  textAlign: 'right',
+  flexShrink: 0,
+}));
+
 const RangeWrapper = styled.div({
   display: 'flex',
   alignItems: 'center',
@@ -208,9 +219,9 @@ export const RangeControl: FC<RangeProps> = ({
         onChange={handleChange}
         {...{ name, value, min, max, step, onFocus, onBlur }}
       />
-      <RangeLabel>
+      <RangeCurrentAndMaxLabel numberOFDecimalsPlaces={numberOFDecimalsPlaces} max={max}>
         {`${hasValue ? value.toFixed(numberOFDecimalsPlaces) : '--'}`} / {max}
-      </RangeLabel>
+      </RangeCurrentAndMaxLabel>
     </RangeWrapper>
   );
 };

@@ -8,13 +8,18 @@ import {
 import { JsonObject } from '@angular-devkit/core';
 import { BrowserBuilderOptions, StylePreprocessorOptions } from '@angular-devkit/build-angular';
 import { from, Observable, of } from 'rxjs';
-import { CLIOptions } from '@storybook/types';
 import { map, switchMap, mapTo } from 'rxjs/operators';
 import { sync as findUpSync } from 'find-up';
 import { sync as readUpSync } from 'read-pkg-up';
 
+import { CLIOptions } from '@storybook/types';
+import { getEnvConfig } from '@storybook/cli';
+
 import { buildDevStandalone, withTelemetry } from '@storybook/core-server';
-import { StyleElement } from '@angular-devkit/build-angular/src/builders/browser/schema';
+import {
+  AssetPattern,
+  StyleElement,
+} from '@angular-devkit/build-angular/src/builders/browser/schema';
 import { StandaloneOptions } from '../utils/standalone-options';
 import { runCompodoc } from '../utils/run-compodoc';
 import { printErrorDetails, errorSummary } from '../utils/error-handler';
@@ -27,6 +32,7 @@ export type StorybookBuilderOptions = JsonObject & {
   compodocArgs: string[];
   styles?: StyleElement[];
   stylePreprocessorOptions?: StylePreprocessorOptions;
+  assets?: AssetPattern[];
 } & Pick<
     // makes sure the option exists
     CLIOptions,
@@ -62,6 +68,16 @@ function commandBuilder(
       return runCompodoc$.pipe(mapTo({ tsConfig }));
     }),
     map(({ tsConfig }) => {
+      getEnvConfig(options, {
+        port: 'SBCONFIG_PORT',
+        host: 'SBCONFIG_HOSTNAME',
+        staticDir: 'SBCONFIG_STATIC_DIR',
+        configDir: 'SBCONFIG_CONFIG_DIR',
+        ci: 'CI',
+      });
+      // eslint-disable-next-line no-param-reassign
+      options.port = parseInt(`${options.port}`, 10);
+
       const {
         browserTarget,
         stylePreprocessorOptions,
@@ -78,6 +94,7 @@ function commandBuilder(
         sslCert,
         sslKey,
         disableTelemetry,
+        assets,
       } = options;
 
       const standaloneOptions: StandaloneOptions = {
@@ -99,6 +116,7 @@ function commandBuilder(
         angularBuilderOptions: {
           ...(stylePreprocessorOptions ? { stylePreprocessorOptions } : {}),
           ...(styles ? { styles } : {}),
+          ...(assets ? { assets } : {}),
         },
         tsConfig,
       };

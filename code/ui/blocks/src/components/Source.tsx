@@ -1,6 +1,6 @@
 import type { ComponentProps, FunctionComponent } from 'react';
 import React from 'react';
-import { styled, ThemeProvider, convert, themes } from '@storybook/theming';
+import { styled, ThemeProvider, convert, themes, ignoreSsrWarning } from '@storybook/theming';
 import { SyntaxHighlighter } from '@storybook/components';
 
 import { EmptyBlock } from './EmptyBlock';
@@ -69,7 +69,7 @@ const SourceSkeletonPlaceholder = styled.div(({ theme }) => ({
   marginTop: 1,
   width: '60%',
 
-  [`&:first-child`]: {
+  [`&:first-child${ignoreSsrWarning}`]: {
     margin: 0,
   },
 }));

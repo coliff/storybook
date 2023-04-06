@@ -1,11 +1,11 @@
 import { NgModule, Type, Component, EventEmitter, Input, Output } from '@angular/core';
 
 import { TestBed } from '@angular/core/testing';
-import { BrowserModule } from '@angular/platform-browser';
 import { BehaviorSubject } from 'rxjs';
 import { ICollection } from '../types';
 import { getApplication } from './StorybookModule';
 import { storyPropsProvider } from './StorybookProvider';
+import { PropertyExtractor } from './utils/PropertyExtractor';
 
 describe('StorybookModule', () => {
   describe('getStorybookModuleMetadata', () => {
@@ -55,10 +55,13 @@ describe('StorybookModule', () => {
           localFunction: () => 'localFunction',
         };
 
+        const analyzedMetadata = new PropertyExtractor({}, FooComponent);
+
         const application = getApplication({
           storyFnAngular: { props },
           component: FooComponent,
           targetSelector: 'my-selector',
+          analyzedMetadata,
         });
 
         const { fixture } = await configureTestingModule({
@@ -91,10 +94,13 @@ describe('StorybookModule', () => {
           },
         };
 
+        const analyzedMetadata = new PropertyExtractor({}, FooComponent);
+
         const application = getApplication({
           storyFnAngular: { props },
           component: FooComponent,
           targetSelector: 'my-selector',
+          analyzedMetadata,
         });
 
         const { fixture } = await configureTestingModule({
@@ -117,10 +123,13 @@ describe('StorybookModule', () => {
         };
         const storyProps$ = new BehaviorSubject<ICollection>(initialProps);
 
+        const analyzedMetadata = new PropertyExtractor({}, FooComponent);
+
         const application = getApplication({
           storyFnAngular: { props: initialProps },
           component: FooComponent,
           targetSelector: 'my-selector',
+          analyzedMetadata,
         });
         const { fixture } = await configureTestingModule({
           imports: [application],
@@ -170,10 +179,13 @@ describe('StorybookModule', () => {
         };
         const storyProps$ = new BehaviorSubject<ICollection>(initialProps);
 
+        const analyzedMetadata = new PropertyExtractor({}, FooComponent);
+
         const application = getApplication({
           storyFnAngular: { props: initialProps },
           component: FooComponent,
           targetSelector: 'my-selector',
+          analyzedMetadata,
         });
         const { fixture } = await configureTestingModule({
           imports: [application],
@@ -208,6 +220,8 @@ describe('StorybookModule', () => {
         };
         const storyProps$ = new BehaviorSubject<ICollection>(initialProps);
 
+        const analyzedMetadata = new PropertyExtractor({}, FooComponent);
+
         const application = getApplication({
           storyFnAngular: {
             props: initialProps,
@@ -215,6 +229,7 @@ describe('StorybookModule', () => {
           },
           component: FooComponent,
           targetSelector: 'my-selector',
+          analyzedMetadata,
         });
         const { fixture } = await configureTestingModule({
           imports: [application],
@@ -243,10 +258,13 @@ describe('StorybookModule', () => {
         };
         const storyProps$ = new BehaviorSubject<ICollection>(initialProps);
 
+        const analyzedMetadata = new PropertyExtractor({}, FooComponent);
+
         const application = getApplication({
           storyFnAngular: { props: initialProps },
           component: FooComponent,
           targetSelector: 'my-selector',
+          analyzedMetadata,
         });
         const { fixture } = await configureTestingModule({
           imports: [application],
@@ -276,6 +294,11 @@ describe('StorybookModule', () => {
       it('should display the component', async () => {
         const props = {};
 
+        const analyzedMetadata = new PropertyExtractor(
+          { entryComponents: [WithoutSelectorComponent] },
+          WithoutSelectorComponent
+        );
+
         const application = getApplication({
           storyFnAngular: {
             props,
@@ -283,6 +306,7 @@ describe('StorybookModule', () => {
           },
           component: WithoutSelectorComponent,
           targetSelector: 'my-selector',
+          analyzedMetadata,
         });
 
         const { fixture } = await configureTestingModule({
@@ -302,10 +326,13 @@ describe('StorybookModule', () => {
       })
       class FooComponent {}
 
+      const analyzedMetadata = new PropertyExtractor({}, FooComponent);
+
       const application = getApplication({
         storyFnAngular: { template: '' },
         component: FooComponent,
         targetSelector: 'my-selector',
+        analyzedMetadata,
       });
 
       const { fixture } = await configureTestingModule({

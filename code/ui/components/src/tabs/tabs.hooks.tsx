@@ -98,10 +98,11 @@ export function useList(list: ChildrenList) {
               />
             </AddonButton>
           </WithTooltip>
-          {invisibleList.map(({ title, id, color }) => {
+          {invisibleList.map(({ title, id, color }, index) => {
+            const indexId = `index-${index}`;
             return (
               <TabButton
-                id={`tabbutton-${sanitize(title)}`}
+                id={`tabbutton-${sanitize(id) ?? indexId}`}
                 style={{ visibility: 'hidden' }}
                 aria-hidden
                 tabIndex={-1}

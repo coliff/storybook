@@ -8,9 +8,7 @@ import { router } from './router';
 export async function getStoryIndexGenerator(
   features: {
     buildStoriesJson?: boolean;
-    previewCsfV3?: boolean;
     storyStoreV7?: boolean;
-    breakingChangesV7?: boolean;
     argTypeTargetsV7?: boolean;
     warnOnLegacyHierarchySeparator?: boolean;
   },
@@ -34,7 +32,7 @@ export async function getStoryIndexGenerator(
       storyIndexers: await storyIndexers,
       docs: await docsOptions,
       workingDir,
-      storiesV2Compatibility: !features?.breakingChangesV7 && !features?.storyStoreV7,
+      storiesV2Compatibility: !features?.storyStoreV7,
       storyStoreV7: features?.storyStoreV7,
     });
 

@@ -45,10 +45,10 @@ If you want to know the exact details of the webpack config, the best way is to 
 ```shell
 
 ## Development mode
-yarn start-storybook --debug-webpack
+yarn storybook dev --debug-webpack
 
 ## Production mode
-yarn build-storybook --debug-webpack
+yarn storybook build --debug-webpack
 ```
 
 ### Bundle splitting

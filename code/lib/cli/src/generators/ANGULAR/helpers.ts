@@ -24,7 +24,7 @@ export const promptForCompoDocs = async (): Promise<boolean> => {
 
 export class AngularJSON {
   json: {
-    projects: Record<string, { root: string; architect: Record<string, any> }>;
+    projects: Record<string, { root: string; projectType: string; architect: Record<string, any> }>;
   };
 
   constructor() {

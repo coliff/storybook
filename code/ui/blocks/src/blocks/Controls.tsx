@@ -24,6 +24,10 @@ type ControlsProps = ControlsParameters & {
 
 export const Controls: FC<ControlsProps> = (props) => {
   const { of } = props;
+  if ('of' in props && of === undefined) {
+    throw new Error('Unexpected `of={undefined}`, did you mistype a CSF file reference?');
+  }
+
   const context = useContext(DocsContext);
   const { story } = context.resolveOf(of || 'story', ['story']);
   const { parameters, argTypes } = story;

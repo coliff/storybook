@@ -1,4 +1,5 @@
 import fse from 'fs-extra';
+import path from 'path';
 import { dedent } from 'ts-dedent';
 import { externalFrameworks, SupportedLanguage } from '../project_types';
 
@@ -55,7 +56,8 @@ export async function configureMain({
   language,
   ...custom
 }: ConfigureMainOptions) {
-  const prefix = (await fse.pathExists('./src')) ? '../src' : '../stories';
+  const srcPath = path.resolve(storybookConfigFolder, '../src');
+  const prefix = (await fse.pathExists(srcPath)) ? '../src' : '../stories';
   const config = {
     stories: [`${prefix}/**/*.mdx`, `${prefix}/**/*.stories.@(${extensions.join('|')})`],
     addons,
@@ -142,9 +144,6 @@ export async function configurePreview(options: ConfigurePreviewOptions) {
         : ''
     }const preview${isTypescript ? ': Preview' : ''} = {
       parameters: {
-        backgrounds: {
-          default: 'light',
-        },
         actions: { argTypesRegex: '^on[A-Z].*' },
         controls: {
           matchers: {

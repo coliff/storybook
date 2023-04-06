@@ -6,6 +6,7 @@ import { join, resolve } from 'path';
 import { prompt } from 'prompts';
 import { dedent } from 'ts-dedent';
 
+import { CODE_DIRECTORY, JUNIT_DIRECTORY, SANDBOX_DIRECTORY } from './utils/constants';
 import type { OptionValues } from './utils/options';
 import { createOptions, getCommand, getOptionsOrPrompt } from './utils/options';
 import { install } from './tasks/install';
@@ -19,9 +20,11 @@ import { dev } from './tasks/dev';
 import { smokeTest } from './tasks/smoke-test';
 import { build } from './tasks/build';
 import { serve } from './tasks/serve';
-import { testRunner } from './tasks/test-runner';
+import { testRunnerBuild } from './tasks/test-runner-build';
+import { testRunnerDev } from './tasks/test-runner-dev';
 import { chromatic } from './tasks/chromatic';
-import { e2eTests } from './tasks/e2e-tests';
+import { e2eTestsBuild } from './tasks/e2e-tests-build';
+import { e2eTestsDev } from './tasks/e2e-tests-dev';
 
 import {
   allTemplates as TEMPLATES,
@@ -31,15 +34,14 @@ import {
 
 import { version } from '../code/package.json';
 
-const sandboxDir = process.env.SANDBOX_ROOT || resolve(__dirname, '../sandbox');
-const codeDir = resolve(__dirname, '../code');
-const junitDir = resolve(__dirname, '../test-results');
+const sandboxDir = process.env.SANDBOX_ROOT || SANDBOX_DIRECTORY;
 
 export const extraAddons = ['a11y', 'storysource'];
 
 export type Path = string;
 export type TemplateDetails = {
   key: TemplateKey;
+  selectedTask: TaskKey;
   template: Template;
   codeDir: Path;
   sandboxDir: Path;
@@ -98,9 +100,11 @@ export const tasks = {
   'smoke-test': smokeTest,
   build,
   serve,
-  'test-runner': testRunner,
+  'test-runner': testRunnerBuild,
+  'test-runner-dev': testRunnerDev,
   chromatic,
-  'e2e-tests': e2eTests,
+  'e2e-tests': e2eTestsBuild,
+  'e2e-tests-dev': e2eTestsDev,
 };
 type TaskKey = keyof typeof tasks;
 
@@ -175,7 +179,7 @@ type PassedOptionValues = Omit<OptionValues<typeof options>, 'task' | 'startFrom
 const logger = console;
 
 function getJunitFilename(taskKey: TaskKey) {
-  return join(junitDir, `${taskKey}.xml`);
+  return join(JUNIT_DIRECTORY, `${taskKey}.xml`);
 }
 
 async function writeJunitXml(
@@ -316,6 +320,8 @@ async function runTask(task: Task, details: TemplateDetails, optionValues: Passe
   }
 }
 
+const controllers: AbortController[] = [];
+
 async function run() {
   const allOptionValues = await getOptionsOrPrompt('yarn task', options);
 
@@ -326,10 +332,11 @@ async function run() {
   const template = TEMPLATES[templateKey];
 
   const templateSandboxDir = templateKey && join(sandboxDir, templateKey.replace('/', '-'));
-  const details = {
+  const details: TemplateDetails = {
     key: templateKey,
     template,
-    codeDir,
+    codeDir: CODE_DIRECTORY,
+    selectedTask: taskKey,
     sandboxDir: templateSandboxDir,
     builtSandboxDir: templateKey && join(templateSandboxDir, 'storybook-static'),
     junitFilename: junit && getJunitFilename(taskKey),
@@ -417,7 +424,6 @@ async function run() {
     setUnready(startFromTask);
   }
 
-  const controllers: AbortController[] = [];
   for (let i = 0; i < sortedTasks.length; i += 1) {
     const task = sortedTasks[i];
     const status = statuses.get(task);
@@ -439,7 +445,6 @@ async function run() {
           // Always debug the final task so we can see it's output fully
           debug: task === finalTask ? true : optionValues.debug,
         });
-
         if (controller) controllers.push(controller);
       } catch (err) {
         logger.error(`Error running task ${getTaskKey(task)}:`);
@@ -484,11 +489,16 @@ async function run() {
       }
     }
   }
+
+  return 0;
+}
+
+process.on('exit', () => {
+  // Make sure to kill any running tasks 🎉
   controllers.forEach((controller) => {
     controller.abort();
   });
-  return 0;
-}
+});
 
 if (require.main === module) {
   run()

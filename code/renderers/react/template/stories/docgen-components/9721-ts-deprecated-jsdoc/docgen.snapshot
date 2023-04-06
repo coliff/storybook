@@ -9,13 +9,6 @@ Foo.__docgenInfo = {
   \\"methods\\": [],
   \\"displayName\\": \\"Foo\\",
   \\"props\\": {
-    \\"width\\": {
-      \\"required\\": true,
-      \\"tsType\\": {
-        \\"name\\": \\"number\\"
-      },
-      \\"description\\": \\"@deprecated Do not use! Use \`size\` instead!\\\\n\\\\nWidth of foo\\"
-    },
     \\"size\\": {
       \\"required\\": true,
       \\"tsType\\": {

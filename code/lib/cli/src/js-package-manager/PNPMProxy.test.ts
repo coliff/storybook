@@ -217,4 +217,144 @@ describe('NPM Proxy', () => {
       });
     });
   });
+
+  describe('mapDependencies', () => {
+    it('should display duplicated dependencies based on pnpm output', async () => {
+      // pnpm list "@storybook/*" "storybook" --depth 10 --json
+      jest.spyOn(pnpmProxy, 'executeCommand').mockReturnValue(`
+        [
+          {
+            "peerDependencies": {
+              "unrelated-and-should-be-filtered": {
+                "version": "1.0.0",
+                "from": "",
+                "resolved": ""
+              }
+            },
+            "dependencies": {
+              "@storybook/addon-interactions": {
+                "from": "@storybook/addon-interactions",
+                "version": "7.0.0-beta.13",
+                "resolved": "https://registry.npmjs.org/@storybook/addon-interactions/-/addon-interactions-7.0.0-beta.13.tgz",
+                "dependencies": {
+                  "@storybook/instrumenter": {
+                    "from": "@storybook/instrumenter",
+                    "version": "7.0.0-beta.13",
+                    "resolved": "https://registry.npmjs.org/@storybook/instrumenter/-/instrumenter-7.0.0-beta.13.tgz"
+                  }
+                }
+              }
+            },
+            "devDependencies": {
+              "@storybook/jest": {
+                "from": "@storybook/jest",
+                "version": "0.0.11-next.0",
+                "resolved": "https://registry.npmjs.org/@storybook/jest/-/jest-0.0.11-next.0.tgz",
+                "dependencies": {
+                  "@storybook/instrumenter": {
+                    "from": "@storybook/instrumenter",
+                    "version": "7.0.0-rc.7",
+                    "resolved": "https://registry.npmjs.org/@storybook/instrumenter/-/instrumenter-7.0.0-rc.7.tgz"
+                  }
+                }
+              },
+              "@storybook/testing-library": {
+                "from": "@storybook/testing-library",
+                "version": "0.0.14-next.1",
+                "resolved": "https://registry.npmjs.org/@storybook/testing-library/-/testing-library-0.0.14-next.1.tgz",
+                "dependencies": {
+                  "@storybook/instrumenter": {
+                    "from": "@storybook/instrumenter",
+                    "version": "7.0.0-rc.7",
+                    "resolved": "https://registry.npmjs.org/@storybook/instrumenter/-/instrumenter-7.0.0-rc.7.tgz"
+                  }
+                }
+              },
+              "@storybook/nextjs": {
+                "from": "@storybook/nextjs",
+                "version": "7.0.0-beta.13",
+                "resolved": "https://registry.npmjs.org/@storybook/nextjs/-/nextjs-7.0.0-beta.13.tgz",
+                "dependencies": {
+                  "@storybook/builder-webpack5": {
+                    "from": "@storybook/builder-webpack5",
+                    "version": "7.0.0-beta.13",
+                    "resolved": "https://registry.npmjs.org/@storybook/builder-webpack5/-/builder-webpack5-7.0.0-beta.13.tgz",
+                    "dependencies": {
+                      "@storybook/addons": {
+                        "from": "@storybook/addons",
+                        "version": "7.0.0-beta.13",
+                        "resolved": "https://registry.npmjs.org/@storybook/addons/-/addons-7.0.0-beta.13.tgz"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        ]      
+      `);
+
+      const installations = await pnpmProxy.findInstallations(['@storybook/*']);
+
+      expect(installations).toMatchInlineSnapshot(`
+        Object {
+          "dependencies": Object {
+            "@storybook/addon-interactions": Array [
+              Object {
+                "location": "",
+                "version": "7.0.0-beta.13",
+              },
+            ],
+            "@storybook/addons": Array [
+              Object {
+                "location": "",
+                "version": "7.0.0-beta.13",
+              },
+            ],
+            "@storybook/builder-webpack5": Array [
+              Object {
+                "location": "",
+                "version": "7.0.0-beta.13",
+              },
+            ],
+            "@storybook/instrumenter": Array [
+              Object {
+                "location": "",
+                "version": "7.0.0-rc.7",
+              },
+              Object {
+                "location": "",
+                "version": "7.0.0-beta.13",
+              },
+            ],
+            "@storybook/jest": Array [
+              Object {
+                "location": "",
+                "version": "0.0.11-next.0",
+              },
+            ],
+            "@storybook/nextjs": Array [
+              Object {
+                "location": "",
+                "version": "7.0.0-beta.13",
+              },
+            ],
+            "@storybook/testing-library": Array [
+              Object {
+                "location": "",
+                "version": "0.0.14-next.1",
+              },
+            ],
+          },
+          "duplicatedDependencies": Object {
+            "@storybook/instrumenter": Array [
+              "7.0.0-rc.7",
+              "7.0.0-beta.13",
+            ],
+          },
+          "infoCommand": "pnpm list --depth=1",
+        }
+      `);
+    });
+  });
 });

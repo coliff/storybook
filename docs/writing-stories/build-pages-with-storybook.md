@@ -55,10 +55,11 @@ In such cases, it is natural to use [args composition](./args.md#args-compositio
 
 <CodeSnippets
   paths={[
-    'common/page-story-with-args-composition.js.mdx',
-    'common/page-story-with-args-composition.ts.mdx',
+    'angular/page-story-with-args-composition.ts.mdx',
     'web-components/page-story-with-args-composition.js.mdx',
     'web-components/page-story-with-args-composition.ts.mdx',
+    'common/page-story-with-args-composition.js.mdx',
+    'common/page-story-with-args-composition.ts.mdx',
   ]}
   usesCsf3
   csf2Path="writing-stories/build-pages-with-storybook#snippet-page-story-with-args-composition"
@@ -111,6 +112,7 @@ Update your `.storybook/preview.js` file and enable the addon via a [global deco
 <CodeSnippets
   paths={[
     'common/storybook-preview-register-msw-addon.js.mdx',
+    'common/storybook-preview-register-msw-addon.ts.mdx',
   ]}
 />
 
@@ -138,7 +140,7 @@ If you're working with pure presentational screens, adding stories through [args
   paths={[
     'react/document-screen-fetch.js.mdx',
     'vue/document-screen-fetch.3.js.mdx',
-    'vue/document-screen-fetch.ts-3.ts.mdx',
+    'vue/document-screen-fetch.3.ts.mdx',
     'angular/document-screen-fetch.ts.mdx',
     'svelte/document-screen-fetch.js.mdx',
     'web-components/document-screen-fetch.js.mdx',
@@ -153,10 +155,11 @@ To test your screen with the mocked data, you could write a similar set of stori
 
 <CodeSnippets
   paths={[
-    'common/documentscreen-story-msw-rest-request.js.mdx',
-    'common/documentscreen-story-msw-rest-request.ts.mdx',
+    'angular/documentscreen-story-msw-rest-request.ts.mdx',
     'web-components/documentscreen-story-msw-rest-request.js.mdx',
     'web-components/documentscreen-story-msw-rest-request.ts.mdx',
+    'common/documentscreen-story-msw-rest-request.js.mdx',
+    'common/documentscreen-story-msw-rest-request.ts.mdx',
   ]}
   usesCsf3
   csf2Path="writing-stories/build-pages-with-storybook#snippet-documentscreen-story-msw-rest-request"
@@ -181,7 +184,7 @@ In addition to mocking RESTful requests, the other noteworthy feature of the [MS
     'react/document-screen-with-graphql.js.mdx',
     'react/document-screen-with-graphql.ts.mdx',
     'vue/document-screen-with-graphql.3.js.mdx',
-    'vue/document-screen-with-graphql.ts-3.ts.mdx',
+    'vue/document-screen-with-graphql.3.ts.mdx',
     'angular/document-screen-with-graphql.ts.mdx',
     'svelte/document-screen-with-grapqhl.js.mdx',
   ]}
@@ -197,11 +200,11 @@ To test your screen with the GraphQL mocked data, you could write the following 
   paths={[
     'react/documentscreen-story-msw-graphql-query.js.mdx',
     'react/documentscreen-story-msw-graphql-query.ts.mdx',
-    'vue/documentscreen-story-msw-graphql-query.3.js.mdx',
-    'vue/documentscreen-story-msw-graphql-query.ts-3.ts.mdx',
-    'vue/apollo-wrapper-component.with-mock-implementation-3.js.mdx',
-    'angular/documentscreen-story-msw-graphql-query.ts.mdx',
+    'vue/apollo-wrapper-component.with-mock-implementation.3.js.mdx',
+    'vue/documentscreen-story-msw-graphql-query.js.mdx',
+    'vue/documentscreen-story-msw-graphql-query.ts.mdx',
     'angular/apollo-module.mock-apollo-module.ts.mdx',
+    'angular/documentscreen-story-msw-graphql-query.ts.mdx',
     'svelte/documentscreen-story-msw-graphql-query.js.mdx',
     'svelte/apollo-wrapper-component.with-mock-implementation.js.mdx',
   ]}
@@ -251,6 +254,7 @@ Add the decorator you've just implemented to your [storybook/preview.js](../conf
 <CodeSnippets
   paths={[
     'common/storybook-preview-with-mock-decorator.js.mdx',
+    'common/storybook-preview-with-mock-decorator.ts.mdx',
   ]}
 />
 
@@ -262,10 +266,11 @@ Finally, we can set the mock values in a specific story. Let's borrow an example
 
 <CodeSnippets
   paths={[
-    'common/app-story-with-mock.js.mdx',
-    'common/app-story-with-mock.ts.mdx',
+    'angular/app-story-with-mock.ts.mdx',
     'web-components/app-story-with-mock.js.mdx',
     'web-components/app-story-with-mock.ts.mdx',
+    'common/app-story-with-mock.js.mdx',
+    'common/app-story-with-mock.ts.mdx',
   ]}
   usesCsf3
   csf2Path="writing-stories/build-pages-with-storybook#snippet-app-story-with-mock"
@@ -375,6 +380,7 @@ If you’ve set up `GlobalContainerContext`, you’ll need to set up a decorator
 <CodeSnippets
   paths={[
     'react/mock-context-container-global.js.mdx',
+    'react/mock-context-container-global.ts.mdx',
   ]}
 />
 

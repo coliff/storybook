@@ -2,7 +2,7 @@ import { hbs } from 'ember-cli-htmlbars';
 import { action } from '@storybook/addon-actions';
 import { linkTo } from '@storybook/addon-links';
 
-// More on how to set up stories at: https://storybook.js.org/docs/7.0/ember/writing-stories/introduction
+// More on how to set up stories at: https://storybook.js.org/docs/ember/writing-stories/introduction
 export default {
   title: 'Example/Button',
   render: (args) => ({
@@ -12,11 +12,11 @@ export default {
   argTypes: {
     label: { control: 'text' },
   },
-  // This component will have an automatically generated Autodocs entry: https://storybook.js.org/docs/7.0/react/writing-docs/docs-page
+  // This component will have an automatically generated Autodocs entry: https://storybook.js.org/docs/react/writing-docs/autodocs
   tags: ['autodocs'],
 };
 
-// More on writing stories with args: https://storybook.js.org/docs/7.0/ember/writing-stories/args
+// More on writing stories with args: https://storybook.js.org/docs/ember/writing-stories/args
 export const Text = {
   args: {
     label: 'Button',

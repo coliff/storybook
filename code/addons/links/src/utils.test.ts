@@ -79,7 +79,7 @@ describe('preview', () => {
   describe('hrefTo()', () => {
     it('should return promise resolved with story href', async () => {
       const href = await hrefTo('title', 'name');
-      expect(href).toContain('?id=title--name');
+      expect(href).toContain('?path=/story/title--name');
     });
   });
 });

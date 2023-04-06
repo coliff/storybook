@@ -25,6 +25,8 @@ export * from './types';
  */
 export type StorybookViteConfig = StorybookBaseConfig & StorybookConfigVite;
 
+const wrapForPnP = (input: string) => dirname(require.resolve(join(input, 'package.json')));
+
 function iframeMiddleware(options: Options, server: ViteDevServer): RequestHandler {
   return async (req, res, next) => {
     if (!req.url.match(/^\/iframe\.html($|\?)/)) {
@@ -64,7 +66,7 @@ export const start: ViteBuilder['start'] = async ({
 }) => {
   server = await createViteServer(options as Options, devServer);
 
-  const previewResolvedDir = dirname(require.resolve('@storybook/preview/package.json'));
+  const previewResolvedDir = wrapForPnP('@storybook/preview');
   const previewDirOrigin = join(previewResolvedDir, 'dist');
 
   router.use(`/sb-preview`, express.static(previewDirOrigin, { immutable: true, maxAge: '5m' }));
@@ -82,7 +84,7 @@ export const start: ViteBuilder['start'] = async ({
 export const build: ViteBuilder['build'] = async ({ options }) => {
   const viteCompilation = viteBuild(options as Options);
 
-  const previewResolvedDir = dirname(require.resolve('@storybook/preview/package.json'));
+  const previewResolvedDir = wrapForPnP('@storybook/preview');
   const previewDirOrigin = join(previewResolvedDir, 'dist');
   const previewDirTarget = join(options.outputDir || '', `sb-preview`);
 

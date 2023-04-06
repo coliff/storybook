@@ -4,7 +4,7 @@ title: 'Storybook Composition'
 
 Composition allows you to browse components from any Storybook accessible via URL inside your local Storybook. You can compose any [Storybook published online](./publish-storybook.md) or running locally no matter the view layer, tech stack, or dependencies.
 
-![Storybook reference external](./reference-external-storybooks-composition.jpg)
+![Storybook reference external](./reference-external-storybooks-composition.png)
 
 You’ll see the composed Storybook’s stories in the sidebar alongside your own. This unlocks common workflows that teams often struggle with:
 
@@ -68,7 +68,7 @@ You can also compose Storybooks based on the current development environment (e.
 
 <div class="aside">
 
-💡 Similar to the other fields available in Storybook’s configuration file, the `refs` field can also be a function that accepts a config parameter containing Storybook’s configuration object. Check the [Webpack documentation](../builders/webpack.md#extending-storybooks-webpack-config) to learn more about it.
+💡 Similar to the other fields available in Storybook’s configuration file, the `refs` field can also be a function that accepts a config parameter containing Storybook’s configuration object. Check the [Webpack documentation](../builders/webpack.md#override-the-default-configuration) to learn more about it.
 
 </div>
 

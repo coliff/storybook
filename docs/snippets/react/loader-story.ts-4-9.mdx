@@ -9,11 +9,10 @@ import { TodoItem } from './TodoItem';
 
 const meta = {
   /* 👇 The title prop is optional.
-   * See https://storybook.js.org/docs/7.0/react/configure/overview#configure-story-loading
+   * See https://storybook.js.org/docs/react/configure/overview#configure-story-loading
    * to learn how to generate automatic titles
    */
   title: 'Examples/Loader',
-
   component: TodoItem,
   render: (args, { loaded: { todo } }) => <TodoItem {...args} {...todo} />,
 } satisfies Meta<typeof TodoItem>;

@@ -4,7 +4,7 @@ title: 'Setup Storybook'
 
 Now that you’ve learned what stories are and how to browse them, let’s demo working on one of your components.
 
-Pick a simple component from your project, like a Button, and write a `.stories.js`, or a `.stories.mdx` file to go along with it. It might look something like this:
+Pick a simple component from your project, like a Button, and write a `.stories.js`, or a `.stories.ts` file to go along with it. It might look something like this:
 
 <!-- prettier-ignore-start -->
 
@@ -14,9 +14,9 @@ Pick a simple component from your project, like a Button, and write a `.stories.
     'react/your-component.ts.mdx',
     'angular/your-component.ts.mdx',
     'vue/your-component.2.js.mdx',
-    'vue/your-component.ts-2.ts.mdx',
+    'vue/your-component.2.ts.mdx',
     'vue/your-component.3.js.mdx',
-    'vue/your-component.ts-3.ts.mdx',
+    'vue/your-component.3.ts.mdx',
     'web-components/your-component.js.mdx',
     'web-components/your-component.ts.mdx',
     'svelte/your-component.js.mdx',
@@ -45,7 +45,7 @@ Your project may have additional requirements before components can be rendered 
 
 If you see errors on the CLI when you run the `yarn storybook` command, you likely need to make changes to Storybook’s build configuration. Here are some things to try:
 
-- [Presets](../addons/addon-types.md) bundle common configurations for various technologies into Storybook. In particular, presets exist for Create React App, SCSS and Ant Design.
+- [Presets](../addons/addon-types.md) bundle common configurations for various technologies into Storybook. In particular, presets exist for Create React App and Ant Design.
 - Specify a custom [Babel configuration](../configure/babel.md#custom-babel-config) for Storybook. Storybook automatically tries to use your project’s config if it can.
 - Adjust the [Webpack configuration](../builders/webpack.md) that Storybook uses. Try patching in your own configuration if needed.
 
@@ -72,13 +72,18 @@ Use [decorators](../writing-stories/decorators.md) to “wrap” every story in 
 <CodeSnippets
   paths={[
     'react/storybook-preview-with-styled-components-decorator.js.mdx',
-    'react/storybook-preview-with-styled-components-decorator.story-function.js.mdx',
-    'vue/storybook-preview-with-library-decorator.2-library.js.mdx',
-    'vue/storybook-preview-with-library-decorator.3-library.js.mdx',
-    'vue/storybook-preview-with-hoc-component-decorator.2-component.js.mdx',
-    'vue/storybook-preview-with-hoc-component-decorator.3-component.js.mdx',
-    'vue/storybook-preview-with-mixin-decorator.2-mixin.js.mdx',
-    'angular/storybook-preview-with-styled-components-decorator.ts.mdx'
+    'react/storybook-preview-with-styled-components-decorator.ts.mdx',
+    'vue/storybook-preview-with-library-decorator.library-2.js.mdx',
+    'vue/storybook-preview-with-library-decorator.library-2.ts.mdx',
+    'vue/storybook-preview-with-library-decorator.library-3.js.mdx',
+    'vue/storybook-preview-with-library-decorator.library-3.ts.mdx',
+    'vue/storybook-preview-with-hoc-component-decorator.component-2.js.mdx',
+    'vue/storybook-preview-with-hoc-component-decorator.component-2.ts.mdx',
+    'vue/storybook-preview-with-hoc-component-decorator.component-3.js.mdx',
+    'vue/storybook-preview-with-hoc-component-decorator.component-3.ts.mdx',
+    'vue/storybook-preview-with-mixin-decorator.mixin-2.js.mdx',
+    'vue/storybook-preview-with-mixin-decorator.mixin-2.ts.mdx',
+    'angular/storybook-preview-with-styled-components-decorator.ts.mdx',
   ]}
 />
 
@@ -102,7 +107,7 @@ If you are using CSS-in-JS, chances are your styles are working because they’r
 <details>
   <summary>@import CSS into components</summary>
 
-Storybook allows you to import CSS files in your components directly. But in some cases you may need to [tweak its Webpack configuration](../builders/webpack.md#extendingstorybooks-webpack-config). Angular components require [a special import](../configure/styling-and-css.md#importing-css-files).
+Storybook allows you to import CSS files in your components directly. But in some cases you may need to [tweak its Webpack configuration](../builders/webpack.md#override-the-default-configuration). Angular components require [a special import](../configure/styling-and-css.md#importing-css-files).
 
 </details>
 

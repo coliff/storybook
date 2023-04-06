@@ -1,0 +1,41 @@
+```ts
+// MyComponent.stories.ts
+
+import type { Meta, StoryObj } from '@storybook/vue3';
+
+import MyComponent from './MyComponent.vue';
+
+import imageFile from './static/image.png';
+
+const meta = {
+  /* 👇 The title prop is optional.
+   * See https://storybook.js.org/docs/vue/configure/overview#configure-story-loading
+   * to learn how to generate automatic titles
+   */
+  title: 'img',
+  component: MyComponent,
+} satisfies Meta<typeof MyComponent>;
+
+const image = {
+  src: imageFile,
+  alt: 'my image',
+};
+
+export default meta;
+type Story = StoryObj<typeof meta>;
+
+/*
+ *👇 Render functions are a framework specific feature to allow you control on how the component renders.
+ * See https://storybook.js.org/docs/vue/api/csf
+ * to learn how to use render functions.
+ */
+export const WithAnImage: Story = {
+  render: () => ({
+    setup() {
+      //👇 Returns the content of the image object create above.
+      return { image };
+    },
+    template: `<img v-bind="image"/>`,
+  }),
+};
+```

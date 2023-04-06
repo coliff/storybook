@@ -1,5 +1,5 @@
 import type { FC } from 'react';
-import React, { useCallback } from 'react';
+import React, { useState, useCallback } from 'react';
 import { useGlobals } from '@storybook/manager-api';
 import { deprecate } from '@storybook/client-logger';
 import { WithTooltip, TooltipLinkList } from '@storybook/components';
@@ -17,9 +17,10 @@ export const ToolbarMenuList: FC<ToolbarMenuListProps> = withKeyboardCycle(
     id,
     name,
     description,
-    toolbar: { icon: _icon, items, title: _title, showName, preventDynamicIcon, dynamicTitle },
+    toolbar: { icon: _icon, items, title: _title, preventDynamicIcon, dynamicTitle },
   }) => {
     const [globals, updateGlobals] = useGlobals();
+    const [isTooltipVisible, setIsTooltipVisible] = useState(false);
 
     const currentValue = globals[id];
     const hasGlobalValue = !!currentValue;
@@ -31,12 +32,12 @@ export const ToolbarMenuList: FC<ToolbarMenuListProps> = withKeyboardCycle(
     }
 
     // Deprecation support for old "name of global arg used as title"
-    if (showName && !title) {
+    if (!title) {
       title = name;
       deprecate(
         '`showName` is deprecated as `name` will stop having dual purposes in the future. Please specify a `title` in `globalTypes` instead.'
       );
-    } else if (!showName && !icon && !title) {
+    } else if (!icon && !title) {
       title = name;
       deprecate(
         `Using the \`name\` "${name}" as toolbar title for backward compatibility. \`name\` will stop having dual purposes in the future. Please specify either a \`title\` or an \`icon\` in \`globalTypes\` instead.`
@@ -84,9 +85,10 @@ export const ToolbarMenuList: FC<ToolbarMenuListProps> = withKeyboardCycle(
           return <TooltipLinkList links={links} />;
         }}
         closeOnOutsideClick
+        onVisibleChange={setIsTooltipVisible}
       >
         <ToolbarMenuButton
-          active={hasGlobalValue}
+          active={isTooltipVisible || hasGlobalValue}
           description={description || ''}
           icon={icon}
           title={title || ''}

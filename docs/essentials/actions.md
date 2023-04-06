@@ -6,7 +6,7 @@ The actions addon is used to display data received by event handler (callback) a
 
 <video autoPlay muted playsInline loop>
   <source
-    src="addon-actions-optimized.mp4"
+    src="addon-actions-demo-optimized.mp4"
     type="video/mp4"
   />
 </video>
@@ -23,6 +23,9 @@ You can use [argTypes](../api/argtypes.md) to tell Storybook that an arg to your
 
 <CodeSnippets
   paths={[
+    'angular/button-story-onclick-action-argtype.ts.mdx',
+    'web-components/button-story-onclick-action-argtype.js.mdx',
+    'web-components/button-story-onclick-action-argtype.ts.mdx',
     'common/button-story-onclick-action-argtype.js.mdx',
     'common/button-story-onclick-action-argtype.ts.mdx',
   ]}
@@ -43,6 +46,7 @@ Another option is to use a global parameter to match all [argTypes](../api/argty
 <CodeSnippets
   paths={[
     'common/storybook-preview-matching-argtypes.js.mdx',
+    'common/storybook-preview-matching-argtypes.ts.mdx',
   ]}
 />
 
@@ -54,6 +58,9 @@ If you need more granular control over which `argTypes` are matched, you can adj
 
 <CodeSnippets
   paths={[
+    'angular/button-story-matching-argtypes.ts.mdx',
+    'web-components/button-story-matching-argtypes.js.mdx',
+    'web-components/button-story-matching-argtypes.ts.mdx',
     'common/button-story-matching-argtypes.js.mdx',
     'common/button-story-matching-argtypes.ts.mdx',
   ]}
@@ -75,6 +82,9 @@ It is also possible to detect if your component is emitting the correct HTML eve
 
 <CodeSnippets
   paths={[
+    'angular/button-story-action-event-handle.ts.mdx',
+    'web-components/button-story-action-event-handle.js.mdx',
+    'web-components/button-story-action-event-handle.ts.mdx',
     'common/button-story-action-event-handle.js.mdx',
     'common/button-story-action-event-handle.ts.mdx',
   ]}

@@ -1,14 +1,17 @@
-import type { FC } from 'react';
+import type { FC, PropsWithChildren } from 'react';
 import React from 'react';
 import { H2 } from '@storybook/components';
 import { HeaderMdx } from './mdx';
 
 export interface HeadingProps {
-  children: JSX.Element | string;
   disableAnchor?: boolean;
 }
 
-export const Heading: FC<HeadingProps> = ({ children, disableAnchor, ...props }) => {
+export const Heading: FC<PropsWithChildren<HeadingProps>> = ({
+  children,
+  disableAnchor,
+  ...props
+}) => {
   if (disableAnchor || typeof children !== 'string') {
     return <H2>{children}</H2>;
   }

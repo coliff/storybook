@@ -53,8 +53,9 @@ export class DocsRenderer<TRenderer extends Renderer> {
       await new Promise((resolve, reject) => {
         import('@mdx-js/react')
           .then(({ MDXProvider }) =>
+            // We use a `key={}` here to reset the `hasError` state each time we render ErrorBoundary
             renderElement(
-              <ErrorBoundary showException={reject}>
+              <ErrorBoundary showException={reject} key={Math.random()}>
                 <MDXProvider components={components}>
                   <TDocs context={context} docsParameter={docsParameter} />
                 </MDXProvider>

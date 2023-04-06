@@ -3,7 +3,7 @@ import type { Options, PreviewAnnotation } from '@storybook/types';
 import { virtualPreviewFile, virtualStoriesFile } from './virtual-file-names';
 import { processPreviewAnnotation } from './utils/process-preview-annotation';
 
-export async function generateIframeScriptCode(options: Options) {
+export async function generateIframeScriptCode(options: Options, projectRoot: string) {
   const { presets } = options;
   const rendererName = await getRendererName(options);
 
@@ -12,7 +12,9 @@ export async function generateIframeScriptCode(options: Options) {
     [],
     options
   );
-  const configEntries = [...previewAnnotations].filter(Boolean).map(processPreviewAnnotation);
+  const configEntries = [...previewAnnotations]
+    .filter(Boolean)
+    .map((path) => processPreviewAnnotation(path, projectRoot));
 
   const filesToImport = (files: string[], name: string) =>
     files.map((el, i) => `import ${name ? `* as ${name}_${i} from ` : ''}'${el}'`).join('\n');

@@ -201,7 +201,9 @@ export async function copyTemplateFiles({
   destination,
   includeCommonAssets = true,
 }: CopyTemplateFilesOptions) {
-  const languageFolderMapping: Record<SupportedLanguage, string> = {
+  const languageFolderMapping: Record<SupportedLanguage | 'typescript', string> = {
+    // keeping this for backwards compatibility in case community packages are using it
+    typescript: 'ts',
     [SupportedLanguage.JAVASCRIPT]: 'js',
     [SupportedLanguage.TYPESCRIPT_3_8]: 'ts-3-8',
     [SupportedLanguage.TYPESCRIPT_4_9]: 'ts-4-9',
@@ -212,6 +214,7 @@ export async function copyTemplateFiles({
 
     const assetsLanguage = join(assetsDir, languageFolderMapping[language]);
     const assetsJS = join(assetsDir, languageFolderMapping[SupportedLanguage.JAVASCRIPT]);
+    const assetsTS = join(assetsDir, languageFolderMapping.typescript);
     const assetsTS38 = join(assetsDir, languageFolderMapping[SupportedLanguage.TYPESCRIPT_3_8]);
 
     // Ideally use the assets that match the language & version.
@@ -221,6 +224,10 @@ export async function copyTemplateFiles({
     // Use fallback typescript 3.8 assets if new ones aren't available
     if (language === SupportedLanguage.TYPESCRIPT_4_9 && (await fse.pathExists(assetsTS38))) {
       return assetsTS38;
+    }
+    // Fallback further to TS (for backwards compatibility purposes)
+    if (await fse.pathExists(assetsTS)) {
+      return assetsTS;
     }
     // Fallback further to JS
     if (await fse.pathExists(assetsJS)) {

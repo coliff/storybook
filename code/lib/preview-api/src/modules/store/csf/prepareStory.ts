@@ -243,19 +243,6 @@ function preparePartialAnnotations<TRenderer extends Renderer>(
     initialArgsBeforeEnhancers
   );
 
-  // Add some of our metadata into parameters as we used to do this in 6.x and users may be relying on it
-
-  if (!global.FEATURES?.breakingChangesV7) {
-    contextForEnhancers.parameters = {
-      ...contextForEnhancers.parameters,
-      __id: id,
-      globals: projectAnnotations.globals,
-      globalTypes: projectAnnotations.globalTypes,
-      args: contextForEnhancers.initialArgs,
-      argTypes: contextForEnhancers.argTypes,
-    };
-  }
-
   const { name, story, ...withoutStoryIdentifiers } = contextForEnhancers;
 
   return withoutStoryIdentifiers;

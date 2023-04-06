@@ -5,14 +5,15 @@ import type { StoryFn as CSF2Story, StoryObj as CSF3Story, Meta } from '..';
 import type { ButtonProps } from './Button';
 import { Button } from './Button';
 
-export default {
+const meta = {
   title: 'Example/Button',
   component: Button,
   argTypes: {
     backgroundColor: { control: 'color' },
-    label: { defaultValue: 'Button' },
   },
-} as Meta;
+} satisfies Meta<typeof Button>;
+
+export default meta;
 
 const Template: CSF2Story<ButtonProps> = (args) => <Button {...args} />;
 

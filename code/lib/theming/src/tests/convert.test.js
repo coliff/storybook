@@ -33,7 +33,7 @@ describe('convert', () => {
         secondary: '#029CFD',
       }),
       background: expect.objectContaining({
-        app: '#F5FBFF',
+        app: '#F6F9FC',
       }),
     });
   });

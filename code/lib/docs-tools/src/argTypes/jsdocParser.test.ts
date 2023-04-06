@@ -233,8 +233,8 @@ describe('parseJsDoc', () => {
       const { extractedTags } = parseJsDoc('@deprecated string');
 
       expect(extractedTags.deprecated).not.toBeNull();
-      expect(extractedTags.deprecated.name).not.toBeNull();
-      expect(extractedTags.deprecated.name).toBe('string');
+      expect(extractedTags.deprecated).not.toBeNull();
+      expect(extractedTags.deprecated).toBe('string');
     });
   });
 

@@ -16,7 +16,7 @@ type Story = StoryObj;
 export const EmptyForm: Story = {};
 
 /*
- * See https://storybook.js.org/docs/7.0/web-components/writing-stories/play-function#working-with-the-canvas
+ * See https://storybook.js.org/docs/web-components/writing-stories/play-function#working-with-the-canvas
  * to learn more about using the canvasElement to query the DOM
  */
 export const FilledForm: Story = {
@@ -28,7 +28,7 @@ export const FilledForm: Story = {
 
     await userEvent.type(canvas.getByTestId('password'), 'a-random-password');
 
-    // See https://storybook.js.org/docs/7.0/web-components/essentials/actions#automatically-matching-args to learn how to setup logging in the Actions panel
+    // See https://storybook.js.org/docs/web-components/essentials/actions#automatically-matching-args to learn how to setup logging in the Actions panel
     await userEvent.click(canvas.getByRole('button'));
 
     // 👇 Assert DOM structure

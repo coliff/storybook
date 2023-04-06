@@ -1,19 +1,15 @@
 module.exports = {
   toc: [
     {
-      title: '📕 Why Storybook?',
-      pathSegment: 'why-storybook',
-      type: 'link',
-    },
-    {
       title: '🚀 Get started',
       pathSegment: 'get-started',
       type: 'menu',
       children: [
         {
-          pathSegment: 'introduction',
-          title: 'Introduction',
+          pathSegment: 'why-storybook',
+          title: 'Why Storybook?',
           type: 'bullet-link',
+          description: 'Learn why Storybook can help you build better UIs',
         },
         {
           pathSegment: 'install',
@@ -306,6 +302,11 @@ module.exports = {
         {
           pathSegment: 'addons-api',
           title: 'Addon API',
+          type: 'link',
+        },
+        {
+          pathSegment: 'addon-migration-guide',
+          title: 'Migrate addons to 7.0',
           type: 'link',
         },
       ],
@@ -611,6 +612,11 @@ module.exports = {
     {
       title: '❓ FAQ',
       pathSegment: 'faq',
+      type: 'link',
+    },
+    {
+      title: '↗️ Migrate to 7.0',
+      pathSegment: 'migration-guide',
       type: 'link',
     },
   ],

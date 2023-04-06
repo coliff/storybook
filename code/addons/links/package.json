@@ -1,6 +1,6 @@
 {
   "name": "@storybook/addon-links",
-  "version": "7.0.0-beta.62",
+  "version": "7.1.0-alpha.0",
   "description": "Link stories together to build demos and prototypes with your UI components",
   "keywords": [
     "addon",
@@ -73,14 +73,14 @@
     "prep": "../../../scripts/prepare/bundle.ts"
   },
   "dependencies": {
-    "@storybook/client-logger": "7.0.0-beta.62",
-    "@storybook/core-events": "7.0.0-beta.62",
-    "@storybook/csf": "next",
+    "@storybook/client-logger": "7.1.0-alpha.0",
+    "@storybook/core-events": "7.1.0-alpha.0",
+    "@storybook/csf": "^0.1.0",
     "@storybook/global": "^5.0.0",
-    "@storybook/manager-api": "7.0.0-beta.62",
-    "@storybook/preview-api": "7.0.0-beta.62",
-    "@storybook/router": "7.0.0-beta.62",
-    "@storybook/types": "7.0.0-beta.62",
+    "@storybook/manager-api": "7.1.0-alpha.0",
+    "@storybook/preview-api": "7.1.0-alpha.0",
+    "@storybook/router": "7.1.0-alpha.0",
+    "@storybook/types": "7.1.0-alpha.0",
     "prop-types": "^15.7.2",
     "ts-dedent": "^2.0.0"
   },
@@ -112,7 +112,7 @@
     ],
     "post": "./scripts/fix-preview-api-reference.ts"
   },
-  "gitHead": "f70dcdb599363bfd6e6d2b63f8fadd02e9cbe00a",
+  "gitHead": "8ff2938f8ac0c2d524ae653cd89251e5cd4721a4",
   "storybook": {
     "displayName": "Links",
     "icon": "https://user-images.githubusercontent.com/263385/101991673-48355c80-3c7c-11eb-9b6e-b627c96a75f6.png",

@@ -14,7 +14,7 @@ So you can develop UI components in isolation without worrying about app specifi
 
 ```sh
 cd my-app
-npx storybook init -t web_components
+npx storybook@latest init -t web_components
 ```
 
 For more information visit: [storybook.js.org](https://storybook.js.org)

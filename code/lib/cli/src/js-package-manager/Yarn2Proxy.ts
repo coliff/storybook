@@ -1,5 +1,7 @@
 import { JsPackageManager } from './JsPackageManager';
 import type { PackageJson } from './PackageJson';
+import type { InstallationMetadata, PackageMetadata } from './types';
+import { parsePackageData } from './util';
 
 // This encompasses both yarn 2 and yarn 3
 export class Yarn2Proxy extends JsPackageManager {
@@ -28,6 +30,22 @@ export class Yarn2Proxy extends JsPackageManager {
 
   runPackageCommand(command: string, args: string[], cwd?: string): string {
     return this.executeCommand(`yarn`, [command, ...args], undefined, cwd);
+  }
+
+  public findInstallations(pattern: string[]) {
+    const commandResult = this.executeCommand('yarn', [
+      'info',
+      '--name-only',
+      '--recursive',
+      pattern.map((p) => `"${p}"`).join(' '),
+      `"${pattern}"`,
+    ]);
+
+    try {
+      return this.mapDependencies(commandResult);
+    } catch (e) {
+      return undefined;
+    }
   }
 
   protected getResolutions(packageJson: PackageJson, versions: Record<string, string>) {
@@ -74,5 +92,38 @@ export class Yarn2Proxy extends JsPackageManager {
     } catch (e) {
       throw new Error(`Unable to find versions of ${packageName} using yarn 2`);
     }
+  }
+
+  protected mapDependencies(input: string): InstallationMetadata {
+    const lines = input.split('\n');
+    const acc: Record<string, PackageMetadata[]> = {};
+    const existingVersions: Record<string, string[]> = {};
+    const duplicatedDependencies: Record<string, string[]> = {};
+
+    lines.forEach((packageName) => {
+      if (!packageName || !packageName.includes('storybook')) {
+        return;
+      }
+
+      const { name, value } = parsePackageData(packageName.replaceAll(`"`, ''));
+      if (!existingVersions[name]?.includes(value.version)) {
+        if (acc[name]) {
+          acc[name].push(value);
+        } else {
+          acc[name] = [value];
+        }
+
+        existingVersions[name] = [...(existingVersions[name] || []), value.version];
+        if (existingVersions[name].length > 1) {
+          duplicatedDependencies[name] = existingVersions[name];
+        }
+      }
+    });
+
+    return {
+      dependencies: acc,
+      duplicatedDependencies,
+      infoCommand: 'yarn why',
+    };
   }
 }

@@ -27,6 +27,7 @@ const isExampleEntry = (entry: IndexEntry) => {
 
 export function summarizeIndex(storyIndex: StoryIndex) {
   let storyCount = 0;
+  const componentTitles = new Set<string>();
   let exampleStoryCount = 0;
   let exampleDocsCount = 0;
   let pageStoryCount = 0;
@@ -40,6 +41,7 @@ export function summarizeIndex(storyIndex: StoryIndex) {
       if (entry.type === 'docs') exampleDocsCount += 1;
     } else if (entry.type === 'story') {
       storyCount += 1;
+      componentTitles.add(entry.title);
       if (isPageStory(entry.title)) {
         pageStoryCount += 1;
       }
@@ -56,8 +58,10 @@ export function summarizeIndex(storyIndex: StoryIndex) {
       }
     }
   });
+  const componentCount = componentTitles.size;
   return {
     storyCount,
+    componentCount,
     pageStoryCount,
     playStoryCount,
     autodocsCount,

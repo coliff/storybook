@@ -75,38 +75,42 @@ export const ArgJsDoc: FC<ArgJsDocArgs> = ({ tags }) => {
   const hasDisplayableDeprecated = tags.deprecated != null;
   const hasDisplayableReturns = tags.returns != null && tags.returns.description != null;
 
-  if (!hasDisplayableParams && !hasDisplayableReturns) {
+  if (!hasDisplayableParams && !hasDisplayableReturns && !hasDisplayableDeprecated) {
     return null;
   }
 
   return (
-    <Table>
-      <tbody>
-        {hasDisplayableParams &&
-          params.map((x) => {
-            return (
-              <tr key={x.name}>
-                <td>
-                  <code>{x.name}</code>
-                  {hasDisplayableDeprecated && (
-                    <div>
-                      <span>Deprecated</span> {tags.deprecated}
-                    </div>
-                  )}
-                </td>
-                <td>{x.description}</td>
-              </tr>
-            );
-          })}
-        {hasDisplayableReturns && (
-          <tr key="returns">
-            <td>
-              <code>Returns</code>
-            </td>
-            <td>{tags.returns.description}</td>
-          </tr>
-        )}
-      </tbody>
-    </Table>
+    <>
+      <Table>
+        <tbody>
+          {hasDisplayableDeprecated && (
+            <tr key="deprecated">
+              <td colSpan={2}>
+                <strong>Deprecated</strong>: {tags.deprecated}
+              </td>
+            </tr>
+          )}
+          {hasDisplayableParams &&
+            params.map((x) => {
+              return (
+                <tr key={x.name}>
+                  <td>
+                    <code>{x.name}</code>
+                  </td>
+                  <td>{x.description}</td>
+                </tr>
+              );
+            })}
+          {hasDisplayableReturns && (
+            <tr key="returns">
+              <td>
+                <code>Returns</code>
+              </td>
+              <td>{tags.returns.description}</td>
+            </tr>
+          )}
+        </tbody>
+      </Table>
+    </>
   );
 };

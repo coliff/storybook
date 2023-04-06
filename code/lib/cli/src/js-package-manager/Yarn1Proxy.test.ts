@@ -191,4 +191,80 @@ describe('Yarn 1 Proxy', () => {
       });
     });
   });
+
+  describe('mapDependencies', () => {
+    it('should display duplicated dependencies based on yarn output', async () => {
+      // yarn list --pattern "@storybook/*" "@storybook/react" --recursive --json
+      jest.spyOn(yarn1Proxy, 'executeCommand').mockReturnValue(`
+        {
+          "type": "tree",
+          "data": {
+            "type": "list",
+            "trees": [
+              {
+                "name": "unrelated-and-should-be-filtered@1.0.0",
+                "children": []
+              },
+              {
+                "name": "@storybook/instrumenter@7.0.0-beta.12",
+                "children": [
+                  {
+                    "name": "@storybook/types@7.0.0-beta.12",
+                    "children": []
+                  }
+                ]
+              },
+              {
+                "name": "@storybook/addon-interactions@7.0.0-beta.19",
+                "children": [
+                  {
+                    "name": "@storybook/instrumenter@7.0.0-beta.19",
+                    "children": []
+                  }
+                ]
+              }
+            ]
+          }
+        }
+      `);
+
+      const installations = await yarn1Proxy.findInstallations(['@storybook/*']);
+
+      expect(installations).toMatchInlineSnapshot(`
+        Object {
+          "dependencies": Object {
+            "@storybook/addon-interactions": Array [
+              Object {
+                "location": "",
+                "version": "7.0.0-beta.19",
+              },
+            ],
+            "@storybook/instrumenter": Array [
+              Object {
+                "location": "",
+                "version": "7.0.0-beta.12",
+              },
+              Object {
+                "location": "",
+                "version": "7.0.0-beta.19",
+              },
+            ],
+            "@storybook/types": Array [
+              Object {
+                "location": "",
+                "version": "7.0.0-beta.12",
+              },
+            ],
+          },
+          "duplicatedDependencies": Object {
+            "@storybook/instrumenter": Array [
+              "7.0.0-beta.12",
+              "7.0.0-beta.19",
+            ],
+          },
+          "infoCommand": "yarn why",
+        }
+      `);
+    });
+  });
 });

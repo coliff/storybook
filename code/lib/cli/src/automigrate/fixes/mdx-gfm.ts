@@ -1,4 +1,3 @@
-import type { Preset } from '@storybook/types';
 import { dedent } from 'ts-dedent';
 import semver from 'semver';
 import { getStorybookData, updateMainConfig } from '../helpers/mainConfigFile';
@@ -52,7 +51,7 @@ export const mdxgfm: Fix<Options> = {
 
       Storybook 7.0 uses MDX2 for compiling MDX, and thus no longer supports GFM out of the box.
       Because of this you need to explicitly add the GFM plugin in the addon-docs options:
-      https://storybook.js.org/docs/7.0/react/writing-docs/mdx#lack-of-github-flavored-markdown-gfm
+      https://storybook.js.org/docs/react/writing-docs/mdx#lack-of-github-flavored-markdown-gfm
 
       We recommend you follow the guide on the link above, however we can add a temporary storybook addon that helps make this migration easier.
       We'll install the addon and add it to your storybook config.
@@ -61,19 +60,17 @@ export const mdxgfm: Fix<Options> = {
 
   async run({ packageManager, dryRun, mainConfigPath, skipInstall }) {
     if (!dryRun) {
+      const packageJson = packageManager.retrievePackageJson();
       const versionToInstall = getStorybookVersionSpecifier(packageManager.retrievePackageJson());
-      await packageManager.addDependencies({ installAsDevDependencies: true, skipInstall }, [
-        `@storybook/addon-mdx-gfm@${versionToInstall}`,
-      ]);
+      await packageManager.addDependencies(
+        { installAsDevDependencies: true, skipInstall, packageJson },
+        [`@storybook/addon-mdx-gfm@${versionToInstall}`]
+      );
 
       await updateMainConfig({ mainConfigPath, dryRun }, async (main) => {
-        const addonsToAdd = ['@storybook/addon-mdx-gfm'];
-
-        const existingAddons = main.getFieldValue(['addons']) as Preset[];
-        const updatedAddons = [...existingAddons, ...addonsToAdd];
         logger.info(`✅ Adding "@storybook/addon-mdx-gfm" addon`);
         if (!dryRun) {
-          main.setFieldValue(['addons'], updatedAddons);
+          main.appendValueToArray(['addons'], '@storybook/addon-mdx-gfm');
         }
       });
     }

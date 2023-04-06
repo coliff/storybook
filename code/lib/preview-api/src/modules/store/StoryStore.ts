@@ -15,7 +15,7 @@ import type {
   PreparedStory,
   StoryIndex,
   StoryIndexV3,
-  V2CompatIndexEntry,
+  V3CompatIndexEntry,
   StoryContext,
   StoryContextForEnhancers,
   StoryContextForLoaders,
@@ -347,7 +347,7 @@ export class StoryStore<TRenderer extends Renderer> {
     const value = this.getSetStoriesPayload();
     const allowedParameters = ['fileName', 'docsOnly', 'framework', '__id', '__isArgsStory'];
 
-    const stories: Record<StoryId, V2CompatIndexEntry> = mapValues(value.stories, (story) => {
+    const stories: Record<StoryId, V3CompatIndexEntry> = mapValues(value.stories, (story) => {
       const { importPath } = storyIndex.entries[story.id];
       return {
         ...pick(story, ['id', 'name', 'title']),

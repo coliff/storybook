@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 
 /* eslint-disable global-require */
-const { resolve, join } = require('path');
+const { resolve, join, posix, sep } = require('path');
 const { readJSON } = require('fs-extra');
 
 const getStorybookPackages = async () => {
@@ -119,11 +119,15 @@ async function run() {
   }
 
   selection?.filter(Boolean).forEach(async (v) => {
-    const commmand = (await readJSON(resolve(v.location, 'package.json'))).scripts.prep;
+    const commmand = (await readJSON(resolve(v.location, 'package.json'))).scripts.prep
+      .split(posix.sep)
+      .join(sep);
+
     const cwd = resolve(__dirname, '..', 'code', v.location);
     const { execaCommand } = await import('execa');
+    const tsNode = require.resolve('ts-node/dist/bin');
     const sub = execaCommand(
-      `${commmand}${watchMode ? ' --watch' : ''}${prodMode ? ' --optimized' : ''}`,
+      `node ${tsNode} ${commmand}${watchMode ? ' --watch' : ''}${prodMode ? ' --optimized' : ''}`,
       {
         cwd,
         buffer: false,

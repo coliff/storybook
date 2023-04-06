@@ -1,3 +1,4 @@
+import React from 'react';
 import type { Meta, StoryObj } from '@storybook/react';
 
 import { Story as StoryBlock } from './Story';
@@ -43,6 +44,16 @@ export const OfError: Story = {
   args: {
     of: ButtonStories.ErrorStory,
   },
+};
+
+export const OfUndefined: Story = {
+  args: {
+    // @ts-expect-error this is supposed to be undefined
+    // eslint-disable-next-line import/namespace
+    of: ButtonStories.NotDefined,
+  },
+  parameters: { chromatic: { disableSnapshot: true } },
+  decorators: [(s) => (window?.navigator.userAgent.match(/StorybookTestRunner/) ? <div /> : s())],
 };
 
 export const Inline: Story = {

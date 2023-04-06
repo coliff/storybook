@@ -1,6 +1,6 @@
 /* eslint-disable no-fallthrough */
 import type { ReactNode, FC } from 'react';
-import React, { Fragment, useEffect, useRef, memo } from 'react';
+import React, { useState, Fragment, useEffect, useRef, memo } from 'react';
 import memoize from 'memoizerific';
 
 import { styled, Global, type Theme, withTheme } from '@storybook/theming';
@@ -138,6 +138,7 @@ export const ViewportTool: FC = memo(
 
     const list = toList(viewports);
     const api = useStorybookApi();
+    const [isTooltipVisible, setIsTooltipVisible] = useState(false);
 
     if (!list.find((i) => i.id === defaultViewport)) {
       // eslint-disable-next-line no-console
@@ -154,9 +155,9 @@ export const ViewportTool: FC = memo(
       setState({
         selected:
           defaultViewport || (viewports[state.selected] ? state.selected : responsiveViewport.id),
-        isRotated: state.isRotated,
+        isRotated: defaultOrientation === 'landscape',
       });
-    }, [defaultViewport]);
+    }, [defaultOrientation, defaultViewport]);
 
     const { selected, isRotated } = state;
     const item =
@@ -185,11 +186,12 @@ export const ViewportTool: FC = memo(
             <TooltipLinkList links={toLinks(list, item, setState, state, onHide)} />
           )}
           closeOnOutsideClick
+          onVisibleChange={setIsTooltipVisible}
         >
           <IconButtonWithLabel
             key="viewport"
             title="Change the size of the preview"
-            active={!!styles}
+            active={isTooltipVisible || !!styles}
             onDoubleClick={() => {
               setState({ ...state, selected: responsiveViewport.id });
             }}

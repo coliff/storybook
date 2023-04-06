@@ -30,7 +30,6 @@ const config: StorybookConfig = {
   },
   logLevel: 'debug',
   features: {
-    breakingChangesV7: false,
     storyStoreV7: false,
   },
   framework: {

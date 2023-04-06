@@ -15,7 +15,7 @@ Here is a simple example with a storybook decorator that you can place in the `p
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
-import { moduleMetadata } from '@storybook/angular';
+import { moduleMetadata, applicationConfig } from '@storybook/angular';
 
 function createTranslateLoader(http: HttpClient) {
   return new TranslateHttpLoader(http, '/assets/i18n/', '.json');
@@ -24,23 +24,30 @@ function createTranslateLoader(http: HttpClient) {
 const TranslateModuleDecorator = (storyFunc, context) => {
   const { locale } = context.globals;
 
-  return moduleMetadata({
-    imports: [
-      HttpClientModule,
-      TranslateModule.forRoot({
-        defaultLanguage: locale,
-        loader: {
-          provide: TranslateLoader,
-          useFactory: createTranslateLoader,
-          deps: [HttpClient],
-        },
-      }),
-    ],
+  return applicationConfig({
+    providers: [
+      importProvidersFrom(
+        HttpClientModule, 
+        TranslateModule.forRoot({
+          defaultLanguage: locale,
+          loader: {
+            provide: TranslateLoader,
+            useFactory: createTranslateLoader,
+            deps: [HttpClient],
+          },
+        })
+      )
+    ]
   })(storyFunc, context);
 };
 
 // for `preview.ts`
-export const decorators = [TranslateModuleDecorator];
+export const decorators = [
+  moduleMetadata({
+    imports: [TranslateModule],
+  }),
+  TranslateModuleDecorator,
+];
 ```
 
 If the `TranslateModule.forRoot` is made by another module you can try to set this provider `DEFAULT_LANGUAGE`
@@ -51,7 +58,7 @@ import { DEFAULT_LANGUAGE } from '@ngx-translate/core';
 const TranslateModuleDecorator = (storyFunc, context) => {
   const { locale } = context.globals;
 
-  return moduleMetadata({
+  return applicationConfig({
     providers: [{ provide: DEFAULT_LANGUAGE, useValue: locale }],
   })(storyFunc, context);
 };

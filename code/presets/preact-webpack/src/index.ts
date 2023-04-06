@@ -1,9 +1,11 @@
-import path from 'path';
+import { dirname, join } from 'path';
 import type { StorybookConfig } from './types';
 
 export * from './types';
 
-export const babel: StorybookConfig['babelDefault'] = (config, options) => {
+const wrapForPnP = (input: string) => dirname(require.resolve(join(input, 'package.json')));
+
+export const babel: StorybookConfig['babelDefault'] = (config) => {
   return {
     ...config,
     plugins: [
@@ -36,10 +38,10 @@ export const webpackFinal: StorybookConfig['webpackFinal'] = (config) => {
       ...config.resolve,
       alias: {
         ...(config.resolve?.alias || {}),
-        react: path.dirname(require.resolve('preact/compat/package.json')),
-        'react-dom/test-utils': path.dirname(require.resolve('preact/test-utils/package.json')),
-        'react-dom': path.dirname(require.resolve('preact/compat/package.json')),
-        'react/jsx-runtime': path.dirname(require.resolve('preact/jsx-runtime/package.json')),
+        react: wrapForPnP('preact/compat'),
+        'react-dom/test-utils': wrapForPnP('preact/test-utils'),
+        'react-dom': wrapForPnP('preact/compat'),
+        'react/jsx-runtime': wrapForPnP('preact/jsx-runtime'),
       },
     },
   };

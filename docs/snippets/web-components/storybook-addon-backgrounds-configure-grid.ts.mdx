@@ -1,0 +1,28 @@
+```ts
+// Button.stories.ts
+
+import type { Meta } from '@storybook/web-components';
+
+// To apply a set of backgrounds to all stories of Button:
+const meta: Meta = {
+  /* 👇 The title prop is optional.
+   * See https://storybook.js.org/docs/web-components/configure/overview#configure-story-loading
+   * to learn how to generate automatic titles
+   */
+  title: 'Button',
+  component: 'demo-button',
+  parameters: {
+    backgrounds: {
+      grid: {
+        cellSize: 20,
+        opacity: 0.5,
+        cellAmount: 5,
+        offsetX: 16, // default is 0 if story has 'fullscreen' layout, 16 if layout is 'padded'
+        offsetY: 16, // default is 0 if story has 'fullscreen' layout, 16 if layout is 'padded'
+      },
+    },
+  },
+};
+
+export default meta;
+```

@@ -1,4 +1,4 @@
-```js
+```jsx
 // .storybook/preview.js
 
 import React from 'react';
@@ -9,6 +9,7 @@ export default {
   decorators: [
     (Story) => (
       <ThemeProvider theme="default">
+        {/* 👇 Decorators in Storybook also accept a function. Replace <Story/> with Story() to enable it  */}
         <Story />
       </ThemeProvider>
     ),

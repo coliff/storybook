@@ -1,14 +1,14 @@
 ```ts
 // Gizmo.stories.ts|tsx
 
-import { Gizmo } from './Gizmo';
-
 // Replace your-framework with the name of your framework
 import type { Meta } from '@storybook/your-framework';
 
+import { Gizmo } from './Gizmo';
+
 const meta: Meta<typeof Gizmo> = {
   /* 👇 The title prop is optional.
-   * See https://storybook.js.org/docs/7.0/react/configure/overview#configure-story-loading
+   * See https://storybook.js.org/docs/react/configure/overview#configure-story-loading
    * to learn how to generate automatic titles
    */
   title: 'Gizmo',
@@ -40,10 +40,8 @@ const meta: Meta<typeof Gizmo> = {
       options: ['left', 'right', 'center'],
     },
     rotationAxis: {
-      control: {
-        type: 'check',
-        options: ['x', 'y', 'z'],
-      },
+      control: 'check',
+      options: ['x', 'y', 'z'],
     },
     scaling: {
       control: 'select',

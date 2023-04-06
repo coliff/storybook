@@ -88,9 +88,11 @@ export const Button = () => <button>Click me</button>;
 
 <CodeSnippets
   paths={[
+    'angular/api-doc-block-description-example.ts.mdx',
+    'web-components/api-doc-block-description-example.js.mdx',
+    'web-components/api-doc-block-description-example.ts.mdx',
     'common/api-doc-block-description-example.js.mdx',
     'common/api-doc-block-description-example.ts.mdx',
-    'common/api-doc-block-description-example.ts-4-9.mdx',
   ]}
 />
 

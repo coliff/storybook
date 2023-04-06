@@ -274,7 +274,7 @@ describe('angular source decorator', () => {
       const argTypes: ArgTypes = {};
       const source = computesTemplateSourceFromComponent(component, props, argTypes);
       expect(source).toEqual(
-        `<doc-button [counter]="4" accent="High" [isDisabled]="true" label="Hello world"></doc-button>`
+        `<doc-button [counter]="4" [accent]="'High'" [isDisabled]="true" [label]="'Hello world'"></doc-button>`
       );
     });
 
@@ -288,7 +288,7 @@ describe('angular source decorator', () => {
       const argTypes: ArgTypes = {};
       const source = computesTemplateSourceFromComponent(component, props, argTypes);
       expect(source).toEqual(
-        `<doc-button [isDisabled]="true" label="Hello world" (onClick)="onClick($event)"></doc-button>`
+        `<doc-button [isDisabled]="true" [label]="'Hello world'" (onClick)="onClick($event)"></doc-button>`
       );
     });
 
@@ -299,7 +299,7 @@ describe('angular source decorator', () => {
       };
       const argTypes: ArgTypes = {};
       const source = computesTemplateSourceFromComponent(component, props, argTypes);
-      expect(source).toEqual(`<doc-button color="#ffffff"></doc-button>`);
+      expect(source).toEqual(`<doc-button [color]="'#ffffff'"></doc-button>`);
     });
   });
 
@@ -330,7 +330,7 @@ describe('angular source decorator', () => {
       };
       const source = computesTemplateSourceFromComponent(component, props, argTypes);
       expect(source).toEqual(
-        `<doc-button [accent]="ButtonAccent.High" [isDisabled]="false" label="Hello world"></doc-button>`
+        `<doc-button [accent]="'High'" [isDisabled]="false" [label]="'Hello world'"></doc-button>`
       );
     });
 
@@ -360,7 +360,7 @@ describe('angular source decorator', () => {
       };
       const source = computesTemplateSourceFromComponent(component, props, argTypes);
       expect(source).toEqual(
-        `<doc-button accent="High" [isDisabled]="false" label="Hello world"></doc-button>`
+        `<doc-button [accent]="'High'" [isDisabled]="false" [label]="'Hello world'"></doc-button>`
       );
     });
 
@@ -370,7 +370,20 @@ describe('angular source decorator', () => {
       const someDataObject: ISomeInterface = {
         one: 'Hello world',
         two: true,
-        three: ['One', 'Two', 'Three'],
+        three: [
+          `a string literal with "double quotes"`,
+          `a string literal with 'single quotes'`,
+          'a single quoted string with "double quotes"',
+          "a double quoted string with 'single quotes'",
+          // eslint-disable-next-line prettier/prettier
+          'a single quoted string with escaped \'single quotes\'',
+          // eslint-disable-next-line prettier/prettier
+          "a double quoted string with escaped \"double quotes\"",
+          // eslint-disable-next-line no-useless-escape
+          `a string literal with \'escaped single quotes\'`,
+          // eslint-disable-next-line no-useless-escape
+          `a string literal with \"escaped double quotes\"`,
+        ],
       };
 
       const props = {
@@ -383,7 +396,7 @@ describe('angular source decorator', () => {
       // Ideally we should stringify the object, but that could cause the story to break because of unescaped values in the JSON object.
       // This will have to do for now
       expect(source).toEqual(
-        `<doc-button [isDisabled]="false" label="Hello world" [someDataObject]="someDataObject"></doc-button>`
+        `<doc-button [isDisabled]="false" [label]="'Hello world'" [someDataObject]="{one: 'Hello world', two: true, three: ['a string literal with \\'double quotes\\'', 'a string literal with \\'single quotes\\'', 'a single quoted string with \\'double quotes\\'', 'a double quoted string with \\'single quotes\\'', 'a single quoted string with escaped \\'single quotes\\'', 'a double quoted string with escaped \\'double quotes\\'', 'a string literal with \\'escaped single quotes\\'', 'a string literal with \\'escaped double quotes\\'']}"></doc-button>`
       );
     });
   });

@@ -24,7 +24,7 @@ We collect general usage details, including command invocation, Storybook versio
 Specifically, we track the following information in our telemetry events:
 
 - Timestamp of the occurrence.
-- Command invoked (e.g., `init`, `upgrade`, `start-storybook`).
+- Command invoked (e.g., `init`, `upgrade`, `dev`, `build`).
 - Storybook unique identifier: One-way hash generated during Storybook installation process.
 - One way hash of the IP address where the event occurred for spam detection.
 - Story count.

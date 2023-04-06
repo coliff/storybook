@@ -22,14 +22,18 @@ export type Store_CSFExports<TRenderer extends Renderer = Renderer, TArgs extend
   __namedExportsOrder?: string[];
 };
 
-export type ComposedStoryPlayContext = Partial<StoryContext> & Pick<StoryContext, 'canvasElement'>;
+export type ComposedStoryPlayContext<TRenderer extends Renderer = Renderer, TArgs = Args> = Partial<
+  StoryContext<TRenderer, TArgs> & Pick<StoryContext<TRenderer, TArgs>, 'canvasElement'>
+>;
 
-export type ComposedStoryPlayFn = (context: ComposedStoryPlayContext) => Promise<void> | void;
+export type ComposedStoryPlayFn<TRenderer extends Renderer = Renderer, TArgs = Args> = (
+  context: ComposedStoryPlayContext<TRenderer, TArgs>
+) => Promise<void> | void;
 
 export type PreparedStoryFn<TRenderer extends Renderer = Renderer, TArgs = Args> = AnnotatedStoryFn<
   TRenderer,
   TArgs
-> & { play: ComposedStoryPlayFn };
+> & { play: ComposedStoryPlayFn<TRenderer, TArgs>; args: TArgs };
 
 export type ComposedStory<TRenderer extends Renderer = Renderer, TArgs = Args> =
   | StoryFn<TRenderer, TArgs>
@@ -45,7 +49,7 @@ export type StoriesWithPartialProps<TRenderer extends Renderer, TModule> = {
   // @TODO once we can use Typescript 4.0 do this to exclude nonStory exports:
   // replace [K in keyof TModule] with [K in keyof TModule as TModule[K] extends ComposedStory<any> ? K : never]
   [K in keyof TModule]: TModule[K] extends ComposedStory<infer _, infer TProps>
-    ? AnnotatedStoryFn<TRenderer, Partial<TProps>>
+    ? PreparedStoryFn<TRenderer, Partial<TProps>>
     : unknown;
 };
 
@@ -59,7 +63,7 @@ export interface ComposeStoryFn<TRenderer extends Renderer = Renderer, TArgs ext
     (extraArgs: Partial<TArgs>): TRenderer['storyResult'];
     storyName: string;
     args: Args;
-    play: ComposedStoryPlayFn;
+    play: ComposedStoryPlayFn<TRenderer, TArgs>;
     parameters: Parameters;
   };
 }

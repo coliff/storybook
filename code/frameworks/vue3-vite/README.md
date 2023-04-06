@@ -12,7 +12,7 @@ So you can develop UI components in isolation without worrying about app specifi
 
 ```sh
 cd my-vue3-app
-npx storybook init
+npx storybook@latest init
 ```
 
 For more information visit: [storybook.js.org](https://storybook.js.org)

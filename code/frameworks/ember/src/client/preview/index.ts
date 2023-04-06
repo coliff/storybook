@@ -11,6 +11,6 @@ export const { raw } = clientApi;
 const RENDERER = 'ember';
 export const storiesOf = (kind: string, m: any) =>
   clientApi.storiesOf(kind, m).addParameters({ renderer: RENDERER });
-export const configure = (loadable: any, m: any) => coreConfigure(RENDERER, loadable, m);
+export const configure = (...args: any[]) => coreConfigure(RENDERER, ...args);
 
 export { forceReRender };

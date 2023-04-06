@@ -19,7 +19,7 @@ export const OutlineSelector = memo(function OutlineSelector() {
 
   useEffect(() => {
     api.setAddonShortcut(ADDON_ID, {
-      label: 'Toggle Measure [O]',
+      label: 'Toggle Outline [O]',
       defaultShortcut: ['O'],
       actionName: 'outline',
       showInMenu: false,

@@ -1,0 +1,19 @@
+```ts
+// Checkbox.stories.ts
+
+import type { Meta, StoryObj } from '@storybook/web-components';
+
+const meta: Meta = {
+  title: 'Checkbox',
+  component: 'checkbox',
+};
+
+export default meta;
+type Story = StoryObj;
+
+export const Unchecked: Story = {
+  args: {
+    label: 'Unchecked',
+  },
+};
+```

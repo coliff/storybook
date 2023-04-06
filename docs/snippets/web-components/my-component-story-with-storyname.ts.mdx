@@ -1,0 +1,19 @@
+```ts
+// MyComponent.stories.ts
+
+import type { Meta, StoryObj } from '@storybook/web-components';
+
+const meta: Meta = {
+  title: 'Path/To/MyComponent',
+  component: 'my-component',
+};
+
+export default meta;
+type Story = StoryObj;
+
+export const Simple: Story = {
+  decorators: [],
+  name: 'So simple!',
+  parameters: {},
+};
+```

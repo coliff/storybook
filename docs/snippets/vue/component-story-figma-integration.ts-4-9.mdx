@@ -1,0 +1,38 @@
+```ts
+// MyComponent.stories.ts
+
+// Replace vue3 with vue if you are using Storybook for Vue 2
+import type { Meta, StoryObj } from '@storybook/vue3';
+
+import { withDesign } from 'storybook-addon-designs';
+
+import MyComponent from './MyComponent.vue';
+
+// More on default export: https://storybook.js.org/docs/vue/writing-stories/introduction#default-export
+const meta = {
+  title: 'FigmaExample',
+  component: MyComponent,
+  decorators: [withDesign],
+} satisfies Meta<typeof MyComponent>;
+
+export default meta;
+type Story = StoryObj<typeof meta>;
+
+/*
+ *👇 Render functions are a framework specific feature to allow you control on how the component renders.
+ * See https://storybook.js.org/docs/vue/api/csf
+ * to learn how to use render functions.
+ */
+export const Example: Story = {
+  render: () => ({
+    components: { MyComponent },
+    template: '<MyComponent />',
+  }),
+  parameters: {
+    design: {
+      type: 'figma',
+      url: 'https://www.figma.com/file/Sample-File',
+    },
+  },
+};
+```

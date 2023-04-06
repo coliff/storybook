@@ -1,4 +1,4 @@
-```tsx
+```ts
 // YourComponent.stories.ts|tsx
 
 import type { Meta, StoryObj } from '@storybook/react';
@@ -8,11 +8,10 @@ import { YourComponent } from './YourComponent';
 //👇 This default export determines where your story goes in the story list
 const meta = {
   /* 👇 The title prop is optional.
-   * See https://storybook.js.org/docs/7.0/react/configure/overview#configure-story-loading
+   * See https://storybook.js.org/docs/react/configure/overview#configure-story-loading
    * to learn how to generate automatic titles
    */
   title: 'YourComponent',
-
   component: YourComponent,
 } satisfies Meta<typeof YourComponent>;
 

@@ -1,15 +1,14 @@
 ```ts
 // FooBar.stories.ts|tsx
 
-import { Foo } from './Foo';
-
 // Replace your-framework with the name of your framework
 import type { Meta, StoryObj } from '@storybook/your-framework';
 
-// To apply a set of backgrounds to all stories of Button:
+import { Foo } from './Foo';
+
 const meta: Meta<typeof Foo> = {
   /* 👇 The title prop is optional.
-   * See https://storybook.js.org/docs/7.0/react/configure/overview#configure-story-loading
+   * See https://storybook.js.org/docs/react/configure/overview#configure-story-loading
    * to learn how to generate automatic titles
    */
   title: 'OtherFoo/Bar',
@@ -21,6 +20,6 @@ export default meta;
 type Story = StoryObj<typeof Foo>;
 
 export const Baz: Story = {
-  name: 'Moo',
+  name: 'Insert name here',
 };
 ```

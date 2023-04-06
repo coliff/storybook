@@ -1,10 +1,10 @@
 ```ts
 // RegistrationForm.stories.ts|tsx
 
-import { userEvent, within } from '@storybook/testing-library';
-
 // Replace your-framework with the name of your framework
 import type { Meta, StoryObj } from '@storybook/your-framework';
+
+import { userEvent, within } from '@storybook/testing-library';
 
 import { RegistrationForm } from './RegistrationForm';
 
@@ -12,12 +12,12 @@ const meta: Meta<typeof RegistrationForm> = {
   title: 'RegistrationForm',
   component: RegistrationForm,
 };
-export default meta;
 
+export default meta;
 type Story = StoryObj<typeof RegistrationForm>;
 
 /*
- * See https://storybook.js.org/docs/7.0/react/writing-stories/play-function#working-with-the-canvas
+ * See https://storybook.js.org/docs/react/writing-stories/play-function#working-with-the-canvas
  * to learn more about using the canvasElement to query the DOM
  */
 export const FilledForm: Story = {
@@ -39,7 +39,7 @@ export const FilledForm: Story = {
     await userEvent.type(passwordInput, 'ExamplePassword', {
       delay: 100,
     });
-    // See https://storybook.js.org/docs/7.0/react/essentials/actions#automatically-matching-args to learn how to setup logging in the Actions panel
+    // See https://storybook.js.org/docs/react/essentials/actions#automatically-matching-args to learn how to setup logging in the Actions panel
     const submitButton = canvas.getByRole('button');
 
     await userEvent.click(submitButton);

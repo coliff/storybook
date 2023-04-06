@@ -5,19 +5,6 @@ Object {
   "rows": Array [
     Object {
       "defaultValue": null,
-      "description": "",
-      "name": "width",
-      "required": true,
-      "sbType": Object {
-        "name": "number",
-      },
-      "type": Object {
-        "detail": undefined,
-        "summary": "number",
-      },
-    },
-    Object {
-      "defaultValue": null,
       "description": "The size (replaces width)",
       "name": "size",
       "required": true,

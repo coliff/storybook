@@ -54,22 +54,6 @@ describe('sourceDecorator', () => {
     });
   });
 
-  it('should dedent source by default', async () => {
-    const storyFn = (args: any) => `
-      <div>
-        args story
-      </div>
-    `;
-    const context = makeContext('args', { __isArgsStory: true }, {});
-    sourceDecorator(storyFn, context);
-    await tick();
-    expect(mockChannel.emit).toHaveBeenCalledWith(SNIPPET_RENDERED, {
-      id: 'html-test--args',
-      args: {},
-      source: ['<div>', '  args story', '</div>'].join('\n'),
-    });
-  });
-
   it('should skip dynamic rendering for no-args stories', async () => {
     const storyFn = () => `<div>classic story</div>`;
     const context = makeContext('classic', {}, {});
@@ -103,28 +87,5 @@ describe('sourceDecorator', () => {
       args: {},
       source: '<div>args story</div>',
     });
-  });
-
-  it('allows the snippet output to be modified by transformSource', async () => {
-    const storyFn = (args: any) => `<div>args story</div>`;
-    const transformSource = (dom: string) => `<p>${dom}</p>`;
-    const docs = { transformSource };
-    const context = makeContext('args', { __isArgsStory: true, docs }, {});
-    sourceDecorator(storyFn, context);
-    await tick();
-    expect(mockChannel.emit).toHaveBeenCalledWith(SNIPPET_RENDERED, {
-      id: 'html-test--args',
-      args: {},
-      source: '<p><div>args story</div></p>',
-    });
-  });
-
-  it('provides the story context to transformSource', () => {
-    const storyFn = (args: any) => `<div>args story</div>`;
-    const transformSource = jest.fn((x) => x);
-    const docs = { transformSource };
-    const context = makeContext('args', { __isArgsStory: true, docs }, {});
-    sourceDecorator(storyFn, context);
-    expect(transformSource).toHaveBeenCalledWith('<div>args story</div>', context);
   });
 });

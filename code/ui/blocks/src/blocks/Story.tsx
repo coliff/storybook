@@ -89,6 +89,10 @@ export type StoryProps = (StoryDefProps | StoryRefProps) & StoryParameters;
 
 export const getStoryId = (props: StoryProps, context: DocsContextProps): StoryId => {
   const { id, of, meta, story } = props as StoryRefProps;
+  if ('of' in props && of === undefined) {
+    throw new Error('Unexpected `of={undefined}`, did you mistype a CSF file reference?');
+  }
+
   if (id) {
     deprecate(dedent`Referencing stories by \`id\` is deprecated, please use \`of\` instead. 
     

@@ -65,7 +65,5 @@ export const ChangeArgs = {
 
     await within(canvasElement).findByText(/New Text/);
     await expect(button).toHaveFocus();
-
-    await channel.emit(RESET_STORY_ARGS, { storyId: id });
   },
 };

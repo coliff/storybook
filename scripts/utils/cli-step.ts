@@ -22,7 +22,7 @@ export const steps = {
     options: createOptions({
       output: { type: 'string' },
       // TODO allow default values for strings
-      branch: { type: 'string', values: ['next'] },
+      branch: { type: 'string', values: ['main', 'next'] },
       init: { type: 'boolean', inverse: true },
       debug: { type: 'boolean' },
     }),

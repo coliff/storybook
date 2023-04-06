@@ -49,11 +49,11 @@ export const addReact: Fix<AddReactOptions> = {
     return dedent`
       We've detected that you're using ${dependentsFormatted}.
       
-      Starting in Storybook 7 we now require the following peer dependencies:
+      Starting in Storybook 7, we now require these peer dependencies to render docs:
 
       ${additionalDependenciesFormatted}
 
-      We can add these for you automatically.
+      We can add these for you automatically as dev dependencies.
       
       More info: ${chalk.yellow(
         'https://github.com/storybookjs/storybook/blob/next/MIGRATION.md#react-peer-dependencies-required'

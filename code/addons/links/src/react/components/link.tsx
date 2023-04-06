@@ -1,3 +1,4 @@
+import type { ComponentTitle, StoryKind, StoryName } from '@storybook/types';
 import type { MouseEvent, ReactNode } from 'react';
 import React, { PureComponent } from 'react';
 
@@ -20,8 +21,10 @@ const cancelled = (e: MouseEvent<HTMLAnchorElement>, cb = (_e: any) => {}) => {
 };
 
 interface Props {
-  kind: string | null;
-  story: string | null;
+  kind?: StoryKind;
+  title?: ComponentTitle;
+  story?: StoryName;
+  name?: StoryName;
   children: ReactNode;
 }
 
@@ -31,8 +34,6 @@ interface State {
 
 export default class LinkTo extends PureComponent<Props, State> {
   static defaultProps: Props = {
-    kind: null,
-    story: null,
     children: undefined,
   };
 
@@ -45,30 +46,35 @@ export default class LinkTo extends PureComponent<Props, State> {
   }
 
   componentDidUpdate(prevProps: Props) {
-    const { kind, story } = this.props;
+    const { kind, title, story, name } = this.props;
 
-    if (prevProps.kind !== kind || prevProps.story !== story) {
+    if (
+      prevProps.kind !== kind ||
+      prevProps.story !== story ||
+      prevProps.title !== title ||
+      prevProps.name !== name
+    ) {
       this.updateHref();
     }
   }
 
   updateHref = async () => {
-    const { kind, story } = this.props;
-    if (kind && story) {
-      const href = await hrefTo(kind, story);
+    const { kind, title = kind, story, name = story } = this.props;
+    if (title && name) {
+      const href = await hrefTo(title, name);
       this.setState({ href });
     }
   };
 
   handleClick = () => {
-    const { kind, story } = this.props;
-    if (kind && story) {
-      navigate({ kind, story });
+    const { kind, title = kind, story, name = story } = this.props;
+    if (title && name) {
+      navigate({ title, name });
     }
   };
 
   render() {
-    const { kind, story, children, ...rest } = this.props;
+    const { kind, title = kind, story, name = story, children, ...rest } = this.props;
     const { href } = this.state;
 
     return (

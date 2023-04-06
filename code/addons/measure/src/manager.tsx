@@ -7,6 +7,7 @@ import { Tool } from './Tool';
 addons.register(ADDON_ID, () => {
   addons.add(TOOL_ID, {
     type: types.TOOL,
+    id: 'measure',
     title: 'Measure',
     match: ({ viewMode }) => viewMode === 'story',
     render: () => <Tool />,

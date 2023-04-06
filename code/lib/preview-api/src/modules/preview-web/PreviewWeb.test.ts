@@ -70,7 +70,6 @@ jest.mock('@storybook/global', () => ({
     },
     FEATURES: {
       storyStoreV7: true,
-      breakingChangesV7: true,
       // xxx
     },
     fetch: async () => mockFetchResult,

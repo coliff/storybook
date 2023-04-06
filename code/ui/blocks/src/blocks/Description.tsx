@@ -125,6 +125,10 @@ const getDescriptionFromDeprecatedProps = (
 
 const DescriptionContainer: FC<DescriptionProps> = (props) => {
   const { of, type, markdown: markdownProp, children } = props;
+
+  if ('of' in props && of === undefined) {
+    throw new Error('Unexpected `of={undefined}`, did you mistype a CSF file reference?');
+  }
   const context = useContext(DocsContext);
   const resolvedOf = useOf(of || 'meta');
   let markdown;

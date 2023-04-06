@@ -23,6 +23,7 @@ import {
   resolveAddonName,
 } from '@storybook/core-common';
 
+import isEqual from 'lodash/isEqual.js';
 import { outputStats } from './utils/output-stats';
 import {
   copyAllStaticFiles,
@@ -33,6 +34,8 @@ import { extractStoriesJson, convertToIndexV3 } from './utils/stories-json';
 import { extractStorybookMetadata } from './utils/metadata';
 import { StoryIndexGenerator } from './utils/StoryIndexGenerator';
 import { summarizeIndex } from './utils/summarizeIndex';
+import { defaultStaticDirs } from './utils/constants';
+import { warnOnIncompatibleAddons } from './utils/warnOnIncompatibleAddons';
 
 export type BuildStaticStandaloneOptions = CLIOptions &
   LoadOptions &
@@ -63,7 +66,8 @@ export async function buildStaticStandalone(options: BuildStaticStandaloneOption
   await emptyDir(options.outputDir);
   await ensureDir(options.outputDir);
 
-  const { framework } = await loadMainConfig(options);
+  const config = await loadMainConfig(options);
+  const { framework } = config;
   const corePresets = [];
 
   const frameworkName = typeof framework === 'string' ? framework : framework?.name;
@@ -72,6 +76,8 @@ export async function buildStaticStandalone(options: BuildStaticStandaloneOption
   } else {
     logger.warn(`you have not specified a framework in your ${options.configDir}/main.js`);
   }
+
+  await warnOnIncompatibleAddons(config);
 
   logger.info('=> Loading presets');
   let presets = await loadAllPresets({
@@ -114,7 +120,7 @@ export async function buildStaticStandalone(options: BuildStaticStandaloneOption
     features,
   };
 
-  if (staticDirs && options.staticDir) {
+  if (options.staticDir && !isEqual(staticDirs, defaultStaticDirs)) {
     throw new Error(dedent`
       Conflict when trying to read staticDirs:
       * Storybook's configuration option: 'staticDirs'
@@ -157,7 +163,7 @@ export async function buildStaticStandalone(options: BuildStaticStandaloneOption
       ...directories,
       storyIndexers,
       docs: docsOptions,
-      storiesV2Compatibility: !features?.breakingChangesV7 && !features?.storyStoreV7,
+      storiesV2Compatibility: !features?.storyStoreV7,
       storyStoreV7: !!features?.storyStoreV7,
     });
 

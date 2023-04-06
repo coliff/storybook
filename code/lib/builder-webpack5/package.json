@@ -1,6 +1,6 @@
 {
   "name": "@storybook/builder-webpack5",
-  "version": "7.0.0-beta.62",
+  "version": "7.1.0-alpha.0",
   "description": "Storybook framework-agnostic API",
   "keywords": [
     "storybook"
@@ -54,25 +54,25 @@
   },
   "dependencies": {
     "@babel/core": "^7.12.10",
-    "@storybook/addons": "7.0.0-beta.62",
-    "@storybook/api": "7.0.0-beta.62",
-    "@storybook/channel-postmessage": "7.0.0-beta.62",
-    "@storybook/channel-websocket": "7.0.0-beta.62",
-    "@storybook/channels": "7.0.0-beta.62",
-    "@storybook/client-api": "7.0.0-beta.62",
-    "@storybook/client-logger": "7.0.0-beta.62",
-    "@storybook/components": "7.0.0-beta.62",
-    "@storybook/core-common": "7.0.0-beta.62",
-    "@storybook/core-events": "7.0.0-beta.62",
-    "@storybook/core-webpack": "7.0.0-beta.62",
+    "@storybook/addons": "7.1.0-alpha.0",
+    "@storybook/api": "7.1.0-alpha.0",
+    "@storybook/channel-postmessage": "7.1.0-alpha.0",
+    "@storybook/channel-websocket": "7.1.0-alpha.0",
+    "@storybook/channels": "7.1.0-alpha.0",
+    "@storybook/client-api": "7.1.0-alpha.0",
+    "@storybook/client-logger": "7.1.0-alpha.0",
+    "@storybook/components": "7.1.0-alpha.0",
+    "@storybook/core-common": "7.1.0-alpha.0",
+    "@storybook/core-events": "7.1.0-alpha.0",
+    "@storybook/core-webpack": "7.1.0-alpha.0",
     "@storybook/global": "^5.0.0",
-    "@storybook/manager-api": "7.0.0-beta.62",
-    "@storybook/node-logger": "7.0.0-beta.62",
-    "@storybook/preview": "7.0.0-beta.62",
-    "@storybook/preview-api": "7.0.0-beta.62",
-    "@storybook/router": "7.0.0-beta.62",
-    "@storybook/store": "7.0.0-beta.62",
-    "@storybook/theming": "7.0.0-beta.62",
+    "@storybook/manager-api": "7.1.0-alpha.0",
+    "@storybook/node-logger": "7.1.0-alpha.0",
+    "@storybook/preview": "7.1.0-alpha.0",
+    "@storybook/preview-api": "7.1.0-alpha.0",
+    "@storybook/router": "7.1.0-alpha.0",
+    "@storybook/store": "7.1.0-alpha.0",
+    "@storybook/theming": "7.1.0-alpha.0",
     "@types/node": "^16.0.0",
     "@types/semver": "^7.3.4",
     "babel-loader": "^9.0.0",
@@ -87,7 +87,6 @@
     "path-browserify": "^1.0.1",
     "process": "^0.11.10",
     "semver": "^7.3.7",
-    "slash": "^3.0.0",
     "style-loader": "^3.3.1",
     "terser-webpack-plugin": "^5.3.1",
     "ts-dedent": "^2.0.0",
@@ -105,6 +104,7 @@
     "@types/webpack-hot-middleware": "^2.25.6",
     "@types/webpack-virtual-modules": "^0.1.1",
     "pretty-hrtime": "^1.0.3",
+    "slash": "^5.0.0",
     "typescript": "~4.9.3"
   },
   "peerDependencies": {
@@ -126,5 +126,5 @@
       "./src/presets/preview-preset.ts"
     ]
   },
-  "gitHead": "f70dcdb599363bfd6e6d2b63f8fadd02e9cbe00a"
+  "gitHead": "8ff2938f8ac0c2d524ae653cd89251e5cd4721a4"
 }

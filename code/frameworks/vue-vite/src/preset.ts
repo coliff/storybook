@@ -1,5 +1,6 @@
 import path from 'path';
 import type { PresetProperty } from '@storybook/types';
+import { mergeConfig } from 'vite';
 import type { StorybookConfig } from './types';
 import { vueDocgen } from './plugins/vue-docgen';
 
@@ -24,20 +25,12 @@ export const typescript: PresetProperty<'typescript', StorybookConfig> = async (
 });
 
 export const viteFinal: StorybookConfig['viteFinal'] = async (config, { presets }) => {
-  const { plugins = [] } = config;
-
-  plugins.push(vueDocgen());
-
-  const updated = {
-    ...config,
-    plugins,
+  return mergeConfig(config, {
+    plugins: [vueDocgen()],
     resolve: {
-      ...config.resolve,
       alias: {
-        ...config.resolve?.alias,
         vue: 'vue/dist/vue.esm.js',
       },
     },
-  };
-  return updated;
+  });
 };

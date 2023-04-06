@@ -3,7 +3,6 @@
 declare var FEATURES:
   | {
       storyStoreV7?: boolean;
-      breakingChangesV7?: boolean;
       argTypeTargetsV7?: boolean;
     }
   | undefined;
