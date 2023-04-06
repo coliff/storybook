@@ -1,5 +1,9 @@
 import { dedent } from 'ts-dedent';
 import { logger } from '@storybook/node-logger';
+import enhancedResolve from 'enhanced-resolve';
+import { resolveImports } from 'resolve-pkg-maps';
+import { sync as readUpSync } from 'read-pkg-up';
+
 import type {
   BuilderOptions,
   CLIOptions,
@@ -10,7 +14,8 @@ import type {
   PresetConfig,
   Presets,
 } from '@storybook/types';
-import { join, parse } from 'path';
+import { dirname, join } from 'path';
+import slash from 'slash';
 import { loadCustomPresets } from './utils/load-custom-presets';
 import { safeResolve, safeResolveFrom } from './utils/safeResolve';
 import { interopRequireDefault } from './utils/interpret-require';
@@ -19,20 +24,49 @@ const isObject = (val: unknown): val is Record<string, any> =>
   val != null && typeof val === 'object' && Array.isArray(val) === false;
 const isFunction = (val: unknown): val is Function => typeof val === 'function';
 
+const browserResolver = (() => {
+  const main = enhancedResolve.create.sync({
+    extensions: ['.mjs', '.js', '.jsx', '.ts', '.tsx', '.json'],
+    mainFields: ['browser', 'module', 'main'],
+    conditionNames: ['browser', 'import', 'default'],
+    exportsFields: ['browser', 'module', 'main'],
+    symlinks: true,
+  });
+
+  return (input: string, from: string = process.cwd()) => {
+    try {
+      const a = main({}, from, input);
+      const b = main(from, input);
+      console.log({ a, b });
+      return a;
+    } catch (e) {
+      return false;
+    }
+  };
+})();
+
+const nodeResolver = (() => {
+  const main = enhancedResolve.create.sync({
+    extensions: ['.cjs', '.js'],
+    mainFields: ['node', 'require', 'main'],
+    conditionNames: ['node', 'require', 'default'],
+    exportsFields: ['node', 'require', 'main'],
+  });
+
+  return (input: string, from: string = process.cwd()) => {
+    try {
+      return main({}, from, input);
+    } catch (e) {
+      return false;
+    }
+  };
+})();
+
 export function filterPresetsConfig(presetsConfig: PresetConfig[]): PresetConfig[] {
   return presetsConfig.filter((preset) => {
     const presetName = typeof preset === 'string' ? preset : preset.name;
     return !/@storybook[\\\\/]preset-typescript/.test(presetName);
   });
-}
-
-function resolvePathToMjs(filePath: string): string {
-  const { dir, name } = parse(filePath);
-  const mjsPath = join(dir, `${name}.mjs`);
-  if (safeResolve(mjsPath)) {
-    return mjsPath;
-  }
-  return filePath;
 }
 
 function resolvePresetFunction<T = any>(
@@ -73,33 +107,39 @@ export const resolveAddonName = (
   options: any
 ): CoreCommon_ResolvedAddonPreset | CoreCommon_ResolvedAddonVirtual | undefined => {
   const resolve = name.startsWith('/') ? safeResolve : safeResolveFrom.bind(null, configDir);
-  const resolved = resolve(name);
+  const resolved =
+    browserResolver(name, configDir) || nodeResolver(name, configDir) || resolve(name);
+  const resolvedNode = nodeResolver(name, configDir);
+  const resolvedBrowser = browserResolver(name, configDir);
+  const pkg = readUpSync({ cwd: resolved });
 
   if (resolved) {
-    const { dir: fdir, name: fname } = parse(resolved);
-
-    if (name.match(/\/(manager|register(-panel)?)(\.(js|mjs|ts|tsx|jsx))?$/)) {
+    if (
+      resolvedBrowser &&
+      resolvedBrowser.match(/\/(manager|register(-panel)?)(\.(js|mjs|ts|tsx|jsx))?$/)
+    ) {
       return {
         type: 'virtual',
         name,
         // we remove the extension
         // this is a bit of a hack to try to find .mjs files
         // node can only ever resolve .js files; it does not look at the exports field in package.json
-        managerEntries: [resolvePathToMjs(join(fdir, fname))],
+        managerEntries: [resolvedBrowser],
       };
     }
-    if (name.match(/\/(preset)(\.(js|mjs|ts|tsx|jsx))?$/)) {
+    if (resolvedNode && resolvedNode.match(/\/(preset)(\.(js|mjs|ts|tsx|jsx))?$/)) {
       return {
         type: 'presets',
-        name: resolved,
+        name: resolvedNode,
       };
     }
   }
 
-  const checkExists = (exportName: string) => {
-    if (resolve(`${name}${exportName}`)) return `${name}${exportName}`;
+  if (!pkg) {
     return undefined;
-  };
+  }
+
+  const dir = dirname(pkg?.path);
 
   // This is used to maintain back-compat with community addons that do not
   // re-export their sub-addons but reference the sub-addon name directly.
@@ -107,21 +147,39 @@ export const resolveAddonName = (
   // serve it up correctly  when yarn pnp or pnpm is being used.
   // Vite will be broken in such cases, because it does not process absolute paths,
   // and it will try to import from the bare import, breaking in pnp/pnpm.
-  const absolutizeExport = (exportName: string, preferMJS: boolean) => {
-    const found = resolve(`${name}${exportName}`);
 
-    if (found) {
-      return preferMJS ? resolvePathToMjs(found) : found;
+  const resolveFromExportsBrowser = (input: string) => {
+    try {
+      const conditions = ['browser', 'import', 'default'];
+      const paths = resolveImports(pkg?.packageJson.exports, input, conditions);
+      return slash(join(dir, paths[0]));
+    } catch (e) {
+      return false;
     }
-    return undefined;
+  };
+  const resolveFromExportsNode = (input: string) => {
+    try {
+      const conditions = ['node', 'require', 'default'];
+      const paths = resolveImports(pkg?.packageJson.exports, input, conditions);
+      return browserResolver(slash(join(name, paths[0])));
+    } catch (e) {
+      return false;
+    }
   };
 
-  const managerFile = absolutizeExport(`/manager`, true);
-  const registerFile =
-    absolutizeExport(`/register`, true) || absolutizeExport(`/register-panel`, true);
-  const previewFile = checkExists(`/preview`);
-  const previewFileAbsolute = absolutizeExport('/preview', true);
-  const presetFile = absolutizeExport(`/preset`, false);
+  const resolveBrowser = (input: string) => {
+    return browserResolver(`${name}/${input}`, dir) || resolveFromExportsBrowser(`./${input}`);
+  };
+  const resolveNode = (input: string) => {
+    return nodeResolver(`${name}/${input}`, dir) || resolveFromExportsNode(`./${input}`);
+  };
+
+  const managerFile = resolveBrowser('manager');
+  const registerFile = resolveBrowser('register') || resolveBrowser('register-panel');
+  const previewFile = resolveBrowser('preview');
+
+  const previewFileAbsolute = browserResolver(`${name}/preview`, dir);
+  const presetFile = resolveNode(`preset`);
 
   if (!(managerFile || previewFile) && presetFile) {
     return {

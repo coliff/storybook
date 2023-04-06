@@ -81,8 +81,10 @@
     "access": "public"
   },
   "bundler": {
+    "entries": [
+      "./src/index.ts"
+    ],
     "browserEntries": [
-      "./src/index.ts",
       "./src/manager.tsx"
     ],
     "nodeEntries": [

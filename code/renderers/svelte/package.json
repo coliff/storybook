@@ -27,7 +27,6 @@
       "types": "./dist/index.d.ts"
     },
     "./preview": {
-      "require": "./dist/config.js",
       "import": "./dist/config.mjs",
       "types": "./dist/config.d.ts"
     },
@@ -78,10 +77,11 @@
   },
   "bundler": {
     "entries": [
-      "./src/index.ts",
-      "./src/config.ts"
+      "./src/index.ts"
     ],
-    "platform": "browser"
+    "browserEntries": [
+      "./src/config.ts"
+    ]
   },
   "gitHead": "f70dcdb599363bfd6e6d2b63f8fadd02e9cbe00a"
 }

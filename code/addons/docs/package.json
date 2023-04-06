@@ -41,14 +41,6 @@
       "import": "./dist/blocks.mjs",
       "types": "./dist/blocks.d.ts"
     },
-    "./dist/preview": {
-      "import": "./dist/preview.mjs",
-      "types": "./dist/preview.d.ts"
-    },
-    "./dist/preset": {
-      "require": "./dist/preset.js",
-      "types": "./dist/preset.d.ts"
-    },
     "./dist/shims/mdx-react-shim": {
       "import": "./dist/shims/mdx-react-shim.mjs",
       "types": "./dist/shims/mdx-react-shim.d.ts"
@@ -130,8 +122,10 @@
     "access": "public"
   },
   "bundler": {
+    "entries": [
+      "./src/index.ts"
+    ],
     "browserEntries": [
-      "./src/index.ts",
       "./src/preview.ts",
       "./src/blocks.ts",
       "./src/shims/mdx-react-shim.ts"

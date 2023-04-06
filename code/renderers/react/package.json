@@ -98,13 +98,14 @@
   },
   "bundler": {
     "entries": [
-      "./src/index.ts",
+      "./src/index.ts"
+    ],
+    "browserEntries": [
       "./src/config.ts"
     ],
     "nodeEntries": [
       "./src/preset.ts"
-    ],
-    "platform": "browser"
+    ]
   },
   "gitHead": "f70dcdb599363bfd6e6d2b63f8fadd02e9cbe00a"
 }

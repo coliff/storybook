@@ -29,19 +29,12 @@
       "types": "./dist/index.d.ts"
     },
     "./manager": {
-      "require": "./dist/manager.js",
       "import": "./dist/manager.mjs",
       "types": "./dist/manager.d.ts"
     },
     "./preview": {
       "require": "./dist/preview.js",
-      "import": "./dist/preview.mjs",
       "types": "./dist/preview.d.ts"
-    },
-    "./register.js": {
-      "require": "./dist/manager.js",
-      "import": "./dist/manager.mjs",
-      "types": "./dist/manager.d.ts"
     },
     "./package.json": "./package.json"
   },
@@ -111,12 +104,15 @@
   },
   "bundler": {
     "entries": [
-      "./src/index.ts",
-      "./src/manager.tsx",
-      "./src/preview.ts",
-      "./src/preset/checkActionsLoaded.ts"
+      "./src/index.ts"
     ],
-    "platform": "node"
+    "browserEntries": [
+      "./src/manager.tsx",
+      "./src/preview.ts"
+    ],
+    "nodeEntries": [
+      "./src/preset/checkActionsLoaded.ts"
+    ]
   },
   "gitHead": "f70dcdb599363bfd6e6d2b63f8fadd02e9cbe00a",
   "storybook": {

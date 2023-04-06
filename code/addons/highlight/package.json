@@ -74,7 +74,9 @@
   },
   "bundler": {
     "entries": [
-      "./src/index.ts",
+      "./src/index.ts"
+    ],
+    "browserEntries": [
       "./src/preview.ts"
     ]
   },

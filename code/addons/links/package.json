@@ -29,12 +29,10 @@
       "types": "./dist/index.d.ts"
     },
     "./manager": {
-      "require": "./dist/manager.js",
       "import": "./dist/manager.mjs",
       "types": "./dist/manager.d.ts"
     },
     "./preview": {
-      "require": "./dist/preview.js",
       "import": "./dist/preview.mjs",
       "types": "./dist/preview.d.ts"
     },
@@ -42,11 +40,6 @@
       "require": "./dist/react/index.js",
       "import": "./dist/react/index.mjs",
       "types": "./dist/react/index.d.ts"
-    },
-    "./register": {
-      "require": "./dist/manager.js",
-      "import": "./dist/manager.mjs",
-      "types": "./dist/manager.d.ts"
     },
     "./package.json": "./package.json"
   },

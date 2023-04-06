@@ -5785,6 +5785,7 @@ __metadata:
     "@types/picomatch": ^2.3.0
     "@types/pretty-hrtime": ^1.0.0
     chalk: ^4.1.0
+    enhanced-resolve: ^5.12.0
     esbuild: ^0.16.4
     esbuild-register: ^3.3.3
     file-system-cache: ^2.0.0
@@ -5798,7 +5799,9 @@ __metadata:
     picomatch: ^2.3.0
     pkg-dir: ^5.0.0
     pretty-hrtime: ^1.0.3
+    read-pkg-up: ^7.0.1
     resolve-from: ^5.0.0
+    resolve-pkg-maps: ^1.0.0
     slash: ^3.0.0
     ts-dedent: ^2.0.0
     type-fest: ^2.19.0
@@ -13846,7 +13849,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"enhanced-resolve@npm:^5.0.0, enhanced-resolve@npm:^5.10.0, enhanced-resolve@npm:^5.7.0":
+"enhanced-resolve@npm:^5.0.0, enhanced-resolve@npm:^5.10.0, enhanced-resolve@npm:^5.12.0, enhanced-resolve@npm:^5.7.0":
   version: 5.12.0
   resolution: "enhanced-resolve@npm:5.12.0"
   dependencies:
@@ -26261,6 +26264,13 @@ __metadata:
     path-root: ^0.1.1
     resolve: ^1.17.0
   checksum: e8debefeb71dbed652b83589ea703e0efc2a6467550a17a214d11576e6e796b8d466d9878bf72f99114ad1225293033a90b61fa3d46cae32c8239b88a7b9faba
+  languageName: node
+  linkType: hard
+
+"resolve-pkg-maps@npm:^1.0.0":
+  version: 1.0.0
+  resolution: "resolve-pkg-maps@npm:1.0.0"
+  checksum: fb8f7bbe2ca281a73b7ef423a1cbc786fb244bd7a95cbe5c3fba25b27d327150beca8ba02f622baea65919a57e061eb5005204daa5f93ed590d9b77463a567ab
   languageName: node
   linkType: hard
 
