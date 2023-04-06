@@ -30,6 +30,7 @@
       "import": "./dist/config.mjs",
       "types": "./dist/config.d.ts"
     },
+    "./dist/config.mjs": "./dist/config.mjs",
     "./package.json": "./package.json",
     "./templates/HOC.svelte": "./templates/HOC.svelte",
     "./templates/PreviewRender.svelte": "./templates/PreviewRender.svelte",
@@ -38,6 +39,16 @@
   "main": "dist/index.js",
   "module": "dist/index.mjs",
   "types": "dist/index.d.ts",
+  "typesVersions": {
+    "*": {
+      "*": [
+        "dist/index.d.ts"
+      ],
+      "preview": [
+        "dist/preview.d.ts"
+      ]
+    }
+  },
   "files": [
     "dist/**/*",
     "templates/**/*",

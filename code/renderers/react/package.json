@@ -30,7 +30,8 @@
       "import": "./dist/config.mjs",
       "types": "./dist/config.d.ts"
     },
-    "./dist/preset": {
+    "./dist/config.mjs": "./dist/config.mjs",
+    "./preset": {
       "require": "./dist/preset.js",
       "types": "./dist/preset.d.ts"
     },
@@ -39,6 +40,19 @@
   "main": "dist/index.js",
   "module": "dist/index.mjs",
   "types": "dist/index.d.ts",
+  "typesVersions": {
+    "*": {
+      "*": [
+        "dist/index.d.ts"
+      ],
+      "preset": [
+        "dist/preset.d.ts"
+      ],
+      "preview": [
+        "dist/preview.d.ts"
+      ]
+    }
+  },
   "files": [
     "dist/**/*",
     "template/**/*",

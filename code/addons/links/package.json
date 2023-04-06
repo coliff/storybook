@@ -36,6 +36,8 @@
       "import": "./dist/preview.mjs",
       "types": "./dist/preview.d.ts"
     },
+    "./dist/preview.mjs": "./dist/preview.mjs",
+    "./dist/manager.mjs": "./dist/manager.mjs",
     "./react": {
       "require": "./dist/react/index.js",
       "import": "./dist/react/index.mjs",
