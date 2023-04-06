@@ -1,5 +1,4 @@
-/* eslint-disable import/export */
-export * from '@storybook/addon-docs/dist/preset';
+export * from '@storybook/addon-docs/preset';
 
 export const mdxLoaderOptions = async (config: any) => {
   // eslint-disable-next-line no-param-reassign
