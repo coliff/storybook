@@ -88,11 +88,8 @@ export function addons(options: PresetOptions) {
       const p = join(__dirname, key, 'preset.js');
       const exists = pathExistsSync(p);
 
-      console.log({ p, exists });
       return exists ? p : null;
     });
-
-  console.log({ list });
 
   return list.filter(Boolean);
 }

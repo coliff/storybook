@@ -66,8 +66,6 @@ export const resolveAddonName = (
 ): CoreCommon_ResolvedAddonPreset | CoreCommon_ResolvedAddonVirtual | undefined => {
   const resolved = safeResolveAll(name, configDir);
 
-  console.log({ resolved });
-
   if (!resolved) {
     return undefined;
   }

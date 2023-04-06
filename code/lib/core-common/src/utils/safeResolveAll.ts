@@ -65,8 +65,6 @@ export const safeResolveAll = (
   const resolve = name.startsWith('/') ? safeResolve : safeResolveFrom.bind(null, configDir);
   const path = resolve(name);
 
-  console.log({ path });
-
   if (!path) {
     return undefined;
   }
