@@ -115,7 +115,7 @@
     "browserEntries": [
       "./src/decorator.ts",
       "./src/manager.tsx",
-      "./src/preview.tsx"
+      "./src/preview.ts"
     ]
   },
   "gitHead": "8ff2938f8ac0c2d524ae653cd89251e5cd4721a4",
