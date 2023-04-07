@@ -44,10 +44,18 @@
       "*": [
         "dist/index.d.ts"
       ],
-      "preview": ["dist/preview.d.ts"],
-      "templates/HOC.svelte": ["templates/HOC.svelte"],
-      "templates/PreviewRender.svelte": ["templates/PreviewRender.svelte"],
-      "templates/SlotDecorator.svelte": ["templates/SlotDecorator.svelte"]
+      "preview": [
+        "dist/preview.d.ts"
+      ],
+      "templates/HOC.svelte": [
+        "templates/HOC.svelte"
+      ],
+      "templates/PreviewRender.svelte": [
+        "templates/PreviewRender.svelte"
+      ],
+      "templates/SlotDecorator.svelte": [
+        "templates/SlotDecorator.svelte"
+      ]
     }
   },
   "files": [
