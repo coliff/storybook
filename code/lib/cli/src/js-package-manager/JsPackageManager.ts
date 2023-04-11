@@ -115,7 +115,7 @@ export abstract class JsPackageManager {
       delete packageJsonToWrite.devDependencies;
     }
     if (
-      packageJsonToWrite.dependencies &&
+      packageJsonToWrite.peerDependencies &&
       Object.keys(packageJsonToWrite.peerDependencies).length === 0
     ) {
       delete packageJsonToWrite.peerDependencies;

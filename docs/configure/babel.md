@@ -2,81 +2,27 @@
 title: 'Babel'
 ---
 
-Storybook’s webpack config by [default](#default-configuration) sets up [Babel](https://babeljs.io/) for ES6 transpiling.
+As of version 7.0, Storybook now re-uses your project’s Babel configuration to apply the same Babel plugins and presets in your Storybook stories as you do in your app. This makes it simpler, less buggy, easier to troubleshoot, and more consistent with other tools in the JS ecosystem.
 
-It has three different modes:
+<div class="aside">
 
-- [**CRA**](#cra-mode) - the mode for Create React App apps specifically
-- [**V6**](#v6-mode) - the default mode for version 6.x and below
-- [**V7**](#v7-mode) - a new mode slated to become the default in SB7.x
+If you're not using Storybook 7, please reference the <LinkWithVersion version="6.5" href="./babel.md">previous documentation</LinkWithVersion> for guidance on configuring your Babel setup.
 
-## CRA mode
+</div>
 
-[CRA](https://create-react-app.dev/) apps configured with `@storybook/preset-create-react-app` use CRA's babel handling to behave as close as possible to your actual application. None of the other documentation on this page applies.
+## CRA (Create React App)
 
-## V6 mode
+[CRA](https://create-react-app.dev/) apps using `@storybook/react-webpack5` with the `@storybook/preset-create-react-app` package use CRA's Babel handling to behave as close as possible to your actual application. None of the other documentation on this page applies.
 
-Storybook works with evergreen browsers by default.
+## Configuring
 
-If you want to run Storybook in IE11, make sure to [disable](../essentials/introduction.md#disabling-addons) the docs-addon that is part of `@storybook/addon-essentials`, as this currently [causes issues in IE11](https://github.com/storybookjs/storybook/issues/8884).
+In Storybook 7, you are responsible for configuring Babel using your `.babelrc` file, and Storybook does not provide any default. Storybook's frameworks and addons may provide minor programmatic modifications to the Babel configuration.
 
-Here are some key features of Storybook's Babel configurations.
+## Migrating from V6
 
-### Default configuration
+For detailed instructions on migrating from `V6` mode, please see [MIGRATION.md](https://github.com/storybookjs/storybook/blob/next/MIGRATION.md#babel-mode-v7-exclusively).
 
-We have added ES2016 support with Babel for transpiling your JS code.
-
-In addition to that, we've added a few additional features, like [object spreading](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Spread_syntax) and [`async` `await`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/async_function).
-
-Check out our [source](https://github.com/storybookjs/storybook/blob/main/lib/core-common/src/utils/babel.ts) to learn more about these plugins.
-
-### Custom config file
-
-If your project has a `.babelrc` file, we'll use that instead of the default config file.
-
-You can also place a `.storybook/.babelrc` file to use a unique configuration for Storybook only.
-
-### Custom configuration
-
-If you need, you can customize the default Babel configuration used by Storybook. Update your [`.storybook/main.js`](./overview.md#configure-your-storybook-project) and add the `babel` field with the options you want to use:
-
-<!-- prettier-ignore-start -->
-
-<CodeSnippets
-  paths={[
-    'common/storybook-main-custom-babel-config.js.mdx',
-  ]}
-/>
-
-<!-- prettier-ignore-end -->
-
-## V7 Mode
-
-V7 mode is a new option available in Storybook 6.4+ behind a feature flag.
-
-Its goal is to make the Babel configuration simpler, less buggy, easier to troubleshoot, and more consistent with the rest of the JS ecosystem.
-
-In V7 mode, you are responsible for configuring Babel using your `.babelrc` file, and Storybook does not provide any default. Storybook's frameworks and addons may provide minor programmatic modifications to the babel configuration.
-
-### How it works
-
-To activate V7 mode, set the feature flag in your `.storybook/main.js` config:
-
-<!-- prettier-ignore-start -->
-
-<CodeSnippets
-  paths={[
-    'common/storybook-main-babel-mode-v7.js.mdx',
-  ]}
-/>
-
-<!-- prettier-ignore-end -->
-
-### Migrating from V6
-
-For detailed instructions on migrating from `V6` mode, please see [MIGRATION.md](https://github.com/storybookjs/storybook/blob/next/MIGRATION.md#babel-mode-v7).
-
-### Generate a babelrc
+## Generate a babelrc
 
 If your app does not include a babelrc file, and you need one, you can create it by running the following command in your project directory:
 
@@ -85,6 +31,9 @@ npx storybook@latest babelrc
 ```
 
 Once the command completes, you should have a `.babelrc.json` file created in the root directory of your project, similar to the following example:
+
+<details>
+<summary>Example Babel configuration</summary>
 
 ```json
 {
@@ -150,30 +99,34 @@ Once the command completes, you should have a `.babelrc.json` file created in th
 }
 ```
 
+</details>
+
 Depending on your environment, you may need to install additional package dependencies.
 
-### Babelrc vs. babel config
+### Babelrc vs. Babel config
 
-Babel has two different configuration modes: babelrc and babel config. As explained in more detail [in the docs](https://babeljs.io/docs/en/config-files):
+Babel has two different configuration modes: babelrc and Babel config. As explained in more detail [in Babel's docs](https://babeljs.io/docs/en/config-files):
 
-- **babelrc** configures babel for files in the same folder (or descendant folders) of the location of the babelrc
-- **babel config** configures babel globally
+- **babelrc** configures Babel for files in the same folder (or descendant folders) of the location of the babelrc
+- **Babel config** configures Babel globally
 
-Babel recommends to use babelrc, and it's what Storybook generates when you run `npx storybook babelrc` to migrate from v6 mode. If your stories are located in the current project directory (e.g., `stories: ['../src/**/*.stories.js']`) this approach will work well.
-However, when your Storybook refers to files outside of the current project directory (e.g., `stories: ['../../some-other-directory/**/*.stories.js']`), the babelrc will not apply to those files. However, a babel config will, and is the recommended approach in that situation.
+Babel recommends to use babelrc, and it's what Storybook generates when you run `npx storybook babelrc`. If your stories are located in the current project directory (e.g., `stories: ['../src/**/*.stories.js']`) this approach will work well.
+However, when your Storybook refers to files outside of the current project directory (e.g., `stories: ['../../some-other-directory/**/*.stories.js']`), the babelrc will not apply to those files. However, a Babel config will, and is the recommended approach in that situation.
 
-### Troubleshooting
+## Troubleshooting
 
-To troubleshoot your babel configuration, set the `BABEL_SHOW_CONFIG_FOR` environment variable. For example, to see how Storybook is transpiling your `.storybook/preview.js` file, add the following environment variable:
+To troubleshoot your Babel configuration, set the `BABEL_SHOW_CONFIG_FOR` environment variable. For example, to see how Storybook is transpiling your `.storybook/preview.js` file, add the following environment variable:
 
 ```sh
 BABEL_SHOW_CONFIG_FOR=.storybook/preview.js yarn storybook
 ```
 
-When the command finishes running, it will display the available babel configuration for the `.storybook/preview.js` file. You can use this information to debug issues with transpilation.
+When the command finishes running, it will display the available Babel configuration for the `.storybook/preview.js` file. You can use this information to debug issues with transpilation.
 
 <div class="aside">
-💡 Due to what appears to be a Babel bug, setting this flag causes Babel transpilation to fail on the file provided. Thus you cannot actually <strong>run</strong> Storybook using this command. However, it will print out the configuration information as advertised, and therefore you can use this to debug your Storybook. You'll need to remove the flag to actually run your Storybook.
+
+💡 Due to what appears to be a Babel bug, setting this flag causes Babel transpilation to fail on the file provided. Thus you cannot actually **run** Storybook using this command. However, it will print out the configuration information as advertised, and therefore you can use this to debug your Storybook. You'll need to remove the flag to actually run your Storybook.
+
 </div>
 
 For more info, please refer to the [Babel documentation](https://babeljs.io/docs/en/configuration#print-effective-configs).

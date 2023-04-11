@@ -29,7 +29,7 @@ body:
     id: system
     attributes:
       label: System
-      description: Please paste the results of `npx sb@next info` here.
+      description: Please paste the results of `npx storybook@latest info` here.
       render: shell
   - type: textarea
     id: context

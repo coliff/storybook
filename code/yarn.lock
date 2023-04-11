@@ -3559,7 +3559,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@joshwooding/vite-plugin-react-docgen-typescript@npm:^0.2.1":
+"@joshwooding/vite-plugin-react-docgen-typescript@npm:0.2.1":
   version: 0.2.1
   resolution: "@joshwooding/vite-plugin-react-docgen-typescript@npm:0.2.1"
   dependencies:
@@ -7005,7 +7005,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@storybook/react-vite@workspace:frameworks/react-vite"
   dependencies:
-    "@joshwooding/vite-plugin-react-docgen-typescript": ^0.2.1
+    "@joshwooding/vite-plugin-react-docgen-typescript": 0.2.1
     "@rollup/pluginutils": ^4.2.0
     "@storybook/builder-vite": 7.1.0-alpha.0
     "@storybook/react": 7.1.0-alpha.0

@@ -110,7 +110,7 @@ export default {
 };
 ```
 
-If using in conjunction with the [storyshots add-on](https://github.com/storybookjs/storybook/blob/next/code/addons/storyshots/storyshots-core/README.md), you will need to
+If using in conjunction with the [storyshots add-on](https://github.com/storybookjs/storybook/blob/next/code/addons/storyshots-core/README.md), you will need to
 configure Jest to transform MDX stories into something Storyshots can understand:
 
 Add the following to your Jest configuration:
