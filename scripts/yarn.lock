@@ -2910,7 +2910,7 @@ __metadata:
     remark-cli: ^9.0.0
     remark-lint: ^8.0.0
     remark-preset-lint-recommended: ^5.0.0
-    semver: ^7.3.7
+    semver: ^7.5.2
     serve-static: ^1.14.1
     shelljs: ^0.8.5
     slash: ^3.0.0
@@ -13395,6 +13395,17 @@ __metadata:
   bin:
     semver: ./bin/semver.js
   checksum: 1f4959e15bcfbaf727e964a4920f9260141bb8805b399793160da4e7de128e42a7d1f79c1b7d5cd21a6073fba0d55feb9966f5fef3e5ccb8e1d7ead3d7527458
+  languageName: node
+  linkType: hard
+
+"semver@npm:^7.5.2":
+  version: 7.5.3
+  resolution: "semver@npm:7.5.3"
+  dependencies:
+    lru-cache: ^6.0.0
+  bin:
+    semver: bin/semver.js
+  checksum: 4cf3bab7e8cf8c2ae521fc4bcc50a4d6912a836360796b23b9f1c26f45d27a73f870e47664df4770bde0dd60dc4d4781a05fd49fe91d72376ea5519b9e791459
   languageName: node
   linkType: hard
 
